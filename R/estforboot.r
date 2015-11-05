@@ -1,3 +1,4 @@
+#' try i love zhiming
 estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,NS) {
   ###boot function
   #
