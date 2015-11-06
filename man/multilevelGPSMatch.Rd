@@ -2,21 +2,39 @@
 % Please edit documentation in R/multilevelGPSMatch.r
 \name{multilevelGPSMatch}
 \alias{multilevelGPSMatch}
-\title{multilevel treatment matching on GPS}
+\title{multilevel treatment with matching on GPS}
 \usage{
 multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 }
 \arguments{
-\item{Y}{response vector (1 x n)}
+\item{Y}{a continuous response vector (1 x n)}
 
-\item{W}{treatment vector (1 x n)}
+\item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
 
-\item{X}{covariate matrix (p x n) with no intercept}
+\item{X}{a covariate matrix (p x n) with no intercept}
+
+\item{Trimming}{an indicator of whether trimming the sample to ensure overlap}
+
+\item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate
+A list with 2 elements: tauestimate, varestimate, varestimateAI2012(only for multilevelGPSMatch), analysisidx (when Trimming=1)
+tauestimate is a vector of estimates for pairwise treatment effects
+varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+varestimateAI2012 is a vector of variance estimates for tauestimate,
+ when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
+ This variance estimate takes into account of the uncertainty in estimating the GPS.
+analysisidx is the index of units after trimming based on Crump et al. (2009)'s method.
 }
 \description{
-multilevel treatment matching on GPS
+multilevel treatment with matching on GPS
+}
+\examples{
+  X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
+  Y<-c(102,105,120,130,100,80,94,108,96)
+  W<-c(1,1,1,3,2,3,2,1,2)
+  multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
+  multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
+
 }
 

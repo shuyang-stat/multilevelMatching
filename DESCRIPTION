@@ -6,8 +6,8 @@ Version: 0.1
 Date: 2015-11-03
 Author: Shu Yang
 Maintainer: Shu Yang <shuyang@hsph.harvard.edu>
-Description: Matching and Subclasfication in settings with multilevel treatment
-Depends: Matching, MASS, ebal, survey, lattice, nnet, optmatch, boot
+Description: Matching and subclasfication with multilevel treatment.
+Depends: Matching, MASS, nnet, optmatch, boot
 License: GPL-2
 VignetteBuilder: knitr
 Suggests: knitr

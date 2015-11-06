@@ -1,13 +1,22 @@
-#' multilevel treatment stratification on X
+#' Multilevel treatment with matching on X
 #'
-#' @param Y response vector (1 x n)
-#' @param W treatment vector (1 x n)
-#' @param X covariate matrix (p x n) with no intercept
+#' @param Y a continuous response vector (1 x n)
+#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
+#' @param X a covariate matrix (p x n) with no intercept
 #'
 #' @return A list with 2 elements: tauestimate, varestimate
+#' tauestimate is a vector of estimates for pairwise treatment effects
+#' varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+#'
+#' @examples
+#'   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
+#'   Y<-c(102,105,120,130,100,80,94,108,96)
+#'   W<-c(1,1,1,3,2,3,2,1,2)
+#'   multilevelMatchX(Y,W,X)
+#'
+#' @import Matching boot nnet optmatch MASS
 #'
 #' @export
-#'
 multilevelMatchX<-function(Y,W,X){
 
   ## order the treatment increasingly
