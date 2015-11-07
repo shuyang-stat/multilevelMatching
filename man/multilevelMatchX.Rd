@@ -2,7 +2,7 @@
 % Please edit documentation in R/multilevelMatchX.r
 \name{multilevelMatchX}
 \alias{multilevelMatchX}
-\title{Multilevel treatment with matching on X}
+\title{Matching on X with multilevel treatments}
 \usage{
 multilevelMatchX(Y, W, X)
 }
@@ -14,12 +14,12 @@ multilevelMatchX(Y, W, X)
 \item{X}{a covariate matrix (p x n) with no intercept}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate
-tauestimate is a vector of estimates for pairwise treatment effects
-varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+A list with 2 elements: tauestimate, varestimate, where
+tauestimate is a vector of estimates for pairwise treatment effects,
+varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method.
 }
 \description{
-Multilevel treatment with matching on X
+Matching on X with multilevel treatments
 }
 \examples{
   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
@@ -27,5 +27,8 @@ Multilevel treatment with matching on X
   W<-c(1,1,1,3,2,3,2,1,2)
   multilevelMatchX(Y,W,X)
 
+}
+\seealso{
+\code{\link{multilevelGPSMatch}}; \code{\link{multilevelGPSStratification}}
 }
 

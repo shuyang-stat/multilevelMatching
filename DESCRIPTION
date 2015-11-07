@@ -10,6 +10,6 @@ Description: Matching and subclasfication with multilevel treatment.
 Depends: Matching, MASS, nnet, optmatch, boot
 License: GPL-2
 VignetteBuilder: knitr
-Suggests: knitr
+Suggests: knitr, rmarkdown
 LazyData: TRUE
 RoxygenNote: 5.0.0

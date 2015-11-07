@@ -2,7 +2,7 @@
 % Please edit documentation in R/multilevelGPSStratification.r
 \name{multilevelGPSStratification}
 \alias{multilevelGPSStratification}
-\title{multilevel treatment with stratification on GPS}
+\title{Stratification on GPS with multilevel treatments}
 \usage{
 multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
   linearp = 0, nboot)
@@ -23,16 +23,16 @@ multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
 \item{nboot}{(only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate
-tauestimate is a vector of estimates for pairwise treatment effects
-varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+A list with 2 elements: tauestimate, varestimate, where
+tauestimate is a vector of estimates for pairwise treatment effects, and
+varestimate is a vector of variance estimates, using bootstrapping method.
 }
 \description{
-multilevel treatment with stratification on GPS
+Stratification on GPS with multilevel treatments
 }
 \examples{
 
- set.seed(111)
+  set.seed(111)
   n    <- 5000*6
   # X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5
   vars   <- c(2,1,1)
@@ -99,5 +99,8 @@ multilevel treatment with stratification on GPS
   c(match3$tauestimate,match3$varestimate)
   c(match4$tauestimate,match4$varestimate)
 
+}
+\seealso{
+\code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 }
 

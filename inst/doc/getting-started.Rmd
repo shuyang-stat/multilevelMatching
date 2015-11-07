@@ -1,0 +1,10 @@
+---
+title: "multilevelMatching Tutorial"
+author: "Shu Yang"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to the multilevelMatching R package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---

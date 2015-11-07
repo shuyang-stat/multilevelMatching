@@ -1,4 +1,4 @@
-#' multilevel treatment with matching on GPS
+#' Matching on GPS with multilevel treatments
 #'
 #' @param Y a continuous response vector (1 x n)
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
@@ -6,13 +6,21 @@
 #' @param Trimming an indicator of whether trimming the sample to ensure overlap
 #' @param GPSM an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"
 #'
-#' @return A list with 2 elements: tauestimate, varestimate, varestimateAI2012(only for multilevelGPSMatch), analysisidx (when Trimming=1)
-#' tauestimate is a vector of estimates for pairwise treatment effects
-#' varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
-#' varestimateAI2012 is a vector of variance estimates for tauestimate,
-#'  when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
+#' @return
+#' \itemize{
+#'
+#'  \item tauestimate:  a vector of estimates for pairwise treatment effects
+#'
+#'  \item varestimate:  a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+#'
+#'  \item varestimateAI2012:  a vector of variance estimates for tauestimate, when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
 #'  This variance estimate takes into account of the uncertainty in estimating the GPS.
-#' analysisidx is the index of units after trimming based on Crump et al. (2009)'s method.
+#'
+#'  \item analysisidx: the index of units after trimming based on Crump et al. (2009)'s method.
+#'
+#' }
+#'
+#' @seealso \code{\link{multilevelMatchX}}; \code{\link{multilevelGPSStratification}}
 #'
 #' @examples
 #'   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
@@ -25,10 +33,6 @@
 #'
 #' @export
 multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
-  ###GPSM="multinomiallogisticReg"/"ordinallogisticReg"/"existing"(X is the fitted GPS by users)
-  ##return values: point estimator; A&I(2006)'s variance estimator; A&I(2012)'s variance estimator
-  #
-  ###### Trimming ##################################################
 
   if(Trimming==1){
     #PF modeling

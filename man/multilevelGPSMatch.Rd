@@ -2,7 +2,7 @@
 % Please edit documentation in R/multilevelGPSMatch.r
 \name{multilevelGPSMatch}
 \alias{multilevelGPSMatch}
-\title{multilevel treatment with matching on GPS}
+\title{Matching on GPS with multilevel treatments}
 \usage{
 multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 }
@@ -18,16 +18,21 @@ multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 \item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate, varestimateAI2012(only for multilevelGPSMatch), analysisidx (when Trimming=1)
-tauestimate is a vector of estimates for pairwise treatment effects
-varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
-varestimateAI2012 is a vector of variance estimates for tauestimate,
- when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
+\itemize{
+
+ \item tauestimate:  a vector of estimates for pairwise treatment effects
+
+ \item varestimate:  a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+
+ \item varestimateAI2012:  a vector of variance estimates for tauestimate, when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
  This variance estimate takes into account of the uncertainty in estimating the GPS.
-analysisidx is the index of units after trimming based on Crump et al. (2009)'s method.
+
+ \item analysisidx: the index of units after trimming based on Crump et al. (2009)'s method.
+
+}
 }
 \description{
-multilevel treatment with matching on GPS
+Matching on GPS with multilevel treatments
 }
 \examples{
   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
@@ -36,5 +41,8 @@ multilevel treatment with matching on GPS
   multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
   multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 
+}
+\seealso{
+\code{\link{multilevelMatchX}}; \code{\link{multilevelGPSStratification}}
 }
 

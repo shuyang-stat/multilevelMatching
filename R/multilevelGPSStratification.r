@@ -1,4 +1,4 @@
-#' multilevel treatment with stratification on GPS
+#' Stratification on GPS with multilevel treatments
 #'
 #' @param Y a continuous response vector (1 x n)
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
@@ -8,13 +8,15 @@
 #' @param linearp (only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)
 #' @param nboot (only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation
 #'
-#' @return A list with 2 elements: tauestimate, varestimate
-#' tauestimate is a vector of estimates for pairwise treatment effects
-#' varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+#' @return A list with 2 elements: tauestimate, varestimate, where
+#' tauestimate is a vector of estimates for pairwise treatment effects, and
+#' varestimate is a vector of variance estimates, using bootstrapping method.
+#'
+#' @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 #'
 #' @examples
 #'
-#'  set.seed(111)
+#'   set.seed(111)
 #'   n    <- 5000*6
 #'   # X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5
 #'   vars   <- c(2,1,1)
