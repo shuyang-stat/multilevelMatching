@@ -178,7 +178,8 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
             X11<-matrix(X[Matchmat[,c(thiscnames)],(jj-1)],ncol=2,byrow=FALSE)
             mX11<-apply(X11,1,mean)
             C1.X1Y<-apply((X11-mX11)*(Y11-mY11),1,sum)
-            C1.X1Y<-C1.X1Y*(-PF.fit[,kk+1])
+            if(kkk==(kk+1)){C1.X1Y<-C1.X1Y*(1-PF.fit[,kk+1])}
+            else if(kkk!=(kk+1))C1.X1Y<-C1.X1Y*(-PF.fit[,kk+1])
             Cmat[,(dim(X)[2]+1)*(kk-1)+jj]<-C1.X1Y
           }
         }
@@ -190,7 +191,7 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
       for(kk in (jj+1):trtnumber){
         thistrt<-trtlevels[jj]
         thattrt<-trtlevels[kk]
-        cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
+        cname1<-c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
         varestimateAI2012[cname1]<-varestimate[cname1]-
           t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
       }
