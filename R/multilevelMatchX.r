@@ -16,7 +16,7 @@
 #'   W<-c(1,1,1,3,2,3,2,1,2)
 #'   multilevelMatchX(Y,W,X)
 #'
-#' @import Matching boot nnet optmatch MASS
+#' @import Matching boot nnet MASS
 #'
 #' @export
 multilevelMatchX<-function(Y,W,X){
