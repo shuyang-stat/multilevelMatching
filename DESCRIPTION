@@ -2,9 +2,14 @@ Package: multilevelMatching
 Type: Package
 Title: Propensity Score Matching and Subclassification in Observational Studies
     with Multi-level Treatments
-Version: 0.1
-Date: 2015-11-03
-Author: Shu Yang
+Version: 0.1.1
+Date: 2017-03-25
+Authors@R: c(
+    person("Shu", "Yang", email = "shuyang@hsph.harvard.edu",
+      role = c("aut", "cre")),
+    person("Brian", "Barkley", email = "BarkleyBG@unc.edu", 
+      role = "ctb")
+    )
 Maintainer: Shu Yang <shuyang@hsph.harvard.edu>
 Description: Matching and subclasfication with multilevel treatment.
 Depends: Matching, MASS, nnet, optmatch, boot
@@ -12,4 +17,4 @@ License: GPL-2
 VignetteBuilder: knitr
 Suggests: knitr, rmarkdown
 LazyData: TRUE
-RoxygenNote: 5.0.0
+RoxygenNote: 6.0.1

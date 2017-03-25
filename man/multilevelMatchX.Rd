@@ -14,9 +14,11 @@ multilevelMatchX(Y, W, X)
 \item{X}{a covariate matrix (p x n) with no intercept}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate, where
-tauestimate is a vector of estimates for pairwise treatment effects,
-varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method.
+according to \code{\link{tidyOutput}}: a dataframe with two columns,
+tauestimate, varestimate, where
+tauestimate is a vector of estimates for pairwise treatment effects, and
+varestimate is a vector of variance estimates for tauestimate, using
+Abadie&Imbens(2006)'s method.
 }
 \description{
 Matching on X with multilevel treatments
@@ -31,4 +33,3 @@ Matching on X with multilevel treatments
 \seealso{
 \code{\link{multilevelGPSMatch}}; \code{\link{multilevelGPSStratification}}
 }
-

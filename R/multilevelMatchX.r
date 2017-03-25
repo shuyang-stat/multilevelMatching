@@ -4,9 +4,11 @@
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
 #' @param X a covariate matrix (p x n) with no intercept
 #'
-#' @return A list with 2 elements: tauestimate, varestimate, where
-#' tauestimate is a vector of estimates for pairwise treatment effects,
-#' varestimate is a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method.
+#' @return according to \code{\link{tidyOutput}}: a dataframe with two columns,
+#' tauestimate, varestimate, where
+#' tauestimate is a vector of estimates for pairwise treatment effects, and
+#' varestimate is a vector of variance estimates for tauestimate, using
+#' Abadie&Imbens(2006)'s method.
 #'
 #' @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelGPSStratification}}
 #'
@@ -21,21 +23,17 @@
 #' @export
 multilevelMatchX<-function(Y,W,X){
 
+  N <- length(Y) # number of observations
   ## order the treatment increasingly
-  if(1-is.unsorted(W)){
-    temp<-sort(W,index.return=TRUE)
-    temp<-list(x=temp)
-    temp$ix<-1:length(W)
+  ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
+  W <- ordered_data$W
+  X <- ordered_data$X
+  Y <- ordered_data$Y
+  ##check
+  if (length(Y) != N) {
+    #write a unit test here
+    stop("Re-ordering data has failed")
   }
-  if(is.unsorted(W)){
-    temp<-sort(W,index.return=TRUE)
-  }
-  W<-W[temp$ix]
-  N=length(Y) # number of observations
-
-  X<-as.matrix(X)
-  X<-X[temp$ix,]
-  Y<-Y[temp$ix]
 
   trtnumber<-length(unique(W)) # number of treatment levels
   trtlevels<-unique(W) # all treatment levels
@@ -109,6 +107,8 @@ multilevelMatchX<-function(Y,W,X){
   names(tauestimate)<-cname1
   names(varestimate)<-cname1
 
-  return(list(tauestimate=tauestimate,varestimate=varestimate))
+  untidy_output <- list(tauestimate=tauestimate,varestimate=varestimate)
+  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  return(tidy_output)
 
 }

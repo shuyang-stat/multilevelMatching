@@ -8,7 +8,8 @@
 #' @param linearp (only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)
 #' @param nboot (only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation
 #'
-#' @return A list with 2 elements: tauestimate, varestimate, where
+#' @return according to \code{\link{tidyOutput}}: a dataframe with two columns,
+#' tauestimate, varestimate, where
 #' tauestimate is a vector of estimates for pairwise treatment effects, and
 #' varestimate is a vector of variance estimates, using bootstrapping method.
 #'
@@ -96,10 +97,17 @@ multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",lin
   ## nboot: the number of bootstrap replicates in variance estimator
   ## return values: point estimator,bootstrapping variance estimator
   #
+  N <- length(Y) # number of observations
   ## order the treatment increasingly
-
-  N=length(Y) # number of observations
-  X<-as.matrix(X)
+  ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
+  W <- ordered_data$W
+  X <- ordered_data$X
+  Y <- ordered_data$Y
+  ##check
+  if (length(Y) != N) {
+    #write a unit test here
+    stop("Re-ordering data has failed")
+  }
 
   trtnumber<-length(unique(W)) # number of treatment levels
   trtlevels<-unique(W) # all treatment levels
@@ -165,5 +173,7 @@ multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",lin
   bootvar<-apply(results$t,2,var,na.rm = TRUE)
   names(bootvar)<-cname1
 
-  return(list(tauestimate=tauestimate,varestimate=bootvar))
+  untidy_output <- list(tauestimate=tauestimate,varestimate=bootvar)
+  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  return(tidy_output)
 }

@@ -18,6 +18,7 @@ multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 \item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
 }
 \value{
+according to \code{\link{tidyOutput}}, including at most:
 \itemize{
 
  \item tauestimate:  a vector of estimates for pairwise treatment effects
@@ -45,4 +46,3 @@ Matching on GPS with multilevel treatments
 \seealso{
 \code{\link{multilevelMatchX}}; \code{\link{multilevelGPSStratification}}
 }
-

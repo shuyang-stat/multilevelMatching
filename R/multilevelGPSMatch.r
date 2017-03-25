@@ -6,7 +6,7 @@
 #' @param Trimming an indicator of whether trimming the sample to ensure overlap
 #' @param GPSM an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"
 #'
-#' @return
+#' @return according to \code{\link{tidyOutput}}, including at most:
 #' \itemize{
 #'
 #'  \item tauestimate:  a vector of estimates for pairwise treatment effects
@@ -51,21 +51,18 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   if(Trimming==0){
     analysisidx<-1:length(Y)
   }
-  ## order the treatment increasingly
-  if(1-is.unsorted(W)){
-    temp<-sort(W,index.return=TRUE)
-    temp<-list(x=temp)
-    temp$ix<-1:length(W)
-  }
-  if(is.unsorted(W)){
-    temp<-sort(W,index.return=TRUE)
-  }
-  W<-W[temp$ix]
-  N=length(Y) # number of observations
-  X<-as.matrix(X)
-  X<-X[temp$ix,]
-  Y<-Y[temp$ix]
 
+  N <- length(Y) # number of observations
+  ## order the treatment increasingly
+  ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
+  W <- ordered_data$W
+  X <- ordered_data$X
+  Y <- ordered_data$Y
+  ##check
+  if (length(Y) != N) {
+    #write a unit test here
+    stop("Re-ordering data has failed")
+  }
 
   trtnumber<-length(unique(W)) # number of treatment levels
   trtlevels<-unique(W) # all treatment levels
@@ -197,8 +194,11 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
       }
     }
   }
-  return(list(tauestimate=tauestimate,
+  untidy_output <- list(tauestimate=tauestimate,
               varestimate=varestimate,
               varestimateAI2012=varestimateAI2012,
-              analysisidx=analysisidx))
+              analysisidx=analysisidx)
+
+  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  return(tidy_output)
 }
