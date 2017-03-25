@@ -1,5 +1,8 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
+
+This is a fork from the original creator and author's [package](https://github.com/shuyang1987/multilevelMatching). 
+
 In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.
 
 This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A. 
@@ -11,15 +14,21 @@ matching with the full set of covariates, matching with the full set of GPS vect
 
 In order to ensure sufficient overlap, Crump et al. (2009)'s trimming method can be extended to this setting as well. 
 
-### install
-with `devtools`:
+### installation with `devtools`:
+
+This is a fork for the project. To install the 'develop' branch of this fork (the front-facing branch in the forked repo), use
+
+```S
+devtools::install_github("barkleybg/multilevelMatching", ref = "develop")
+```
+To download the original repo from the package's original creator who was also first author of the related paper, use
 
 ```S
 devtools::install_github("shuyang1987/multilevelMatching")
 ```
 
 ### use
-There are only three functions in this package. `multilevelMatchX()`, `multilevelGPSMatch()`, `multilevelGPSStratification()` make super awesome illustrations. 
+There are only three main functions in this package. `multilevelMatchX()`, `multilevelGPSMatch()`, `multilevelGPSStratification()` make super awesome illustrations. 
 
 ```S
 X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
@@ -92,10 +101,10 @@ match2<-multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM="multinomiallogisticReg")
 match3<-multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="multinomiallogisticReg")
 match4<-multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg",linearp=0,nboot=50)
 
-c(match1$tauestimate,match1$varestimate)
-c(match2$tauestimate,match2$varestimate)
-c(match3$tauestimate,match3$varestimate)
-c(match4$tauestimate,match4$varestimate)
+match1$results
+match2$results
+match3$results
+match4$results
 ```
 
 

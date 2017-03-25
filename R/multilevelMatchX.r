@@ -21,7 +21,7 @@
 #' @import Matching boot nnet MASS
 #'
 #' @export
-multilevelMatchX<-function(Y,W,X){
+multilevelMatchX <- function(Y,W,X){
 
   N <- length(Y) # number of observations
   ## order the treatment increasingly

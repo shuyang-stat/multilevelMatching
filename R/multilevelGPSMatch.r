@@ -2,9 +2,13 @@
 #'
 #' @param Y a continuous response vector (1 x n)
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
-#' @param X a covariate matrix (p x n) with no intercept
+#' @param X a covariate matrix (p x n) with no intercept. When GPSM="existing",
+#' then X must be a vector (1 x n) of user-specified propensity scores.
 #' @param Trimming an indicator of whether trimming the sample to ensure overlap
-#' @param GPSM an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"
+#' @param GPSM an indicator of the methods used for estimating GPS, options
+#' include "multinomiallogisticReg", "ordinallogisticReg" for proportional odds
+#' or cumulative logit model, and "existing" for user-specified propensity
+#' score via the parameter X.
 #'
 #' @return according to \code{\link{tidyOutput}}, including at most:
 #' \itemize{
@@ -32,7 +36,10 @@
 #' @import Matching boot nnet optmatch MASS
 #'
 #' @export
-multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
+multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
+
+  X <- as.matrix(X)
+
 
   if(Trimming==1){
     #PF modeling
@@ -43,7 +50,6 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
     overlap.idx<-overlap(PF.fit)$idx
 
     W <- W[overlap.idx]
-    X <- as.matrix(X)
     X <- X[overlap.idx,]
     Y <- Y[overlap.idx]
     analysisidx<-overlap.idx
@@ -53,12 +59,13 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   }
 
   N <- length(Y) # number of observations
+
   ## order the treatment increasingly
   ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
   W <- ordered_data$W
   X <- ordered_data$X
   Y <- ordered_data$Y
-  ##check
+  ## some checks
   if (length(Y) != N) {
     #write a unit test here
     stop("Re-ordering data has failed")
@@ -83,6 +90,10 @@ multilevelGPSMatch<-function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   }
   if(GPSM=="existing"){
     #need to check the row sum of X is 1 - debug1
+    if (any(dim(X)!=c(1,N))){
+      stop("user-supplied propensity scores (through argument 'X') should
+           be a vector of same length as Y and W")
+    }
     PF.fit <- X
   }
 

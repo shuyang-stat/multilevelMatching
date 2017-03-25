@@ -11,11 +11,15 @@ multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 
 \item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
 
-\item{X}{a covariate matrix (p x n) with no intercept}
+\item{X}{a covariate matrix (p x n) with no intercept. When GPSM="existing",
+then X must be a vector (1 x n) of user-specified propensity scores.}
 
 \item{Trimming}{an indicator of whether trimming the sample to ensure overlap}
 
-\item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
+\item{GPSM}{an indicator of the methods used for estimating GPS, options
+include "multinomiallogisticReg", "ordinallogisticReg" for proportional odds
+or cumulative logit model, and "existing" for user-specified propensity
+score via the parameter X.}
 }
 \value{
 according to \code{\link{tidyOutput}}, including at most:

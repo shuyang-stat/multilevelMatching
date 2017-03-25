@@ -17,6 +17,17 @@
 #' }
 reorderByTreatment <- function(W,X,Y){
 
+  X <- as.matrix(X)
+
+  if ((length(W) != length(Y))) {
+    # write a unit test here
+    stop("length of Y must equal length of W")
+  }
+  if ((nrow(X) != length(Y))) {
+    # write a unit test here
+    stop("length of Y must equal the number of rows in matrix X (or length of X)")
+  }
+
   if (1-is.unsorted(W)) {
     temp <- sort(W,index.return=TRUE)
     temp <- list(x=temp)
@@ -28,7 +39,6 @@ reorderByTreatment <- function(W,X,Y){
 
   # temp <- orderTrt(W)
   W <- W[temp$ix]
-  X <- as.matrix(X)
   X <- X[temp$ix,]
   Y <- Y[temp$ix]
 
@@ -81,6 +91,7 @@ tidyOutput <- function(untidy_output){
 
   tidy_dfm <- data.frame(
     stringsAsFactors=FALSE,
+    row.names = NULL,
     Param = names(untidy_output$tauestimate),
     Estimate = untidy_output$tauestimate,
     Variance = untidy_output$varestimate
