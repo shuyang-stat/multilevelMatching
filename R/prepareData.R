@@ -5,9 +5,19 @@ prepareData <- function(
   Trimming = FALSE#Trimming_fit_args
 ){
 
-  if (class(X)!="matrix"){
-    stop("X must be of class 'matrix'.\n
-         Dataframes, lists, and other types are not supported at this time")
+  if (length(class(X))!=1 && class(X)!="matrix") {
+    long_message <- "Dataframes, lists, and some other types are not supported at this time"
+    warning("It is recommended that X is a matrix. X will be coerced to a matrix.")
+    if (is.list(X) || is.data.frame(X)) {stop(long_message)}
+    if (is.factor(X)) {
+      warning("It is recommended that X is a matrix.\n Factor variables are not recommended at this time")
+    }
+
+    X <- try(as.matrix(X))
+    if ("try-error" %in% class(X)){
+      stop("Error with coercing X to matrix. Please specify X as a matrix")
+    }
+
   }
   ## some checks
   argChecks(Y=Y, W=W, X=X, N=NULL)
@@ -31,7 +41,7 @@ prepareData <- function(
       W <- W[overlap.idx]
       X <- X[overlap.idx,]
       Y <- Y[overlap.idx]
-      analysisidx<-overlap.idx
+      analysisidx <- overlap.idx
     }
 
   } else {stop("match_method coding error")}
