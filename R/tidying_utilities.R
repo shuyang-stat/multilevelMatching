@@ -29,6 +29,9 @@ reorderByTreatment <- function(Y,W,X){
   if (1-is.unsorted(W)) {
     temp <- sort(W,index.return=TRUE)
     temp <- list(x=temp)
+    ## future todo: recode this into
+    ## temp <- list(ix = 1:length(W))
+    ## (needs unit test though)
     temp$ix <- 1:length(W)
   }
   if (is.unsorted(W)) {

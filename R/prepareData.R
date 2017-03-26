@@ -5,14 +5,18 @@ prepareData <- function(
   Trimming = FALSE#Trimming_fit_args
 ){
 
+  if (class(X)!="matrix"){
+    stop("X must be of class 'matrix'.\n
+         Dataframes, lists, and other types are not supported at this time")
+  }
   ## some checks
   argChecks(Y=Y, W=W, X=X, N=NULL)
 
 
-  if (Trimming==0) { analysisidx<-1:length(Y) }
+  if (Trimming==0) { analysisidx <- 1:length(Y) }
 
   if (match_method == "MatchOnX") {
-    X <- as.matrix(X)
+    #nothing
   } else if (match_method == "StratifyOnGPS") {
     #nothing
   } else if (match_method == "MatchOnGPS"){
