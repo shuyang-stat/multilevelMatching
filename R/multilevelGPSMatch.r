@@ -38,17 +38,17 @@
 #' @export
 multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
-  X <- as.matrix(X)
-
+  ## some checks
+  match_method <- "MatchOnGPS"
+  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=NULL)
 
   if(Trimming==1){
     #PF modeling
     W.ref <- relevel(as.factor(W),ref=1)
-    temp<-capture.output(PF.out <- multinom(W.ref~X))
+    temp<-capture.output(PF.out <- multinom(W.ref~X))  ##make this into a subfunction?
     PF.fit <- fitted(PF.out)
     ## identify sufficient overlap
     overlap.idx<-overlap(PF.fit)$idx
-
     W <- W[overlap.idx]
     X <- X[overlap.idx,]
     Y <- Y[overlap.idx]
@@ -65,11 +65,10 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   W <- ordered_data$W
   X <- ordered_data$X
   Y <- ordered_data$Y
-  ## some checks
-  if (length(Y) != N) {
-    #write a unit test here
-    stop("Re-ordering data has failed")
-  }
+
+  ## some checks, again
+  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=N)
+
 
   trtnumber<-length(unique(W)) # number of treatment levels
   trtlevels<-unique(W) # all treatment levels

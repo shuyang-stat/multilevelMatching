@@ -23,17 +23,20 @@
 #' @export
 multilevelMatchX <- function(Y,W,X){
 
+  ## some checks
+  match_method <- "MatchOnX"
+  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=NULL)
+
   N <- length(Y) # number of observations
   ## order the treatment increasingly
   ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
   W <- ordered_data$W
   X <- ordered_data$X
   Y <- ordered_data$Y
-  ##check
-  if (length(Y) != N) {
-    #write a unit test here
-    stop("Re-ordering data has failed")
-  }
+
+  ## some checks, again
+  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=N)
+
 
   trtnumber<-length(unique(W)) # number of treatment levels
   trtlevels<-unique(W) # all treatment levels

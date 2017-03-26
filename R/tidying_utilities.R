@@ -15,19 +15,11 @@
 #'  \item Y: a continuous response vector (1 x n)
 #
 #' }
-reorderByTreatment <- function(W,X,Y){
+reorderByTreatment <- function(Y,W,X,method){
 
-  X <- as.matrix(X)
-
-  if ((length(W) != length(Y))) {
-    # write a unit test here
-    stop("length of Y must equal length of W")
+  if (method = "MatchOnX") {
+    X <- as.matrix(X)
   }
-  if ((nrow(X) != length(Y))) {
-    # write a unit test here
-    stop("length of Y must equal the number of rows in matrix X (or length of X)")
-  }
-
   if (1-is.unsorted(W)) {
     temp <- sort(W,index.return=TRUE)
     temp <- list(x=temp)
@@ -51,6 +43,22 @@ reorderByTreatment <- function(W,X,Y){
 }
 
 
+argChecks <- function(Y,W,X,method, N=NULL) {
+
+
+
+  if ((length(W) != length(Y))) {
+    # write a unit test here
+    stop("length of Y must equal length of W")
+  }
+  if ((nrow(X) != length(Y))) {
+    # write a unit test here
+    stop("length of Y must equal the number of rows in matrix X (or length of X)")
+  }
+  if ( (!is.null(N)) && length(Y)!=N) {
+    stop("Re-ordering data has failed; Y length has changed")
+  }
+}
 
 
 #' Strcutres main output in a "tidy" datframe
