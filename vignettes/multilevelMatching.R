@@ -13,6 +13,19 @@ multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 
 ## ------------------------------------------------------------------------
+pr_w1 <- sample(x=c(0.3,0.5), replace=TRUE, size=length(W))
+pr_w2 <- (1-pr_w1)/3
+pr_w3 <- 1-(pr_w1+pr_w2)
+existing_GPS_matrix <- cbind(pr_w1, pr_w2,pr_w3)
+#the following checks are also carried out under the hood
+nrow(existing_GPS_matrix)==length(W)
+ncol(existing_GPS_matrix)==length(unique(W))
+all(rowSums(existing_GPS_matrix)==1)
+
+multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
+
+
+## ------------------------------------------------------------------------
 set.seed(111)
 n    <- 5000*6
 # X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5

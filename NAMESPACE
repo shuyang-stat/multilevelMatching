@@ -3,6 +3,7 @@
 export(multilevelGPSMatch)
 export(multilevelGPSStratification)
 export(multilevelMatchX)
+export(tidyOutput)
 import(MASS)
 import(Matching)
 import(boot)

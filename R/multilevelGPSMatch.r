@@ -1,30 +1,35 @@
 #' Matching on GPS with multilevel treatments
 #'
 #' @param Y a continuous response vector (1 x n)
-#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
+#' @param W a treatment vector (1 x n) with numerical values indicating
+#'   treatment groups
 #' @param X a covariate matrix (p x n) with no intercept. When GPSM="existing",
-#' then X must be a vector (1 x n) of user-specified propensity scores.
+#'   then X must be a vector (1 x n) of user-specified propensity scores.
 #' @param Trimming an indicator of whether trimming the sample to ensure overlap
 #' @param GPSM an indicator of the methods used for estimating GPS, options
-#' include "multinomiallogisticReg", "ordinallogisticReg" for proportional odds
-#' or cumulative logit model, and "existing" for user-specified propensity
-#' score via the parameter X.
+#'   include "multinomiallogisticReg", "ordinallogisticReg" for proportional
+#'   odds or cumulative logit model, and "existing" for user-specified
+#'   propensity score via the parameter X.
 #'
-#' @return according to \code{\link{tidyOutput}}, including at most:
-#' \itemize{
+#' @return according to \code{\link{tidyOutput}}, including at most: \itemize{
 #'
-#'  \item tauestimate:  a vector of estimates for pairwise treatment effects
+#'   \item tauestimate:  a vector of estimates for pairwise treatment effects
 #'
-#'  \item varestimate:  a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+#'   \item varestimate:  a vector of variance estimates for tauestimate, using
+#'   Abadie&Imbens(2006)'s method
 #'
-#'  \item varestimateAI2012:  a vector of variance estimates for tauestimate, when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
-#'  This variance estimate takes into account of the uncertainty in estimating the GPS.
+#'   \item varestimateAI2012:  a vector of variance estimates for tauestimate,
+#'   when matching on the generalized propensity score, using
+#'   Abadie&Imbens(2012)'s method. This variance estimate takes into account of
+#'   the uncertainty in estimating the GPS.
 #'
-#'  \item analysisidx: the index of units after trimming based on Crump et al. (2009)'s method.
+#'   \item analysis_idx: a list containing the indices_kept (analyzed) and
+#'   indices_dropped (trimmed) based on Crump et al. (2009)'s method.
 #'
-#' }
+#'   }
 #'
-#' @seealso \code{\link{multilevelMatchX}}; \code{\link{multilevelGPSStratification}}
+#' @seealso \code{\link{multilevelMatchX}};
+#'   \code{\link{multilevelGPSStratification}}
 #'
 #' @examples
 #'   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
@@ -54,7 +59,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   trtlevels <- prepared_data$trtlevels
   pertrtlevelnumber <- prepared_data$pertrtlevelnumber
   taunumber <- prepared_data$taunumber
-  analysisidx <- prepared_data$analysisidx
+  analysis_idx <- prepared_data$analysis_idx
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){
@@ -68,11 +73,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
     PF.fit <- fitted(PF.out)
   }
   if(GPSM=="existing"){
-    #need to check the row sum of X is 1 - debug1
-    if (any(dim(X)!=c(1,N))){
-      stop("user-supplied propensity scores (through argument 'X') should
-           be a vector of same length as Y and W")
-    }
+    ## bug checks migrated to prepareData()
     PF.fit <- X
   }
 
@@ -187,7 +188,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   untidy_output <- list(tauestimate=tauestimate,
               varestimate=varestimate,
               varestimateAI2012=varestimateAI2012,
-              analysisidx=analysisidx)
+              analysis_idx=analysis_idx)
 
   tidy_output <- tidyOutput(untidy_output=untidy_output)
   return(tidy_output)

@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Yang" />
 
-<meta name="date" content="2017-03-25" />
+<meta name="date" content="2017-03-26" />
 
 <title>multilevelMatching Tutorial</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">multilevelMatching Tutorial</h1>
 <h4 class="author"><em>Shu Yang</em></h4>
-<h4 class="date"><em>2017-03-25</em></h4>
+<h4 class="date"><em>2017-03-26</em></h4>
 
 
 
@@ -99,30 +99,47 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 Y&lt;-<span class="kw">c</span>(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)
 W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)
 <span class="kw">multilevelMatchX</span>(Y,W,X)</code></pre></div>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method):
+## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
 ##         Param   Estimate   Variance
 ## 1 EY(2)-EY(1) -10.666667   9.111111
 ## 2 EY(3)-EY(1)   6.666667 615.580247
 ## 3 EY(3)-EY(2)  17.333333 613.925926</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
+## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
 ##         Param   Estimate   Variance varestimateAI2012
 ## 1 EY(2)-EY(1) -10.444444   8.545953          8.302024
 ## 2 EY(3)-EY(1)   6.666667 616.913580        411.456234
-## 3 EY(3)-EY(2)  17.111111 611.122085        434.247037
-## 
-## $analysisidx
-## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+## 3 EY(3)-EY(2)  17.111111 611.122085        434.247037</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
+## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
 ##         Param Estimate   Variance varestimateAI2012
 ## 1 EY(2)-EY(1)   -9.375   7.794922          5.072057
 ## 2 EY(3)-EY(1)    5.875 582.654297        383.848575
-## 3 EY(3)-EY(2)   15.250 576.304688        430.978089
-## 
-## $analysisidx
-## 1 2 4 5 6 7 8 9 
-## 1 2 4 5 6 7 8 9</code></pre>
+## 3 EY(3)-EY(2)   15.250 576.304688        430.978089</code></pre>
+<p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM=&quot;existing&quot;</code> in <code>multilevelGPSMatch()</code> or <code>multilevelGPSStratification()</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))
+pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span>-pr_w1)/<span class="dv">3</span>
+pr_w3 &lt;-<span class="st"> </span><span class="dv">1</span>-(pr_w1+pr_w2)
+existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(pr_w1, pr_w2,pr_w3)
+<span class="co">#the following checks are also carried out under the hood</span>
+<span class="kw">nrow</span>(existing_GPS_matrix)==<span class="kw">length</span>(W)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(existing_GPS_matrix)==<span class="kw">length</span>(<span class="kw">unique</span>(W))</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">rowSums</span>(existing_GPS_matrix)==<span class="dv">1</span>)</code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;existing&quot;</span>)</code></pre></div>
+<pre><code>## $results
+##         Param  Estimate  Variance
+## 1 EY(2)-EY(1) -8.111111  11.15912
+## 2 EY(3)-EY(1)  2.111111 589.77641
+## 3 EY(3)-EY(2) 10.222222 566.31550</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">111</span>)
 n    &lt;-<span class="st"> </span><span class="dv">5000</span>*<span class="dv">6</span>
 <span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>

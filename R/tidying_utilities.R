@@ -40,7 +40,7 @@ reorderByTreatment <- function(Y,W,X){
 
   # temp <- orderTrt(W)
   W <- W[temp$ix]
-  X <- X[temp$ix,]
+  X <- X[temp$ix,,drop=FALSE]
   Y <- Y[temp$ix]
 
   ## some checks, again

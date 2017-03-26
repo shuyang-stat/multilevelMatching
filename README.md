@@ -1,7 +1,16 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
 
-This is a fork from the original creator and author's [package](https://github.com/shuyang1987/multilevelMatching). 
+## This is a fork 
+
+The original creator and author's package  [is available here](https://github.com/shuyang1987/multilevelMatching). See below for installing the original version 0.1 with `devtools`.
+
+### Breaking changes
+
+See [NEWS.md](NEWS.md) for breaking changes since version 0.1.
+
+# multilevelMatching
+
 
 In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.
 

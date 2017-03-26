@@ -40,7 +40,7 @@ multilevelMatchX <- function(Y,W,X){
   trtlevels <- prepared_data$trtlevels
   pertrtlevelnumber <- prepared_data$pertrtlevelnumber
   taunumber <- prepared_data$taunumber
-  analysisidx <- prepared_data$analysisidx
+  analysis_idx <- prepared_data$analysis_idx
 
   tauestimate<-varestimate<-rep(NA,taunumber)
   meanw<-rep(NA,trtnumber)

@@ -47,7 +47,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
   trtlevels <- prepared_data$trtlevels
   pertrtlevelnumber <- prepared_data$pertrtlevelnumber
   taunumber <- prepared_data$taunumber
-  analysisidx <- prepared_data$analysisidx
+  analysis_idx <- prepared_data$analysis_idx
 
 
   #PF modeling
@@ -66,11 +66,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
     PF.fit <- fitted(PF.out)
   }
   if(GPSM=="existing"){
-    if (any(dim(X)!=c(1,N))){
-      stop("user-supplied propensity scores (through argument 'X') should
-           be a vector of same length as Y and W")
-    }
-    #need to check the row sum of X is 1 - debug1
+    ## bug checks migrated to prepareData()
     PF.fit <- X
   }
 
