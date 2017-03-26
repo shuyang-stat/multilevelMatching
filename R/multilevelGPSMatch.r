@@ -38,43 +38,23 @@
 #' @export
 multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
-  ## some checks
   match_method <- "MatchOnGPS"
-  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=NULL)
 
-  if(Trimming==1){
-    #PF modeling
-    W.ref <- relevel(as.factor(W),ref=1)
-    temp<-capture.output(PF.out <- multinom(W.ref~X))  ##make this into a subfunction?
-    PF.fit <- fitted(PF.out)
-    ## identify sufficient overlap
-    overlap.idx<-overlap(PF.fit)$idx
-    W <- W[overlap.idx]
-    X <- X[overlap.idx,]
-    Y <- Y[overlap.idx]
-    analysisidx<-overlap.idx
-  }
-  if(Trimming==0){
-    analysisidx<-1:length(Y)
-  }
-
-  N <- length(Y) # number of observations
-
-  ## order the treatment increasingly
-  ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
-  W <- ordered_data$W
-  X <- ordered_data$X
-  Y <- ordered_data$Y
-
-  ## some checks, again
-  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=N)
-
-
-  trtnumber<-length(unique(W)) # number of treatment levels
-  trtlevels<-unique(W) # all treatment levels
-  pertrtlevelnumber<-table(W) # number of observations by treatment level
-  taunumber<-trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
-
+  prepared_data <- prepareData(
+    Y=Y, W=W, X=X,
+    match_method = match_method,
+    Trimming = Trimming
+    #Trimming_fit_args
+  )
+  W <- prepared_data$W
+  X <- prepared_data$X
+  Y <- prepared_data$Y
+  N <- prepared_data$N
+  trtnumber <- prepared_data$trtnumber
+  trtlevels <- prepared_data$trtlevels
+  pertrtlevelnumber <- prepared_data$pertrtlevelnumber
+  taunumber <- prepared_data$taunumber
+  analysisidx <- prepared_data$analysisidx
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){

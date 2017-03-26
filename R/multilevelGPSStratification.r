@@ -32,22 +32,23 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
   ## some checks
   match_method <- "StratifyOnGPS"
-  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=NULL)
 
-  N <- length(Y) # number of observations
-  ## order the treatment increasingly
-  ordered_data <- reorderByTreatment(W=W,X=X,Y=Y)
-  W <- ordered_data$W
-  X <- ordered_data$X
-  Y <- ordered_data$Y
-  ## some checks, again
-  argChecks(Y=Y, W=W, X=X, match_method = match_method, N=N)
+  prepared_data <- prepareData(
+    Y=Y, W=W, X=X,
+    match_method = match_method#,
+    # Trimming = Trimming
+    #Trimming_fit_args
+  )
+  W <- prepared_data$W
+  X <- prepared_data$X
+  Y <- prepared_data$Y
+  N <- prepared_data$N
+  trtnumber <- prepared_data$trtnumber
+  trtlevels <- prepared_data$trtlevels
+  pertrtlevelnumber <- prepared_data$pertrtlevelnumber
+  taunumber <- prepared_data$taunumber
+  analysisidx <- prepared_data$analysisidx
 
-
-  trtnumber<-length(unique(W)) # number of treatment levels
-  trtlevels<-unique(W) # all treatment levels
-  pertrtlevelnumber<-table(W) # number of observations by treatment level
-  taunumber<-trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){

@@ -4,17 +4,17 @@
 \alias{reorderByTreatment}
 \title{order the treatment increasingly}
 \usage{
-reorderByTreatment(W, X, Y)
+reorderByTreatment(Y, W, X)
 }
 \arguments{
+\item{Y}{a continuous response vector (1 x n)}
+
 \item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
 
 \item{X}{a covariate matrix (p x n) with no intercept}
-
-\item{Y}{a continuous response vector (1 x n)}
 }
 \value{
-the following three elements, ordered according to levels of W
+the following elements, ordered according to levels of W
 \itemize{
 
  \item W: a treatment vector (1 x n) with numerical values indicating treatment groups
@@ -22,6 +22,13 @@ the following three elements, ordered according to levels of W
  \item X: a covariate matrix (p x n) with no intercept
 
  \item Y: a continuous response vector (1 x n)
+}
+along with these downstream elements of treatment:
+\itemize{
+\item trtnumber: number of treatment levels
+\item trtlevels: all treatment levels
+\item pertrtlevelnumber: number of observations by treatment level
+\item taunumber: number of pairwise treatment effects
 }
 }
 \description{

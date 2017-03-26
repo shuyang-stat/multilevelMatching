@@ -5,7 +5,7 @@
 #' @param X a covariate matrix (p x n) with no intercept
 #' @param Y a continuous response vector (1 x n)
 #'
-#' @return the following three elements, ordered according to levels of W
+#' @return the following elements, ordered according to levels of W
 #' \itemize{
 #'
 #'  \item W: a treatment vector (1 x n) with numerical values indicating treatment groups
@@ -15,11 +15,17 @@
 #'  \item Y: a continuous response vector (1 x n)
 #
 #' }
-reorderByTreatment <- function(Y,W,X,method){
+#' along with these downstream elements of treatment:
+#' \itemize{
+#' \item trtnumber: number of treatment levels
+#' \item trtlevels: all treatment levels
+#' \item pertrtlevelnumber: number of observations by treatment level
+#' \item taunumber: number of pairwise treatment effects
+#' }
+reorderByTreatment <- function(Y,W,X){
 
-  if (method = "MatchOnX") {
-    X <- as.matrix(X)
-  }
+  N <- length(Y)
+
   if (1-is.unsorted(W)) {
     temp <- sort(W,index.return=TRUE)
     temp <- list(x=temp)
@@ -34,16 +40,26 @@ reorderByTreatment <- function(Y,W,X,method){
   X <- X[temp$ix,]
   Y <- Y[temp$ix]
 
-  list_to_return <- list(
-    W = W,
-    X = X,
-    Y = Y
-  )
+  ## some checks, again
+  argChecks(Y=Y,W=W,X=X,N=N)
+
+  list_to_return <- list(W = W,X = X,Y = Y,N=N)
+
+  ## adding to output
+  trtnumber <- length(unique(W))
+  list_to_return$trtnumber <- trtnumber # number of treatment levels
+  list_to_return$trtlevels <- unique(W) # all treatment levels
+  list_to_return$pertrtlevelnumber <- table(W) # number of observations by treatment level
+  list_to_return$taunumber <- trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
+
+
+
   return(list_to_return)
 }
 
 
-argChecks <- function(Y,W,X,method, N=NULL) {
+argChecks <- function(Y,W,X,#match_method,
+                      N=NULL) {
 
 
 
