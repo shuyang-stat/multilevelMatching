@@ -4,7 +4,7 @@
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
 #' @param X a covariate matrix (p x n) with no intercept
 #'
-#' @return according to \code{\link{tidyOutput}}: a dataframe with two columns,
+#' @return according to \code{\link{estimateTau}}: a dataframe with two columns,
 #' tauestimate, varestimate, where
 #' tauestimate is a vector of estimates for pairwise treatment effects, and
 #' varestimate is a vector of variance estimates for tauestimate, using
@@ -42,7 +42,7 @@ multilevelMatchX <- function(Y,W,X){
   taunumber <- prepared_data$taunumber
   analysis_idx <- prepared_data$analysis_idx
 
-  tauestimate<-varestimate<-rep(NA,taunumber)
+  # tauestimate<-varestimate<-rep(NA,taunumber)
   meanw<-rep(NA,trtnumber)
 
   Yiw<-matrix(NA,N,trtnumber) #Yiw is the full imputed data set
@@ -93,24 +93,42 @@ multilevelMatchX <- function(Y,W,X){
     Matchmat[which(WW1),thiscnames]<-matrix(c(which(WW1),which(WW1)[out111$index.control]),ncol=2,byrow=FALSE)
 
   }
-  cnt<-0
-  cname1<-c()
-  for(jj in 1:(trtnumber-1)){
-    for(kk in (jj+1):trtnumber){
-      cnt<-cnt+1
-      thistrt<-trtlevels[jj]
-      thattrt<-trtlevels[kk]
-      cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
-      tauestimate[cnt]<-meanw[kk]-meanw[jj]
-      varestimate[cnt]<-mean((Yiw[,kk]-Yiw[,jj]-(meanw[kk]-meanw[jj]))^2)+mean((Kiw^2+Kiw)*sigsqiw*(W==thistrt | W==thattrt))
-    }
-  }
-  varestimate<-varestimate/N
-  names(tauestimate)<-cname1
-  names(varestimate)<-cname1
 
-  untidy_output <- list(tauestimate=tauestimate,varestimate=varestimate)
-  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  # cnt<-0
+  # cname1<-c()
+  # for(jj in 1:(trtnumber-1)){
+  #   for(kk in (jj+1):trtnumber){
+  #     cnt<-cnt+1
+  #     thistrt<-trtlevels[jj]
+  #     thattrt<-trtlevels[kk]
+  #     cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
+  #     tauestimate[cnt]<-meanw[kk]-meanw[jj]
+  #     varestimate[cnt]<-mean((Yiw[,kk]-Yiw[,jj]-(meanw[kk]-meanw[jj]))^2)+mean((Kiw^2+Kiw)*sigsqiw*(W==thistrt | W==thattrt))
+  #   }
+  # }
+  # varestimate<-varestimate/N
+  # names(tauestimate)<-cname1
+  # names(varestimate)<-cname1
+
+  results_dfm <- estimateTau(
+    trtlevels = trtlevels,
+    meanw = meanw,
+    trtnumber = trtnumber,
+    taunumber = taunumber,
+    N=N,
+    #also get variance estimates
+    Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
+  )
+
+
+  # untidy_output <- list(tauestimate=tauestimate,varestimate=varestimate)
+  # tidy_output <- tidyOutput(untidy_output=untidy_output)
+
+
+  tidy_output <- list(
+    results = results_dfm,
+    analysis_idx = analysis_idx
+  )
   return(tidy_output)
-
 }
+

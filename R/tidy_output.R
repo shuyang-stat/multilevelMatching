@@ -1,7 +1,7 @@
 
 
 
-#' Strcutres main output in a "tidy" datframe
+#' DEPRECATED.Strcutres main output in a "tidy" datframe
 #'
 #' @param untidy_output A list of objects to output from
 #' \code{\link{multilevelXMatch}}
@@ -34,9 +34,9 @@
 #'
 #' }
 #'
-#' @export
 tidyOutput <- function(untidy_output, analysis_idx=NULL){
 
+  stop("tidyOutput is a deprecated utility function and will be removed soon")
   tidy_dfm <- data.frame(
     stringsAsFactors=FALSE,
     row.names = NULL,
@@ -63,3 +63,6 @@ tidyOutput <- function(untidy_output, analysis_idx=NULL){
 
   return(list_to_return)
 }
+
+
+nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }

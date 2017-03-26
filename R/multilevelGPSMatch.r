@@ -11,7 +11,7 @@
 #'   odds or cumulative logit model, and "existing" for user-specified
 #'   propensity score via the parameter X.
 #'
-#' @return according to \code{\link{tidyOutput}}, including at most: \itemize{
+#' @return according to \code{\link{estimateTau}}, including at most: \itemize{
 #'
 #'   \item tauestimate:  a vector of estimates for pairwise treatment effects
 #'
@@ -62,23 +62,23 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   analysis_idx <- prepared_data$analysis_idx
 
   #PF modeling
-  if(GPSM=="multinomiallogisticReg"){
+  if (GPSM == "multinomiallogisticReg") {
     W.ref <- relevel(as.factor(W),ref=1)
-    temp<-capture.output(PF.out <- multinom(W.ref~X))
+    temp <- capture.output(PF.out <- multinom(W.ref~X))
     PF.fit <- fitted(PF.out)
     vcov_coeff <- vcov(PF.out)
   }
-  if(GPSM=="ordinallogisticReg"){
+  if (GPSM == "ordinallogisticReg") {
     PF.out <- polr(as.factor(W)~X)
     PF.fit <- fitted(PF.out)
   }
-  if(GPSM=="existing"){
+  if (GPSM == "existing") {
     ## bug checks migrated to prepareData()
     PF.fit <- X
   }
 
 
-  tauestimate<-varestimate<-varestimateAI2012<-rep(NA,taunumber)
+  # tauestimate<-varestimate<-varestimateAI2012<-rep(NA,taunumber)
   meanw<-rep(NA,trtnumber)
 
   Yiw<-matrix(NA,N,trtnumber) #Yiw is the full imputed data set
@@ -129,25 +129,50 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
   }
 
-  cnt<-0
-  cname1<-c()
-  for(jj in 1:(trtnumber-1)){
-    for(kk in (jj+1):trtnumber){
-      cnt<-cnt+1
-      thistrt<-trtlevels[jj]
-      thattrt<-trtlevels[kk]
-      cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
-      tauestimate[cnt]<-meanw[kk]-meanw[jj]
-      varestimate[cnt]<-mean((Yiw[,kk]-Yiw[,jj]-(meanw[kk]-meanw[jj]))^2)+mean((Kiw^2+Kiw)*sigsqiw*(W==thistrt | W==thattrt))
-    }
-  }
-  varestimate<-varestimate/N
-  names(tauestimate)<-cname1
-  names(varestimate)<-cname1
-  names(varestimateAI2012)<-cname1
+  # row_num <- 0
+  # # cname1<-c()
+  # for(jj in 1:(trtnumber-1)){
+  #   for(kk in (jj+1):trtnumber){
+  #     row_num <- row_num+1
+  #     # thistrt <- trtlevels[jj]
+  #     # thattrt <- trtlevels[kk]
+  #
+  #     results_dfm$Trt1[row_num] <- trtlevels[jj]
+  #     results_dfm$Trt2[row_num] <- trtlevels[kk]
+  #     results_dfm$Param[row_num] <- nameContrast(trt1=results_dfm$Trt1[row_num], trt2=results_dfm$Trt2[row_num])
+  #     results_dfm$Estimate[row_num] <- meanw[kk]-meanw[jj]
+  #     results_dfm$Variance[row_num] <- (1/N)*(
+  #       mean( (Yiw[,kk]-Yiw[,jj]-(results_dfm$Estimate[row_num]))^2 ) +
+  #         mean( (Kiw^2+Kiw)*sigsqiw*
+  #           (W==results_dfm$Trt1[row_num] | W==results_dfm$Trt2[row_num])
+  #         )
+  #     )
+  #
+  #     # varestimate[row_num]<-mean((Yiw[,kk]-Yiw[,jj]-(meanw[kk]-meanw[jj]))^2)+
+  #     # mean((Kiw^2+Kiw)*sigsqiw*(W==thistrt | W==thattrt))
+  #   }
+  # }
+  # if (row_num != taunumber) { stop("Error in for loop") }
+  results_dfm <- estimateTau(
+    trtlevels = trtlevels,
+    meanw = meanw,
+    trtnumber = trtnumber,
+    taunumber = taunumber,
+    N=N,
+    #also get variance estimates
+    Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
+  )
+
+  # varestimate<-varestimate/N
+  # names(tauestimate)<-cname1
+  # names(varestimate)<-cname1
+  # names(varestimateAI2012)<-cname1
 
 
-  if(GPSM=="multinomiallogisticReg"){
+  if (GPSM=="multinomiallogisticReg") {
+
+    results_dfm$VarianceAI2012 <- NA
+
     I.inv<-vcov_coeff
     ## Adjustment term c'(I^-1)c
     X<-as.matrix(X)
@@ -179,17 +204,29 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
       for(kk in (jj+1):trtnumber){
         thistrt<-trtlevels[jj]
         thattrt<-trtlevels[kk]
-        cname1<-c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
-        varestimateAI2012[cname1]<-varestimate[cname1]-
-          t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
+        result_row_num <- which(results_dfm$Param  ==
+                                  nameContrast(trt1=thistrt, trt2=thattrt))
+        # cname1<-c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
+        # varestimateAI2012[cname1]<-varestimate[cname1]-
+        #   t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
+        results_dfm$VarianceAI2012[result_row_num] <-
+          results_dfm$Variance[result_row_num] -
+            t(Cvec[jj,]+Cvec[kk,]) %*% vcov_coeff %*% (Cvec[jj,]+Cvec[kk,])
       }
     }
   }
-  untidy_output <- list(tauestimate=tauestimate,
-              varestimate=varestimate,
-              varestimateAI2012=varestimateAI2012,
-              analysis_idx=analysis_idx)
 
-  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  # results_dfm <-
+  #   as.data.frame(results_dfm, stringsAsFactors = FALSE, row.names = NULL)
+  # untidy_output <- list(tauestimate=tauestimate,
+  #             varestimate=varestimate,
+  #             varestimateAI2012=varestimateAI2012,
+  #             analysis_idx=analysis_idx)
+
+  # tidy_output <- tidyOutput(untidy_output=untidy_output)
+  tidy_output <- list(
+    results = results_dfm,
+    analysis_idx = analysis_idx
+  )
   return(tidy_output)
 }

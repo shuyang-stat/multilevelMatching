@@ -14,7 +14,7 @@ multilevelMatchX(Y, W, X)
 \item{X}{a covariate matrix (p x n) with no intercept}
 }
 \value{
-according to \code{\link{tidyOutput}}: a dataframe with two columns,
+according to \code{\link{estimateTau}}: a dataframe with two columns,
 tauestimate, varestimate, where
 tauestimate is a vector of estimates for pairwise treatment effects, and
 varestimate is a vector of variance estimates for tauestimate, using

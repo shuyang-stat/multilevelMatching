@@ -20,42 +20,63 @@ t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
 
 my_tolerance <- 0.0001
+Param_names <- c( "EY(2)-EY(1)", "EY(3)-EY(1)" ,"EY(3)-EY(2)")
+Trt1s <- c(1,1,2)
+Trt2s <- c(2,3,3)
 
+this_t <- t1
 test_that("match on one X returns same output", {
-  expect_equal( (t1$results)$Estimate,
-               c( -10.666667,   6.666667 , 17.333333),
-               tolerance = my_tolerance)
-  expect_equal( (t1$results)$Variance,
-                c(  9.111111 ,615.580247, 613.925926),
-                tolerance = my_tolerance)
+  expect_equal(
+    object = (this_t$results)$Estimate,
+    expected = c( -10.666667,   6.666667 , 17.333333),
+    tolerance = my_tolerance)
+  expect_equal(
+    object =(this_t$results)$Variance,
+    expected = c(  9.111111 ,615.580247, 613.925926),
+    tolerance = my_tolerance)
+  expect_identical(
+    object = (this_t$results)$Param, expected = Param_names)
+  expect_identical( (this_t$results)$Trt1, Trt1s)
+  expect_identical( (this_t$results)$Trt2, Trt2s)
 })
 
+this_t <- t2
 test_that("match on GPS with one X and no trimming returns same output", {
-  expect_equal( (t2$results)$Estimate,
+  expect_equal( (this_t$results)$Estimate,
                 c(  -10.444444  , 6.666667 , 17.111111),
                 tolerance = my_tolerance)
-  expect_equal( (t2$results)$Variance,
+  expect_equal( (this_t$results)$Variance,
                 c( 8.545953, 616.913580 ,611.122085),
                 tolerance = my_tolerance)
-  expect_equal( (t2$results)$varestimateAI2012,
+  expect_equal( (this_t$results)$VarianceAI2012,
                 c(   8.302024, 411.456234 ,434.247037),
                 tolerance = my_tolerance)
+  expect_identical( (this_t$results)$Param, Param_names)
+  expect_identical( (this_t$results)$Trt1, Trt1s)
+  expect_identical( (this_t$results)$Trt2, Trt2s)
 })
 
+this_t <- t3
 test_that("match on GPS with one X with trimming returns same output", {
-  expect_equal( (t3$results)$Estimate,
+  expect_equal( (this_t$results)$Estimate,
                 c( -9.375 , 5.875, 15.250),
                 tolerance = my_tolerance)
-  expect_equal( (t3$results)$Variance,
-                c(  7.794922 ,582.654297 ,576.304688),
-                tolerance = my_tolerance)
-  expect_equal( (t3$results)$varestimateAI2012,
+  expect_equal(
+    object = (this_t$results)$Variance,
+    expected =  c(  7.794922 ,582.654297 ,576.304688),
+    tolerance = my_tolerance)
+  expect_equal( (this_t$results)$VarianceAI2012,
                 c(  5.072057 ,383.848575, 430.978089),
                 tolerance = my_tolerance)
-  # expect_equal( t3$analysis_idx,
+  expect_identical( (this_t$results)$Param, Param_names)
+  expect_identical( (this_t$results)$Trt1, Trt1s)
+  expect_identical( (this_t$results)$Trt2, Trt2s)
+  # expect_equal( this_t$analysis_idx,
   #               c(  5.072057 ,383.848575, 430.978089),
   #               tolerance = my_tolerance)
 })
+
+# this_t <- t4
 # test_that("match on GPS with existing GPS returns same output", {
 #   expect_equal( (t4$results)$Estimate,
 #                 c( -8.000000 , 1.777778 , 9.777778),
@@ -64,11 +85,17 @@ test_that("match on GPS with one X with trimming returns same output", {
 #                 c( 18.04938 ,573.25377, 552.78464),
 #                 tolerance = my_tolerance)
 # })
+
+this_t <- t_matX
 test_that("match on X with X a one-column matrix returns same output", {
-  expect_equal( (t_matX$results)$Estimate,
+  expect_equal( (this_t$results)$Estimate,
                 c( -10.666667 ,  6.666667 , 17.333333),
                 tolerance = my_tolerance)
-  expect_equal( (t_matX$results)$Variance,
+  expect_equal( (this_t$results)$Variance,
                 c( 9.111111 ,615.580247, 613.925926),
                 tolerance = my_tolerance)
+  expect_identical( (this_t$results)$Param, Param_names)
+  expect_identical( (this_t$results)$Trt1, Trt1s)
+  expect_identical( (this_t$results)$Trt2, Trt2s)
+
 })

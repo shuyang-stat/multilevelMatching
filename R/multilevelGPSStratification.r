@@ -8,7 +8,7 @@
 #' @param linearp (only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)
 #' @param nboot (only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation
 #'
-#' @return according to \code{\link{tidyOutput}}: a dataframe with two columns,
+#' @return according to \code{\link{estimateTau}}: a dataframe with two columns,
 #' tauestimate, varestimate, where
 #' tauestimate is a vector of estimates for pairwise treatment effects, and
 #' varestimate is a vector of variance estimates, using bootstrapping method.
@@ -51,24 +51,34 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
 
   #PF modeling
-  if(GPSM=="multinomiallogisticReg"){
+  if (GPSM == "multinomiallogisticReg") {
     W.ref <- relevel(as.factor(W),ref="1")
-    temp<-capture.output(PF.out <- multinom(W.ref~X))
+    temp <- capture.output(PF.out <- multinom(W.ref~X))
     PF.fit <- fitted(PF.out)
-    if(linearp==1){
-      beta<-coef(PF.out)
-      Xbeta<-X%*%t(beta[,-1])
-      PF.fit[,-1]<-Xbeta
+    if (linearp==1) {
+      beta <- coef(PF.out)
+      Xbeta <- X%*%t(beta[,-1])
+      PF.fit[,-1] <- Xbeta
     }
   }
-  if(GPSM=="ordinallogisticReg"){
+  if (GPSM == "ordinallogisticReg") {
     PF.out <- polr(as.factor(W)~X)
     PF.fit <- fitted(PF.out)
   }
-  if(GPSM=="existing"){
+  if (GPSM == "existing") {
     ## bug checks migrated to prepareData()
     PF.fit <- X
   }
+
+
+  # results_dfm <- list(
+  #   Param = rep(NA, taunumber),
+  #   Trt1 = rep(NA, taunumber),
+  #   Trt2 = rep(NA, taunumber),
+  #   Estimate = rep(NA, taunumber),
+  #   Variance = rep(NA, taunumber)#,
+  #   # VarianceAI2012 = rep(NA,taunumber)
+  # )
 
   meanwj<-numberwj<-matrix(NA,trtnumber,NS)
 
@@ -86,30 +96,58 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
     meanw<-apply(meanwj*numberwj,1,sum,na.rm=TRUE)/apply(numberwj,1,sum) # to get weighted sum at the end
   }
 
-  tauestimate<-rep(NA,taunumber)
+  # tauestimate<-rep(NA,taunumber)
 
-  cnt<-0
-  cname1<-c()
-  for(jj in 1:(trtnumber-1)){
-    for(kk in (jj+1):trtnumber){
-      cnt<-cnt+1
-      thistrt<-trtlevels[jj]
-      thattrt<-trtlevels[kk]
-      cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
-      tauestimate[cnt]<-meanw[kk]-meanw[jj]
-    }
-  }
-  names(tauestimate)<-cname1
+  # cnt<-0
+  # cname1<-c()
+
+  ## Calculate estimates for tau
+  results_dfm <- estimateTau(
+    trtlevels = trtlevels,
+    meanw = meanw,
+    trtnumber = trtnumber,
+    taunumber = taunumber,
+    N=N
+    # do NOT get variance estimates in stratification
+    # Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
+  )
+  # row_num <- 0
+  # for(jj in 1:(trtnumber-1)){
+  #   for(kk in (jj+1):trtnumber){
+  #     # cnt<-cnt+1
+  #     # thistrt<-trtlevels[jj]
+  #     # thattrt<-trtlevels[kk]
+  #     # cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
+  #     # tauestimate[cnt]<-meanw[kk]-meanw[jj]
+  #     row_num <- row_num+1
+  #     results_dfm$Trt1[row_num] <- trtlevels[jj]
+  #     results_dfm$Trt2[row_num] <- trtlevels[kk]
+  #     results_dfm$Param[row_num] <- nameContrast(trt1=results_dfm$Trt1[row_num], trt2=results_dfm$Trt2[row_num])
+  #     results_dfm$Estimate[row_num] <- meanw[kk]-meanw[jj]
+  #   }
+  # }
+  # # names(tauestimate)<-cname1
+  # if (row_num != taunumber) { stop("Error in for loop") }
 
 
+  ## Bootstrap the variance
   data<-cbind(W,Y,X)
   results <- boot(data=data, statistic=estforboot,R=nboot,
                   GPSM=GPSM,linearp=linearp,trtnumber=trtnumber,
                   trtlevels=trtlevels,taunumber=taunumber,NS=NS)
   bootvar<-apply(results$t,2,var,na.rm = TRUE)
-  names(bootvar)<-cname1
+  # names(bootvar)<-cname1
 
-  untidy_output <- list(tauestimate=tauestimate,varestimate=bootvar)
-  tidy_output <- tidyOutput(untidy_output=untidy_output)
+  ## Tidy the output
+  results_dfm$Variance <- bootvar
+  # untidy_output <- list(tauestimate=tauestimate,varestimate=bootvar)
+  # tidy_output <- tidyOutput(untidy_output=untidy_output)
+  results_dfm <-
+    as.data.frame(results_dfm, stringsAsFactors = FALSE, row.names = NULL)
+
+  tidy_output <- list(
+    results = results_dfm,
+    analysis_idx = analysis_idx
+  )
   return(tidy_output)
 }

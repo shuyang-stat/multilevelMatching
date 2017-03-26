@@ -23,7 +23,7 @@ multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
 \item{nboot}{(only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation}
 }
 \value{
-according to \code{\link{tidyOutput}}: a dataframe with two columns,
+according to \code{\link{estimateTau}}: a dataframe with two columns,
 tauestimate, varestimate, where
 tauestimate is a vector of estimates for pairwise treatment effects, and
 varestimate is a vector of variance estimates, using bootstrapping method.

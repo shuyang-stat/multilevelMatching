@@ -3,7 +3,7 @@
 \name{tidyOutput}
 \alias{tidyOutput}
 \alias{tidyOutput}
-\title{Strcutres main output in a "tidy" datframe}
+\title{DEPRECATED.Strcutres main output in a "tidy" datframe}
 \usage{
 tidyOutput(untidy_output)
 
@@ -72,7 +72,7 @@ a list containing
 }
 }
 \description{
-Strcutres main output in a "tidy" datframe
+DEPRECATED.Strcutres main output in a "tidy" datframe
 
 Strcutres main output in a "tidy" datframe
 }

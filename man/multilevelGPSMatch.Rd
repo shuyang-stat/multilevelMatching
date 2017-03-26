@@ -23,7 +23,7 @@ odds or cumulative logit model, and "existing" for user-specified
 propensity score via the parameter X.}
 }
 \value{
-according to \code{\link{tidyOutput}}, including at most: \itemize{
+according to \code{\link{estimateTau}}, including at most: \itemize{
 
   \item tauestimate:  a vector of estimates for pairwise treatment effects
 
