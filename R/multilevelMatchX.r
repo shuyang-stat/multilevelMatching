@@ -110,7 +110,7 @@ multilevelMatchX <- function(Y,W,X){
   # names(tauestimate)<-cname1
   # names(varestimate)<-cname1
 
-  results_dfm <- estimateTau(
+  results_list <- estimateTau(
     trtlevels = trtlevels,
     meanw = meanw,
     trtnumber = trtnumber,
@@ -120,14 +120,18 @@ multilevelMatchX <- function(Y,W,X){
     Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
 
+  tau_dfm <- results_list$tau_dfm
+
 
   # untidy_output <- list(tauestimate=tauestimate,varestimate=varestimate)
   # tidy_output <- tidyOutput(untidy_output=untidy_output)
 
 
   tidy_output <- list(
-    results = results_dfm,
-    analysis_idx = analysis_idx
+    results = tau_dfm,
+    analysis_idx = analysis_idx,
+    mu = results_list$mu_dfm,
+    impute_mat = Yiw
   )
   return(tidy_output)
 }

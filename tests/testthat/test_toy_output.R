@@ -19,6 +19,11 @@ t3 <- multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
 
+tests_dir <- file.path("..", "test_toy_output.Rdata")
+# ##GPS_imputes_mat <- t3$imputes_mat
+### save(GPS_imputes_mat,file= tests_dir)
+load(tests_dir)
+
 my_tolerance <- 0.0001
 Param_names <- c( "EY(2)-EY(1)", "EY(3)-EY(1)" ,"EY(3)-EY(2)")
 Trt1s <- c(1,1,2)
@@ -71,6 +76,10 @@ test_that("match on GPS with one X with trimming returns same output", {
   expect_identical( (this_t$results)$Param, Param_names)
   expect_identical( (this_t$results)$Trt1, Trt1s)
   expect_identical( (this_t$results)$Trt2, Trt2s)
+  expect_equal( ##imputes_mat
+    object = (this_t$imputes_mat),
+    expected = GPS_imputes_mat,
+    tolerance = my_tolerance)
   # expect_equal( this_t$analysis_idx,
   #               c(  5.072057 ,383.848575, 430.978089),
   #               tolerance = my_tolerance)

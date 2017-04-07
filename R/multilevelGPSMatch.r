@@ -153,7 +153,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
   #   }
   # }
   # if (row_num != taunumber) { stop("Error in for loop") }
-  results_dfm <- estimateTau(
+  results_list <- estimateTau(
     trtlevels = trtlevels,
     meanw = meanw,
     trtnumber = trtnumber,
@@ -163,6 +163,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
     Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
 
+  tau_dfm <- results_list$tau_dfm
   # varestimate<-varestimate/N
   # names(tauestimate)<-cname1
   # names(varestimate)<-cname1
@@ -171,7 +172,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
   if (GPSM=="multinomiallogisticReg") {
 
-    results_dfm$VarianceAI2012 <- NA
+    tau_dfm$VarianceAI2012 <- NA
 
     I.inv<-vcov_coeff
     ## Adjustment term c'(I^-1)c
@@ -204,20 +205,20 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
       for(kk in (jj+1):trtnumber){
         thistrt<-trtlevels[jj]
         thattrt<-trtlevels[kk]
-        result_row_num <- which(results_dfm$Param  ==
+        result_row_num <- which(tau_dfm$Param  ==
                                   nameContrast(trt1=thistrt, trt2=thattrt))
         # cname1<-c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
         # varestimateAI2012[cname1]<-varestimate[cname1]-
         #   t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
-        results_dfm$VarianceAI2012[result_row_num] <-
-          results_dfm$Variance[result_row_num] -
+        tau_dfm$VarianceAI2012[result_row_num] <-
+          tau_dfm$Variance[result_row_num] -
             t(Cvec[jj,]+Cvec[kk,]) %*% vcov_coeff %*% (Cvec[jj,]+Cvec[kk,])
       }
     }
   }
 
-  # results_dfm <-
-  #   as.data.frame(results_dfm, stringsAsFactors = FALSE, row.names = NULL)
+  # tau_dfm <-
+  #   as.data.frame(tau_dfm, stringsAsFactors = FALSE, row.names = NULL)
   # untidy_output <- list(tauestimate=tauestimate,
   #             varestimate=varestimate,
   #             varestimateAI2012=varestimateAI2012,
@@ -225,8 +226,10 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
   # tidy_output <- tidyOutput(untidy_output=untidy_output)
   tidy_output <- list(
-    results = results_dfm,
-    analysis_idx = analysis_idx
+    results = tau_dfm,
+    analysis_idx = analysis_idx,
+    mu = results_list$mu_dfm,
+    impute_mat = Yiw
   )
   return(tidy_output)
 }

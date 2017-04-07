@@ -34,8 +34,7 @@ all of the following must be supplied. Otherwise, they default to NULL.
  \code{\link{multilevelGPSStratification}}}
 }
 \value{
-a tidy dataframe including Estimate, Variance, and referencing the
-  target parameter (tau)
+a list including the dataframes for estimates for tau and for mu
 }
 \description{
 This is a major plumbing function for the package

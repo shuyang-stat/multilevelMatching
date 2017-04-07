@@ -102,7 +102,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
   # cname1<-c()
 
   ## Calculate estimates for tau
-  results_dfm <- estimateTau(
+  results_list <- estimateTau(
     trtlevels = trtlevels,
     meanw = meanw,
     trtnumber = trtnumber,
@@ -111,6 +111,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
     # do NOT get variance estimates in stratification
     # Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
+  tau_dfm <- results_list$tau_dfm
   # row_num <- 0
   # for(jj in 1:(trtnumber-1)){
   #   for(kk in (jj+1):trtnumber){
@@ -139,15 +140,17 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
   # names(bootvar)<-cname1
 
   ## Tidy the output
-  results_dfm$Variance <- bootvar
+  tau_dfm$Variance <- bootvar
   # untidy_output <- list(tauestimate=tauestimate,varestimate=bootvar)
   # tidy_output <- tidyOutput(untidy_output=untidy_output)
-  results_dfm <-
-    as.data.frame(results_dfm, stringsAsFactors = FALSE, row.names = NULL)
+  tau_dfm <-
+    as.data.frame(tau_dfm, stringsAsFactors = FALSE, row.names = NULL)
+
 
   tidy_output <- list(
-    results = results_dfm,
-    analysis_idx = analysis_idx
+    results = tau_dfm,
+    analysis_idx = analysis_idx,
+    mu = results_list$mu_dfm
   )
   return(tidy_output)
 }

@@ -66,3 +66,4 @@ tidyOutput <- function(untidy_output, analysis_idx=NULL){
 
 
 nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
+nameMu <- function(trt){ paste0("EY(", trt,")") }

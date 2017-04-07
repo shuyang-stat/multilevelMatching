@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Yang" />
 
-<meta name="date" content="2017-03-26" />
+<meta name="date" content="2017-04-06" />
 
 <title>multilevelMatching Tutorial</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">multilevelMatching Tutorial</h1>
 <h4 class="author"><em>Shu Yang</em></h4>
-<h4 class="date"><em>2017-03-26</em></h4>
+<h4 class="date"><em>2017-04-06</em></h4>
 
 
 
@@ -102,26 +102,59 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method):
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
-##         Param   Estimate   Variance
-## 1 EY(2)-EY(1) -10.666667   9.111111
-## 2 EY(3)-EY(1)   6.666667 615.580247
-## 3 EY(3)-EY(2)  17.333333 613.925926</code></pre>
+##         Param Trt1 Trt2   Estimate   Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -10.666667   9.111111             NA
+## 2 EY(3)-EY(1)    1    3   6.666667 615.580247             NA
+## 3 EY(3)-EY(2)    2    3  17.333333 613.925926             NA
+## 
+## $analysis_idx
+## NULL
+## 
+## $mu
+##   Param Trt Estimate
+## 1 EY(1)   1 106.6667
+## 2 EY(2)   2  96.0000
+## 3 EY(3)   3 113.3333</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
-##         Param   Estimate   Variance varestimateAI2012
-## 1 EY(2)-EY(1) -10.444444   8.545953          8.302024
-## 2 EY(3)-EY(1)   6.666667 616.913580        411.456234
-## 3 EY(3)-EY(2)  17.111111 611.122085        434.247037</code></pre>
+##         Param Trt1 Trt2   Estimate   Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024
+## 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234
+## 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037
+## 
+## $analysis_idx
+## NULL
+## 
+## $mu
+##   Param Trt  Estimate
+## 1 EY(1)   1 106.66667
+## 2 EY(2)   2  96.22222
+## 3 EY(3)   3 113.33333</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
 <pre><code>## $results
-##         Param Estimate   Variance varestimateAI2012
-## 1 EY(2)-EY(1)   -9.375   7.794922          5.072057
-## 2 EY(3)-EY(1)    5.875 582.654297        383.848575
-## 3 EY(3)-EY(2)   15.250 576.304688        430.978089</code></pre>
+##         Param Trt1 Trt2 Estimate   Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2   -9.375   7.794922       5.072057
+## 2 EY(3)-EY(1)    1    3    5.875 582.654297     383.848575
+## 3 EY(3)-EY(2)    2    3   15.250 576.304688     430.978089
+## 
+## $analysis_idx
+## $analysis_idx$indices_kept
+## 1 2 4 5 6 7 8 9 
+## 1 2 4 5 6 7 8 9 
+## 
+## $analysis_idx$indices_dropped
+## [1] 3
+## 
+## 
+## $mu
+##   Param Trt Estimate
+## 1 EY(1)   1  105.375
+## 2 EY(2)   2   96.000
+## 3 EY(3)   3  111.250</code></pre>
 <p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM=&quot;existing&quot;</code> in <code>multilevelGPSMatch()</code> or <code>multilevelGPSStratification()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))
 pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span>-pr_w1)/<span class="dv">3</span>
@@ -136,10 +169,19 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;existing&quot;</span>)</code></pre></div>
 <pre><code>## $results
-##         Param  Estimate  Variance
-## 1 EY(2)-EY(1) -8.111111  11.15912
-## 2 EY(3)-EY(1)  2.111111 589.77641
-## 3 EY(3)-EY(2) 10.222222 566.31550</code></pre>
+##         Param Trt1 Trt2   Estimate   Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -12.444444   6.348422             NA
+## 2 EY(3)-EY(1)    1    3  -6.444444 566.249657             NA
+## 3 EY(3)-EY(2)    2    3   6.000000 564.691358             NA
+## 
+## $analysis_idx
+## NULL
+## 
+## $mu
+##   Param Trt  Estimate
+## 1 EY(1)   1 108.66667
+## 2 EY(2)   2  96.22222
+## 3 EY(3)   3 102.22222</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">111</span>)
 n    &lt;-<span class="st"> </span><span class="dv">5000</span>*<span class="dv">6</span>
 <span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>
@@ -208,25 +250,25 @@ match4&lt;-<span class="kw">multilevelGPSStratification</span>(Y,W,X,<span class
 
 
 match1$results</code></pre></div>
-<pre><code>##         Param   Estimate  Variance
-## 1 EY(2)-EY(1) 0.07927361 0.1792186
-## 2 EY(3)-EY(1) 0.86264929 0.1634754
-## 3 EY(3)-EY(2) 0.78337567 0.3221616</code></pre>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186             NA
+## 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754             NA
+## 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616             NA</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match2$results</code></pre></div>
-<pre><code>##         Param   Estimate  Variance varestimateAI2012
-## 1 EY(2)-EY(1) -0.7458499 0.6974908         0.4340571
-## 2 EY(3)-EY(1)  0.5605192 0.4856579         0.2287787
-## 3 EY(3)-EY(2)  1.3063691 0.7089620         0.4226466</code></pre>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -0.7458499 0.6974908      0.4340571
+## 2 EY(3)-EY(1)    1    3  0.5605192 0.4856579      0.2287787
+## 3 EY(3)-EY(2)    2    3  1.3063691 0.7089620      0.4226466</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match3$results</code></pre></div>
-<pre><code>##         Param  Estimate  Variance varestimateAI2012
-## 1 EY(2)-EY(1) -1.056445 0.7924310         0.4876396
-## 2 EY(3)-EY(1)  1.001189 0.4457239         0.2104603
-## 3 EY(3)-EY(2)  2.057634 0.8310264         0.4624069</code></pre>
+<pre><code>##         Param Trt1 Trt2  Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -1.056445 0.7924310      0.4876396
+## 2 EY(3)-EY(1)    1    3  1.001189 0.4457239      0.2104603
+## 3 EY(3)-EY(2)    2    3  2.057634 0.8310264      0.4624069</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match4$results</code></pre></div>
-<pre><code>##         Param   Estimate  Variance
-## 1 EY(2)-EY(1) -0.3077249 0.3515320
-## 2 EY(3)-EY(1)  0.4170466 0.2412386
-## 3 EY(3)-EY(2)  0.7247715 0.4906146</code></pre>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -0.3077249 0.3515320             NA
+## 2 EY(3)-EY(1)    1    3  0.4170466 0.2412386             NA
+## 3 EY(3)-EY(2)    2    3  0.7247715 0.4906146             NA</code></pre>
 </div>
 
 
