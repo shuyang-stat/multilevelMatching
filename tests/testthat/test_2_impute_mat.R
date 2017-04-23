@@ -1,5 +1,5 @@
 library(multilevelMatching)
-context("toy dataset results")
+context("impute_mat is ordered as original data")
 
 
 X <- matrix(c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9), ncol=1)
@@ -46,7 +46,6 @@ load(tests_dir)
 
 
 my_tolerance <- 1e-3
-# this_t <- t2
 test_that("match on GPS with one X and no trimming returns same output", {
   expect_equal( (t2_in_imputemat$results)$Estimate,
                 (baseline_tests2$results)$Estimate,
@@ -57,12 +56,9 @@ test_that("match on GPS with one X and no trimming returns same output", {
   expect_equal( (t2_in_imputemat$results)$VarianceAI2012,
                 (baseline_tests2$results)$VarianceAI2012,
                 tolerance = my_tolerance)
-  expect_equal( (t2_in_imputemat$impute_mat),
-                (baseline_tests2$impute_mat),
-                tolerance = my_tolerance)
-  # expect_identical( (this_t$results)$Param, Param_names)
-  # expect_identical( (this_t$results)$Trt1, Trt1s)
-  # expect_identical( (this_t$results)$Trt2, Trt2s)
+  # expect_equal( (t2_in_imputemat$impute_mat),
+  #               (baseline_tests2$impute_mat),
+  #               tolerance = my_tolerance)
 })
 
 
@@ -70,6 +66,8 @@ baseline_imputes <- matrix(NA,ncol=3,  nrow= length(W))
 for (ii in 1:nrow(baseline_imputes)){
   baseline_imputes[ii,W[ii]] <- Y[ii]
 }
+
+
 new_imputes <- (t2_in_imputemat$impute_mat)
 new_imputes[is.na(baseline_imputes)] <- NA
 

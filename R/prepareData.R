@@ -1,5 +1,9 @@
 
 
+
+nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
+nameMu <- function(trt){ paste0("EY(", trt,")") }
+
 prepareData <- function(
   Y,W,X,match_method,
   GPSM = NULL,
@@ -135,10 +139,13 @@ reorderByTreatment <- function(Y,W,X){
     temp <- sort(W,index.return=TRUE)
   }
 
+  orig_to_sorted <- temp$ix
+  sorted_to_orig <- order(temp$ix)
+
   # temp <- orderTrt(W)
-  W <- W[temp$ix]
-  X <- X[temp$ix,,drop=FALSE]
-  Y <- Y[temp$ix]
+  W <- W[orig_to_sorted]
+  X <- X[orig_to_sorted,,drop=FALSE]
+  Y <- Y[orig_to_sorted]
 
   ## some checks, again
   argChecks(Y=Y,W=W,X=X,N=N)
@@ -151,7 +158,8 @@ reorderByTreatment <- function(Y,W,X){
   list_to_return$trtlevels <- unique(W) # all treatment levels
   list_to_return$pertrtlevelnumber <- table(W) # number of observations by treatment level
   list_to_return$taunumber <- trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
-
+  list_to_return$orig_to_sorted <- orig_to_sorted
+  list_to_return$sorted_to_orig <- sorted_to_orig
 
 
   return(list_to_return)

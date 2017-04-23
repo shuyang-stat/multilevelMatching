@@ -2,10 +2,10 @@ library(multilevelMatching)
 context("toy dataset results")
 
 
-X <-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
-Y <-c(102,105,120,130,100,80,94,108,96)
+X <- matrix(c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9), ncol=1)
+Y <- matrix(c(102,105,120,130,100,80,94,108,96), ncol=1)
 
-W <- c(1, 1, 1, 3, 2, 3, 2, 1, 2)
+W <- matrix(c(1, 1, 1, 3, 2, 3, 2, 1, 2), ncol=1)
 existing_GPS_matrix <- cbind(
   c(0.5, 0.3, 0.5, 0.5, 0.5, 0.3, 0.3, 0.5, 0.3),
   c(1,1.6, 1, 1, 1, 1.6,1.6, 1,1.6)/6,
@@ -20,8 +20,7 @@ t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
 
 tests_dir <- file.path("..", "test_toy_output.Rdata")
-# ##GPS_imputes_mat <- t3$imputes_mat
-### save(GPS_imputes_mat,file= tests_dir)
+
 load(tests_dir)
 
 my_tolerance <- 0.0001

@@ -131,7 +131,7 @@ multilevelMatchX <- function(Y,W,X){
     results = tau_dfm,
     analysis_idx = analysis_idx,
     mu = results_list$mu_dfm,
-    impute_mat = Yiw
+    impute_mat = Yiw[prepared_data$sorted_to_orig,]
   )
   return(tidy_output)
 }
