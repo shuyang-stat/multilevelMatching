@@ -59,6 +59,10 @@ test_that("match on GPS with one X and no trimming returns same output", {
   expect_identical( (this_t$results)$Param, Param_names)
   expect_identical( (this_t$results)$Trt1, Trt1s)
   expect_identical( (this_t$results)$Trt2, Trt2s)
+  expect_equal( ##imputes_mat
+    object = (this_t$impute_mat),
+    expected = baseline_tests2$impute_mat,
+    tolerance = my_tolerance)
 })
 
 this_t <- t3
@@ -76,10 +80,7 @@ test_that("match on GPS with one X with trimming returns same output", {
   expect_identical( (this_t$results)$Param, Param_names)
   expect_identical( (this_t$results)$Trt1, Trt1s)
   expect_identical( (this_t$results)$Trt2, Trt2s)
-  expect_equal( ##imputes_mat
-    object = (this_t$imputes_mat),
-    expected = GPS_imputes_mat,
-    tolerance = my_tolerance)
+
   # expect_equal( this_t$analysis_idx,
   #               c(  5.072057 ,383.848575, 430.978089),
   #               tolerance = my_tolerance)
