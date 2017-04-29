@@ -1,7 +1,16 @@
 
 
-
+#' naming the matching contrasts
+#' @param trt1 former treatment level
+#' @param trt2 latter treatment level
+#'
+#' @export
 nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
+
+#' naming the matching mu's
+#' @param trt treatment level
+#'
+#' @export
 nameMu <- function(trt){ paste0("EY(", trt,")") }
 
 prepareData <- function(
@@ -64,12 +73,11 @@ prepareData <- function(
 
   ## order the treatment increasingly
   ordered_data_list <- reorderByTreatment(W=W,X=X,Y=Y)
-
   ## check that "existing" X has the correctly specified number of levels
   if ((!is.null(GPSM))&&(GPSM=="existing")) {
 
     warning("user-supplied propensity scores has not been passing checks as of 2017-03-26")
-      if (nrow(X) != N) {
+      if (nrow(X) != ordered_data_list$N) {
         stop("user-supplied propensity scores (through argument X and
               GPSM='existing') should be a matrix with number of rows
               equal to length of Y and W")

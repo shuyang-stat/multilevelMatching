@@ -7,6 +7,11 @@
 #' @param trtnumber a scalar, the number of treatment levels
 #' @param taunumber a scalar, the number of tau contrasts to estimate
 #' @param N A scalar for the number of rows in the data
+#' @param Yiw for AI2012 variance
+#' @param Kiw for AI2012 variance
+#' @param sigsqiw for AI2012 variance
+#' @param W for AI2012 variance
+#'
 #' To estimate variance in Matching using AI2006 method in MatchX and MatchGPS,
 #' all of the following must be supplied. Otherwise, they default to NULL.
 #'   \itemize{

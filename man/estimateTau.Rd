@@ -16,7 +16,16 @@ estimateTau(trtlevels, meanw, trtnumber, taunumber, N, Yiw = NULL,
 
 \item{taunumber}{a scalar, the number of tau contrasts to estimate}
 
-\item{N}{A scalar for the number of rows in the data
+\item{N}{A scalar for the number of rows in the data}
+
+\item{Yiw}{for AI2012 variance}
+
+\item{Kiw}{for AI2012 variance}
+
+\item{sigsqiw}{for AI2012 variance}
+
+\item{W}{for AI2012 variance
+
 To estimate variance in Matching using AI2006 method in MatchX and MatchGPS,
 all of the following must be supplied. Otherwise, they default to NULL.
   \itemize{
