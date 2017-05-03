@@ -10,6 +10,9 @@
 #'   include "multinomiallogisticReg", "ordinallogisticReg" for proportional
 #'   odds or cumulative logit model, and "existing" for user-specified
 #'   propensity score via the parameter X.
+#' @param model_options A list of the options to pass to propensity model.
+#'   Currently under development. Can only pass reference level to multinomial
+#'   logisitc regression.
 #'
 #' @return according to \code{\link{estimateTau}}, including at most: \itemize{
 #'
@@ -38,12 +41,28 @@
 #'   multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 #'   multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 #'
-#' @import Matching boot nnet optmatch MASS
+#' @import Matching boot nnet MASS
 #'
 #' @export
-multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
+multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
+                               model_options = list(reference_level = "1")){
 
   match_method <- "MatchOnGPS"
+
+  #probably move this into prepareData
+  if (!is.null(model_options)){
+    if (!is.list(model_options)){
+      stop("model_options must be a list or NULL")
+    }
+    # if (GPSM!= "existing") {
+    #
+    # }
+    if (GPSM == "multinomiallogisticReg"){
+      if (!"reference_level" %in% names(model_options)){
+        stop("User must supply model_options$reference_level")
+      } ## defensive programming for correct level variable?
+    }
+  }
 
   prepared_data <- prepareData(
     Y=Y, W=W, X=X,
@@ -63,13 +82,15 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
 
   #PF modeling
   if (GPSM == "multinomiallogisticReg") {
-    W.ref <- relevel(as.factor(W),ref=1)
-    temp <- capture.output(PF.out <- multinom(W.ref~X))
+    # message("Multinomial model fitted with reference level '1'")
+    ##This should probably be user-specified via the dots argument
+    W.ref <- stats::relevel(as.factor(W),ref=model_options$reference_level)
+    temp <- capture.output(PF.out <- nnet::multinom(W.ref~X))
     PF.fit <- fitted(PF.out)
     vcov_coeff <- vcov(PF.out)
   }
   if (GPSM == "ordinallogisticReg") {
-    PF.out <- polr(as.factor(W)~X)
+    PF.out <- MASS::polr(as.factor(W)~X)
     PF.fit <- fitted(PF.out)
   }
   if (GPSM == "existing") {
@@ -99,15 +120,15 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
     if(kk==1){fromto<-1:pertrtlevelnumber[1]}
     if(kk>1){fromto<-(1:pertrtlevelnumber[kk])+sum(pertrtlevelnumber[1:(kk-1)])}
     W1<-W!=thistrt
-    out1 <- Match(Y=Y,Tr=W1,X=PF.fit[,kk],distance.tolerance=0,ties=FALSE,Weight=2)
+    out1 <- Matching::Match(Y=Y,Tr=W1,X=PF.fit[,kk],distance.tolerance=0,ties=FALSE,Weight=2)
     mdata1<-out1$mdata
-    meanw[kk]<-weighted.mean(c(Y[which(W==thistrt)],mdata1$Y[which(mdata1$Tr==0)]),c(rep(1,length(which(W==thistrt))),out1$weights))
+    meanw[kk]<-stats::weighted.mean(c(Y[which(W==thistrt)],mdata1$Y[which(mdata1$Tr==0)]),c(rep(1,length(which(W==thistrt))),out1$weights))
     Kiw[fromto,1]<-table(factor(out1$index.control,levels=fromto))
     Yiw[which(W==thistrt),kk]<- Y[which(W==thistrt)]
     Yiw[which(W!=thistrt),kk]<-mdata1$Y[which(mdata1$Tr==0)]
 
     WW1<-W==thistrt
-    out11<-Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(1,0),each=sum(WW1)),
+    out11<-Matching::Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(1,0),each=sum(WW1)),
                  X=c(PF.fit[which(WW1),kk],PF.fit[which(WW1),kk]),M=1,distance.tolerance=0,ties=FALSE,Weight=2,
                  restrict=matrix(c(1:sum(WW1),(1:sum(WW1))+sum(WW1),rep(-1,sum(WW1))),nrow=sum(WW1),ncol=3,byrow=FALSE))
 
@@ -119,10 +140,10 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg"){
                   paste(paste(paste("m",thistrt,sep=""),".",sep=""),2,sep=""))
 
     # find two outsiders closest
-    findmatch1<-Match(Y=Y,Tr=W1,X=PF.fit[,kk],distance.tolerance=0,ties=FALSE,Weight=2,M=2)
+    findmatch1<-Matching::Match(Y=Y,Tr=W1,X=PF.fit[,kk],distance.tolerance=0,ties=FALSE,Weight=2,M=2)
     Matchmat[unique(findmatch1$index.treated),thiscnames]<-matrix(findmatch1$index.control,ncol=2,byrow=TRUE)
     # find one insider closest
-    out111<-Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(0,1),each=sum(WW1)),
+    out111<-Matching::Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(0,1),each=sum(WW1)),
                   X=c(PF.fit[which(WW1),kk],PF.fit[which(WW1),kk]),M=1,distance.tolerance=0,ties=FALSE,Weight=2,
                   restrict=matrix(c(1:sum(WW1),(1:sum(WW1))+sum(WW1),rep(-1,sum(WW1))),nrow=sum(WW1),ncol=3,byrow=FALSE))
     Matchmat[which(WW1),thiscnames]<-matrix(c(which(WW1),which(WW1)[out111$index.control]),ncol=2,byrow=FALSE)

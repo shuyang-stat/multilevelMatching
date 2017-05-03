@@ -4,7 +4,8 @@
 \alias{multilevelGPSMatch}
 \title{Matching on GPS with multilevel treatments}
 \usage{
-multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
+multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg",
+  model_options = list(reference_level = "1"))
 }
 \arguments{
 \item{Y}{a continuous response vector (1 x n)}
@@ -21,6 +22,10 @@ then X must be a vector (1 x n) of user-specified propensity scores.}
 include "multinomiallogisticReg", "ordinallogisticReg" for proportional
 odds or cumulative logit model, and "existing" for user-specified
 propensity score via the parameter X.}
+
+\item{model_options}{A list of the options to pass to propensity model.
+Currently under development. Can only pass reference level to multinomial
+logisitc regression.}
 }
 \value{
 according to \code{\link{estimateTau}}, including at most: \itemize{

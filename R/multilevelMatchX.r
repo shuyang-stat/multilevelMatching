@@ -18,7 +18,7 @@
 #'   W<-c(1,1,1,3,2,3,2,1,2)
 #'   multilevelMatchX(Y,W,X)
 #'
-#' @import Matching boot nnet MASS
+#' @import Matching
 #'
 #' @export
 multilevelMatchX <- function(Y,W,X){
@@ -64,15 +64,15 @@ multilevelMatchX <- function(Y,W,X){
     if(kk==1){fromto<-1:pertrtlevelnumber[1]}
     if(kk>1){fromto<-(1:pertrtlevelnumber[kk])+sum(pertrtlevelnumber[1:(kk-1)])}
     W1<-W!=thistrt
-    out1 <- Match(Y=Y,Tr=W1,X=X,distance.tolerance=0,ties=FALSE,Weight=2)
+    out1 <- Matching::Match(Y=Y,Tr=W1,X=X,distance.tolerance=0,ties=FALSE,Weight=2)
     mdata1<-out1$mdata
-    meanw[kk]<-weighted.mean(c(Y[which(W==thistrt)],mdata1$Y[which(mdata1$Tr==0)]),c(rep(1,length(which(W==thistrt))),out1$weights))
-    Kiw[fromto,1]<-table(factor(out1$index.control,levels=fromto))
+    meanw[kk] <- stats::weighted.mean(c(Y[which(W==thistrt)],mdata1$Y[which(mdata1$Tr==0)]),c(rep(1,length(which(W==thistrt))),out1$weights))
+    Kiw[fromto,1] <- table(factor(out1$index.control,levels=fromto))
     Yiw[which(W==thistrt),kk]<- Y[which(W==thistrt)]
     Yiw[which(W!=thistrt),kk]<-mdata1$Y[which(mdata1$Tr==0)]
     WW1<-W==thistrt
     X<-as.matrix(X)
-    out11<-Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(1,0),each=sum(WW1)),
+    out11<-Matching::Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(1,0),each=sum(WW1)),
                  X=rbind(as.matrix(X[which(WW1),]),as.matrix(X[which(WW1),])),M=1,distance.tolerance=0,ties=FALSE,Weight=2,
                  restrict=matrix(c(1:sum(WW1),(1:sum(WW1))+sum(WW1),rep(-1,sum(WW1))),nrow=sum(WW1),ncol=3,byrow=FALSE))
 
@@ -84,10 +84,10 @@ multilevelMatchX <- function(Y,W,X){
                   paste(paste(paste("m",thistrt,sep=""),".",sep=""),2,sep=""))
 
     # find two outsiders closest
-    findmatch1<-Match(Y=Y,Tr=W1,X=X,distance.tolerance=0,ties=FALSE,Weight=2,M=2)
+    findmatch1<-Matching::Match(Y=Y,Tr=W1,X=X,distance.tolerance=0,ties=FALSE,Weight=2,M=2)
     Matchmat[unique(findmatch1$index.treated),thiscnames]<-matrix(findmatch1$index.control,ncol=2,byrow=TRUE)
     # find one insider closest
-    out111<-Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(0,1),each=sum(WW1)),
+    out111<-Matching::Match(Y=rep(Y[which(WW1)],times=2),Tr=rep(c(0,1),each=sum(WW1)),
                   X=rbind(as.matrix(X[which(WW1),]),as.matrix(X[which(WW1),])),M=1,distance.tolerance=0,ties=FALSE,Weight=2,
                   restrict=matrix(c(1:sum(WW1),(1:sum(WW1))+sum(WW1),rep(-1,sum(WW1))),nrow=sum(WW1),ncol=3,byrow=FALSE))
     Matchmat[which(WW1),thiscnames]<-matrix(c(which(WW1),which(WW1)[out111$index.control]),ncol=2,byrow=FALSE)

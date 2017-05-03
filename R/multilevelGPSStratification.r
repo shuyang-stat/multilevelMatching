@@ -7,6 +7,9 @@
 #' @param NS (only required in the function multilevelGPSStratification) the number of strata
 #' @param linearp (only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)
 #' @param nboot (only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation
+#' @param model_options A list of the options to pass to propensity model.
+#'   Currently under development. Can only pass reference level to multinomial
+#'   logisitc regression.
 #'
 #' @return according to \code{\link{estimateTau}}: a dataframe with two columns,
 #' tauestimate, varestimate, where
@@ -16,10 +19,12 @@
 #' @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 #'
 #'
-#' @import Matching boot nnet optmatch MASS
+#' @import  boot nnet MASS
 #'
 #' @export
-multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",linearp=0,nboot){
+multilevelGPSStratification <- function(
+  Y,W,X,NS,GPSM="multinomiallogisticReg",linearp=0,nboot,
+  model_options = list(reference_level = "1") ){
   ### Generalized propensity score stratification
   ## PF.out=Propensity function estimation
   ## linearp=1 if use linear predictor for stratification
@@ -32,6 +37,21 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
   ## some checks
   match_method <- "StratifyOnGPS"
+
+
+  if (!is.null(model_options)){
+    if (!is.list(model_options)){
+      stop("model_options must be a list or NULL")
+    }
+    # if (GPSM!= "existing") {
+    #
+    # }
+    if (GPSM == "multinomiallogisticReg"){
+      if (!"reference_level" %in% names(model_options)){
+        stop("User must supply model_options$reference_level")
+      } ## defensive programming for correct level variable?
+    }
+  }
 
   prepared_data <- prepareData(
     Y=Y, W=W, X=X,
@@ -52,8 +72,10 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
   #PF modeling
   if (GPSM == "multinomiallogisticReg") {
-    W.ref <- relevel(as.factor(W),ref="1")
-    temp <- capture.output(PF.out <- multinom(W.ref~X))
+    # message("Multinomial model fitted with reference level '1'")
+    ##This should probably be user-specified via the dots argument
+    W.ref <- stats::relevel(as.factor(W),ref=model_options$reference_level)
+    temp <- capture.output(PF.out <- nnet::multinom(W.ref~X))
     PF.fit <- fitted(PF.out)
     if (linearp==1) {
       beta <- coef(PF.out)
@@ -62,7 +84,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
     }
   }
   if (GPSM == "ordinallogisticReg") {
-    PF.out <- polr(as.factor(W)~X)
+    PF.out <- MASS::polr(as.factor(W)~X)
     PF.fit <- fitted(PF.out)
   }
   if (GPSM == "existing") {
@@ -84,7 +106,7 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
   for(kk in 1:trtnumber){
     pwx<-PF.fit[,kk]
-    ranking<-ave(pwx,FUN=function(x)cut(x,quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE))
+    ranking<-stats::ave(pwx,FUN=function(x)cut(x,quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE))
     #type=2 to have the same quintiles as in SAS
     #right=FALSE to have left side closed intervals
     for(jj in 1:NS){
@@ -133,10 +155,10 @@ multilevelGPSStratification <- function(Y,W,X,NS,GPSM="multinomiallogisticReg",l
 
   ## Bootstrap the variance
   data<-cbind(W,Y,X)
-  results <- boot(data=data, statistic=estforboot,R=nboot,
+  results <- boot::boot(data=data, statistic=estforboot,R=nboot,
                   GPSM=GPSM,linearp=linearp,trtnumber=trtnumber,
                   trtlevels=trtlevels,taunumber=taunumber,NS=NS)
-  bootvar<-apply(results$t,2,var,na.rm = TRUE)
+  bootvar <- apply(results$t,2,var,na.rm = TRUE)
   # names(bootvar)<-cname1
 
   ## Tidy the output

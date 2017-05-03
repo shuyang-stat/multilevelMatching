@@ -5,7 +5,7 @@
 \title{Stratification on GPS with multilevel treatments}
 \usage{
 multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
-  linearp = 0, nboot)
+  linearp = 0, nboot, model_options = list(reference_level = "1"))
 }
 \arguments{
 \item{Y}{a continuous response vector (1 x n)}
@@ -21,6 +21,10 @@ multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
 \item{linearp}{(only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)}
 
 \item{nboot}{(only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation}
+
+\item{model_options}{A list of the options to pass to propensity model.
+Currently under development. Can only pass reference level to multinomial
+logisitc regression.}
 }
 \value{
 according to \code{\link{estimateTau}}: a dataframe with two columns,
