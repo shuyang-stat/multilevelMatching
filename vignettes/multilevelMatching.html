@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Yang" />
 
-<meta name="date" content="2017-04-06" />
+<meta name="date" content="2017-05-17" />
 
 <title>multilevelMatching Tutorial</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">multilevelMatching Tutorial</h1>
 <h4 class="author"><em>Shu Yang</em></h4>
-<h4 class="date"><em>2017-04-06</em></h4>
+<h4 class="date"><em>2017-05-17</em></h4>
 
 
 
@@ -114,7 +114,74 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt Estimate
 ## 1 EY(1)   1 106.6667
 ## 2 EY(2)   2  96.0000
-## 3 EY(3)   3 113.3333</code></pre>
+## 3 EY(3)   3 113.3333
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  105   94  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  105   94   80
+##  [8,]  108   96  130
+##  [9,]  108   96  130
+## 
+## $estimate_args
+## $estimate_args$trtlevels
+## [1] 1 2 3
+## 
+## $estimate_args$meanw
+## [1] 106.6667  96.0000 113.3333
+## 
+## $estimate_args$trtnumber
+## [1] 3
+## 
+## $estimate_args$taunumber
+## [1] 3
+## 
+## $estimate_args$N
+## [1] 9
+## 
+## $estimate_args$Yiw
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  108   96  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  108   96  130
+##  [8,]  105   94  130
+##  [9,]  105   94   80
+## 
+## $estimate_args$Kiw
+##       [,1]
+##  [1,]    1
+##  [2,]    3
+##  [3,]    0
+##  [4,]    1
+##  [5,]    1
+##  [6,]    3
+##  [7,]    2
+##  [8,]    5
+##  [9,]    2
+## 
+## $estimate_args$sigsqiw
+##         [,1]
+##  [1,]   18.0
+##  [2,]    4.5
+##  [3,]   72.0
+##  [4,]   18.0
+##  [5,]    8.0
+##  [6,]   18.0
+##  [7,]    8.0
+##  [8,] 1250.0
+##  [9,] 1250.0
+## 
+## $estimate_args$W
+## [1] 1 1 1 1 2 2 2 3 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
@@ -131,7 +198,89 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt  Estimate
 ## 1 EY(1)   1 106.66667
 ## 2 EY(2)   2  96.22222
-## 3 EY(3)   3 113.33333</code></pre>
+## 3 EY(3)   3 113.33333
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  105   96  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  105   94   80
+##  [8,]  108   96  130
+##  [9,]  108   96  130
+## 
+## $estimate_args
+## $estimate_args$trtlevels
+## [1] 1 2 3
+## 
+## $estimate_args$meanw
+## [1] 106.66667  96.22222 113.33333
+## 
+## $estimate_args$trtnumber
+## [1] 3
+## 
+## $estimate_args$taunumber
+## [1] 3
+## 
+## $estimate_args$N
+## [1] 9
+## 
+## $estimate_args$Yiw
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  108   96  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  108   96  130
+##  [8,]  105   96  130
+##  [9,]  105   94   80
+## 
+## $estimate_args$Kiw
+##       [,1]
+##  [1,]    1
+##  [2,]    3
+##  [3,]    0
+##  [4,]    1
+##  [5,]    1
+##  [6,]    2
+##  [7,]    3
+##  [8,]    5
+##  [9,]    2
+## 
+## $estimate_args$sigsqiw
+##         [,1]
+##  [1,]   18.0
+##  [2,]    4.5
+##  [3,]   72.0
+##  [4,]   72.0
+##  [5,]    8.0
+##  [6,]    2.0
+##  [7,]    8.0
+##  [8,] 1250.0
+##  [9,] 1250.0
+## 
+## $estimate_args$W
+## [1] 1 1 1 1 2 2 2 3 3
+## 
+## 
+## $AI2012_args
+## $AI2012_args$Cvec
+##      [,1]        [,2] [,3]        [,4]
+## [1,]    0  0.04536431    0  -1.4222059
+## [2,]    0 -1.02393228    0   0.7915606
+## [3,]    0 12.50001000    0 -29.1666552
+## 
+## $AI2012_args$vcov_coeff
+##               2:(Intercept)         2:X 3:(Intercept)         3:X
+## 2:(Intercept)     4.2775709 -0.58729558     1.9261788 -0.27779100
+## 2:X              -0.5872956  0.09365331    -0.2826604  0.04689727
+## 3:(Intercept)     1.9261788 -0.28266040    19.5121429 -2.10608615
+## 3:X              -0.2777910  0.04689727    -2.1060861  0.24229598</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
@@ -154,7 +303,85 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt Estimate
 ## 1 EY(1)   1  105.375
 ## 2 EY(2)   2   96.000
-## 3 EY(3)   3  111.250</code></pre>
+## 3 EY(3)   3  111.250
+## 
+## $impute_mat
+##      [,1] [,2] [,3]
+## [1,]  102  100  130
+## [2,]  105   94   80
+## [3,]  102   94  130
+## [4,]  108  100  130
+## [5,]  105   94   80
+## [6,]  105   94   80
+## [7,]  108   96  130
+## [8,]  108   96  130
+## 
+## $estimate_args
+## $estimate_args$trtlevels
+## [1] 1 2 3
+## 
+## $estimate_args$meanw
+## [1] 105.375  96.000 111.250
+## 
+## $estimate_args$trtnumber
+## [1] 3
+## 
+## $estimate_args$taunumber
+## [1] 3
+## 
+## $estimate_args$N
+## [1] 8
+## 
+## $estimate_args$Yiw
+##      [,1] [,2] [,3]
+## [1,]  102  100  130
+## [2,]  105   94   80
+## [3,]  108   96  130
+## [4,]  108  100  130
+## [5,]  105   94   80
+## [6,]  108   96  130
+## [7,]  102   94  130
+## [8,]  105   94   80
+## 
+## $estimate_args$Kiw
+##      [,1]
+## [1,]    1
+## [2,]    2
+## [3,]    2
+## [4,]    1
+## [5,]    3
+## [6,]    1
+## [7,]    4
+## [8,]    2
+## 
+## $estimate_args$sigsqiw
+##        [,1]
+## [1,]   18.0
+## [2,]    4.5
+## [3,]   18.0
+## [4,]    8.0
+## [5,]   18.0
+## [6,]    8.0
+## [7,] 1250.0
+## [8,] 1250.0
+## 
+## $estimate_args$W
+## [1] 1 1 1 2 2 2 3 3
+## 
+## 
+## $AI2012_args
+## $AI2012_args$Cvec
+##      [,1]      [,2] [,3]       [,4]
+## [1,]    0  0.277578    0  -1.210117
+## [2,]    0 -5.121661    0   3.139818
+## [3,]    0 14.062674    0 -28.124873
+## 
+## $AI2012_args$vcov_coeff
+##               2:(Intercept)         2:X 3:(Intercept)         3:X
+## 2:(Intercept)     6.1334608 -0.81407641     3.0403215 -0.39723734
+## 2:X              -0.8140764  0.12126318    -0.3960346  0.05811916
+## 3:(Intercept)     3.0403215 -0.39603457    21.2168440 -2.27970447
+## 3:X              -0.3972373  0.05811916    -2.2797045  0.25886828</code></pre>
 <p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM=&quot;existing&quot;</code> in <code>multilevelGPSMatch()</code> or <code>multilevelGPSStratification()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))
 pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span>-pr_w1)/<span class="dv">3</span>
@@ -169,19 +396,86 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;existing&quot;</span>)</code></pre></div>
 <pre><code>## $results
-##         Param Trt1 Trt2   Estimate   Variance VarianceAI2012
-## 1 EY(2)-EY(1)    1    2 -12.444444   6.348422             NA
-## 2 EY(3)-EY(1)    1    3  -6.444444 566.249657             NA
-## 3 EY(3)-EY(2)    2    3   6.000000 564.691358             NA
+##         Param Trt1 Trt2  Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -8.888889  25.22085             NA
+## 2 EY(3)-EY(1)    1    3  6.666667 627.87654             NA
+## 3 EY(3)-EY(2)    2    3 15.555556 625.85460             NA
 ## 
 ## $analysis_idx
 ## NULL
 ## 
 ## $mu
 ##   Param Trt  Estimate
-## 1 EY(1)   1 108.66667
-## 2 EY(2)   2  96.22222
-## 3 EY(3)   3 102.22222</code></pre>
+## 1 EY(1)   1 106.66667
+## 2 EY(2)   2  97.77778
+## 3 EY(3)   3 113.33333
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102   96   80
+##  [2,]  105  100  130
+##  [3,]  120  100  130
+##  [4,]  105  100  130
+##  [5,]  105  100   80
+##  [6,]  105  100   80
+##  [7,]  108   94  130
+##  [8,]  108   94  130
+##  [9,]  102   96  130
+## 
+## $estimate_args
+## $estimate_args$trtlevels
+## [1] 1 2 3
+## 
+## $estimate_args$meanw
+## [1] 106.66667  97.77778 113.33333
+## 
+## $estimate_args$trtnumber
+## [1] 3
+## 
+## $estimate_args$taunumber
+## [1] 3
+## 
+## $estimate_args$N
+## [1] 9
+## 
+## $estimate_args$Yiw
+##       [,1] [,2] [,3]
+##  [1,]  102   96   80
+##  [2,]  105  100  130
+##  [3,]  120  100  130
+##  [4,]  108   94  130
+##  [5,]  105  100   80
+##  [6,]  108   94  130
+##  [7,]  102   96  130
+##  [8,]  105  100  130
+##  [9,]  105  100   80
+## 
+## $estimate_args$Kiw
+##       [,1]
+##  [1,]    1
+##  [2,]    3
+##  [3,]    0
+##  [4,]    1
+##  [5,]    4
+##  [6,]    1
+##  [7,]    1
+##  [8,]    5
+##  [9,]    2
+## 
+## $estimate_args$sigsqiw
+##         [,1]
+##  [1,]   18.0
+##  [2,]  112.5
+##  [3,]  112.5
+##  [4,]   18.0
+##  [5,]   18.0
+##  [6,]    2.0
+##  [7,]    2.0
+##  [8,] 1250.0
+##  [9,] 1250.0
+## 
+## $estimate_args$W
+## [1] 1 1 1 1 2 2 2 3 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">111</span>)
 n    &lt;-<span class="st"> </span><span class="dv">5000</span>*<span class="dv">6</span>
 <span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>
@@ -200,7 +494,7 @@ trt1 &lt;-<span class="st"> </span><span class="dv">100</span>; trt1</code></pre
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trt3 &lt;-<span class="st"> </span><span class="dv">100</span>; trt3</code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw Xs</span>
-X13 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)
+X13 &lt;-<span class="st"> </span>MASS::<span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)
 X1 &lt;-<span class="st"> </span>X13[,<span class="dv">1</span>]
 X2 &lt;-<span class="st"> </span>X13[,<span class="dv">2</span>]
 X3 &lt;-<span class="st"> </span>X13[,<span class="dv">3</span>]

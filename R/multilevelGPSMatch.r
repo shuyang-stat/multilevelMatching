@@ -174,7 +174,8 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
   #   }
   # }
   # if (row_num != taunumber) { stop("Error in for loop") }
-  results_list <- estimateTau(
+
+  estimate_args <- list(
     trtlevels = trtlevels,
     meanw = meanw,
     trtnumber = trtnumber,
@@ -183,6 +184,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     #also get variance estimates
     Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
+  results_list <- do.call(estimateTau,estimate_args)
 
   tau_dfm <- results_list$tau_dfm
   # varestimate<-varestimate/N
@@ -236,6 +238,10 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
             t(Cvec[jj,]+Cvec[kk,]) %*% vcov_coeff %*% (Cvec[jj,]+Cvec[kk,])
       }
     }
+    AI2012_args <- list(
+      Cvec = Cvec,
+      vcov_coeff = vcov_coeff
+    )
   }
 
   # tau_dfm <-
@@ -251,7 +257,13 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     results = tau_dfm,
     analysis_idx = analysis_idx,
     mu = results_list$mu_dfm,
-    impute_mat = Yiw[prepared_data$sorted_to_orig,]
+    impute_mat = Yiw[prepared_data$sorted_to_orig,],
+    estimate_args = estimate_args
   )
+
+  if (GPSM=="multinomiallogisticReg") {
+    tidy_output$AI2012_args <- AI2012_args
+  }
+
   return(tidy_output)
 }
