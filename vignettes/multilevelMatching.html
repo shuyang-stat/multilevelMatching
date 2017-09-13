@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Yang" />
 
-<meta name="date" content="2017-04-06" />
+<meta name="date" content="2017-09-12" />
 
 <title>multilevelMatching Tutorial</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">multilevelMatching Tutorial</h1>
 <h4 class="author"><em>Shu Yang</em></h4>
-<h4 class="date"><em>2017-04-06</em></h4>
+<h4 class="date"><em>2017-09-12</em></h4>
 
 
 
@@ -114,7 +114,19 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt Estimate
 ## 1 EY(1)   1 106.6667
 ## 2 EY(2)   2  96.0000
-## 3 EY(3)   3 113.3333</code></pre>
+## 3 EY(3)   3 113.3333
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  105   94  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  105   94   80
+##  [8,]  108   96  130
+##  [9,]  108   96  130</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
@@ -131,7 +143,19 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt  Estimate
 ## 1 EY(1)   1 106.66667
 ## 2 EY(2)   2  96.22222
-## 3 EY(3)   3 113.33333</code></pre>
+## 3 EY(3)   3 113.33333
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102  100  130
+##  [2,]  105   94   80
+##  [3,]  120   96  130
+##  [4,]  105   96  130
+##  [5,]  102  100  130
+##  [6,]  105   94   80
+##  [7,]  105   94   80
+##  [8,]  108   96  130
+##  [9,]  108   96  130</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)</code></pre></div>
 <pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_method = match_method, :
 ## It is recommended that X is a matrix. X will be coerced to a matrix.</code></pre>
@@ -154,7 +178,18 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ##   Param Trt Estimate
 ## 1 EY(1)   1  105.375
 ## 2 EY(2)   2   96.000
-## 3 EY(3)   3  111.250</code></pre>
+## 3 EY(3)   3  111.250
+## 
+## $impute_mat
+##      [,1] [,2] [,3]
+## [1,]  102  100  130
+## [2,]  105   94   80
+## [3,]  102   94  130
+## [4,]  108  100  130
+## [5,]  105   94   80
+## [6,]  105   94   80
+## [7,]  108   96  130
+## [8,]  108   96  130</code></pre>
 <p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM=&quot;existing&quot;</code> in <code>multilevelGPSMatch()</code> or <code>multilevelGPSStratification()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))
 pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span>-pr_w1)/<span class="dv">3</span>
@@ -169,19 +204,31 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;existing&quot;</span>)</code></pre></div>
 <pre><code>## $results
-##         Param Trt1 Trt2   Estimate   Variance VarianceAI2012
-## 1 EY(2)-EY(1)    1    2 -12.444444   6.348422             NA
-## 2 EY(3)-EY(1)    1    3  -6.444444 566.249657             NA
-## 3 EY(3)-EY(2)    2    3   6.000000 564.691358             NA
+##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2 -13.777778  28.20439             NA
+## 2 EY(3)-EY(1)    1    3  -7.111111 583.43073             NA
+## 3 EY(3)-EY(2)    2    3   6.666667 575.16049             NA
 ## 
 ## $analysis_idx
 ## NULL
 ## 
 ## $mu
 ##   Param Trt  Estimate
-## 1 EY(1)   1 108.66667
-## 2 EY(2)   2  96.22222
-## 3 EY(3)   3 102.22222</code></pre>
+## 1 EY(1)   1 109.33333
+## 2 EY(2)   2  95.55556
+## 3 EY(3)   3 102.22222
+## 
+## $impute_mat
+##       [,1] [,2] [,3]
+##  [1,]  102  100   80
+##  [2,]  105   94  130
+##  [3,]  120   94   80
+##  [4,]  120   94  130
+##  [5,]  102  100   80
+##  [6,]  120   94   80
+##  [7,]  105   94   80
+##  [8,]  108   94  130
+##  [9,]  102   96  130</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">111</span>)
 n    &lt;-<span class="st"> </span><span class="dv">5000</span>*<span class="dv">6</span>
 <span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>
@@ -200,6 +247,7 @@ trt1 &lt;-<span class="st"> </span><span class="dv">100</span>; trt1</code></pre
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trt3 &lt;-<span class="st"> </span><span class="dv">100</span>; trt3</code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw Xs</span>
+<span class="kw">library</span>(MASS)
 X13 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)
 X1 &lt;-<span class="st"> </span>X13[,<span class="dv">1</span>]
 X2 &lt;-<span class="st"> </span>X13[,<span class="dv">2</span>]
@@ -278,7 +326,7 @@ match1$results</code></pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

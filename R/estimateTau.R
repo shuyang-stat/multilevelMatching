@@ -31,7 +31,6 @@
 #' @return a list including the dataframes for estimates for tau and for mu
 #'
 #'
-#' @export
 estimateTau <- function(
   trtlevels,meanw,
   trtnumber,taunumber,N,

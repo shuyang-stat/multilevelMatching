@@ -1,9 +1,15 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
 
-## This is a fork 
+## This is an (active) fork 
+
+#### Original repo
 
 The original creator and author's package  [is available here](https://github.com/shuyang1987/multilevelMatching). See below for installing the original version 0.1 with `devtools`.
+
+#### What's different here
+
+This fork has been updated more recently than the original repo. It has a few improvements.
 
 ### Breaking changes
 

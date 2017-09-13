@@ -6,7 +6,7 @@ overlap<-function(PF.fit){
   }
   gx<-apply(1/PF.fit,1,sum)
   #alpha1<-optim(median(gx), obj)$par
-  suppressWarnings( alpha1<-optim(median(gx), obj)$par)
+  suppressWarnings( alpha1<-stats::optim(stats::median(gx), obj)$par)
   alpha<-2*obj(alpha1)
   idx<-which(gx<alpha)
   return(list(alpha=alpha,idx=idx))

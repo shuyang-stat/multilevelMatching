@@ -75,17 +75,17 @@ multilevelGPSStratification <- function(
     # message("Multinomial model fitted with reference level '1'")
     ##This should probably be user-specified via the dots argument
     W.ref <- stats::relevel(as.factor(W),ref=model_options$reference_level)
-    temp <- capture.output(PF.out <- nnet::multinom(W.ref~X))
-    PF.fit <- fitted(PF.out)
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
+    PF.fit <- stats::fitted(PF.out)
     if (linearp==1) {
-      beta <- coef(PF.out)
+      beta <- stats::coef(PF.out)
       Xbeta <- X%*%t(beta[,-1])
       PF.fit[,-1] <- Xbeta
     }
   }
   if (GPSM == "ordinallogisticReg") {
     PF.out <- MASS::polr(as.factor(W)~X)
-    PF.fit <- fitted(PF.out)
+    PF.fit <- stats::fitted(PF.out)
   }
   if (GPSM == "existing") {
     ## bug checks migrated to prepareData()
@@ -106,7 +106,8 @@ multilevelGPSStratification <- function(
 
   for(kk in 1:trtnumber){
     pwx<-PF.fit[,kk]
-    ranking<-stats::ave(pwx,FUN=function(x)cut(x,quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE))
+    ranking <- stats::ave(pwx,FUN=function(x){
+      cut(x,stats::quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE)})
     #type=2 to have the same quintiles as in SAS
     #right=FALSE to have left side closed intervals
     for(jj in 1:NS){
@@ -158,7 +159,7 @@ multilevelGPSStratification <- function(
   results <- boot::boot(data=data, statistic=estforboot,R=nboot,
                   GPSM=GPSM,linearp=linearp,trtnumber=trtnumber,
                   trtlevels=trtlevels,taunumber=taunumber,NS=NS)
-  bootvar <- apply(results$t,2,var,na.rm = TRUE)
+  bootvar <- apply(results$t,2,stats::var,na.rm = TRUE)
   # names(bootvar)<-cname1
 
   ## Tidy the output

@@ -85,13 +85,13 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     # message("Multinomial model fitted with reference level '1'")
     ##This should probably be user-specified via the dots argument
     W.ref <- stats::relevel(as.factor(W),ref=model_options$reference_level)
-    temp <- capture.output(PF.out <- nnet::multinom(W.ref~X))
-    PF.fit <- fitted(PF.out)
-    vcov_coeff <- vcov(PF.out)
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
+    PF.fit <- stats::fitted(PF.out)
+    vcov_coeff <- stats::vcov(PF.out)
   }
   if (GPSM == "ordinallogisticReg") {
     PF.out <- MASS::polr(as.factor(W)~X)
-    PF.fit <- fitted(PF.out)
+    PF.fit <- stats::fitted(PF.out)
   }
   if (GPSM == "existing") {
     ## bug checks migrated to prepareData()

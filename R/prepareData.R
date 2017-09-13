@@ -47,9 +47,9 @@ prepareData <- function(
 
     if(Trimming==1){
       #PF modeling
-      W.ref <- relevel(as.factor(W),ref=1)
-      temp<-capture.output(PF.out <- multinom(W.ref~X))  ##make this into a subfunction?
-      PF.fit <- fitted(PF.out)
+      W.ref <- stats::relevel(as.factor(W),ref=1)
+      temp <- utils::capture.output(PF.out <- multinom(W.ref~X))  ##make this into a subfunction?
+      PF.fit <- stats::fitted(PF.out)
 
       ## identify sufficient overlap
       overlap_idx <- overlap(PF.fit)$idx
@@ -108,29 +108,29 @@ prepareData <- function(
 
 
 
-#' order the treatment increasingly
-#'
-#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
-#' @param X a covariate matrix (p x n) with no intercept
-#' @param Y a continuous response vector (1 x n)
-#'
-#' @return the following elements, ordered according to levels of W
-#' \itemize{
-#'
-#'  \item W: a treatment vector (1 x n) with numerical values indicating treatment groups
-#'
-#'  \item X: a covariate matrix (p x n) with no intercept
-#'
-#'  \item Y: a continuous response vector (1 x n)
-#
-#' }
-#' along with these downstream elements of treatment:
-#' \itemize{
-#' \item trtnumber: number of treatment levels
-#' \item trtlevels: all treatment levels
-#' \item pertrtlevelnumber: number of observations by treatment level
-#' \item taunumber: number of pairwise treatment effects
-#' }
+# #' order the treatment increasingly
+# #'
+# #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
+# #' @param X a covariate matrix (p x n) with no intercept
+# #' @param Y a continuous response vector (1 x n)
+# #'
+# #' @return the following elements, ordered according to levels of W
+# #' \itemize{
+# #'
+# #'  \item W: a treatment vector (1 x n) with numerical values indicating treatment groups
+# #'
+# #'  \item X: a covariate matrix (p x n) with no intercept
+# #'
+# #'  \item Y: a continuous response vector (1 x n)
+# #
+# #' }
+# #' along with these downstream elements of treatment:
+# #' \itemize{
+# #' \item trtnumber: number of treatment levels
+# #' \item trtlevels: all treatment levels
+# #' \item pertrtlevelnumber: number of observations by treatment level
+# #' \item taunumber: number of pairwise treatment effects
+# #' }
 reorderByTreatment <- function(Y,W,X){
 
   N <- length(Y)
