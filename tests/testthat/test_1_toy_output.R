@@ -1,4 +1,4 @@
-# library(multilevelMatching)
+
 context("toy dataset results")
 
 
@@ -19,9 +19,9 @@ t3 <- multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
 
-tests_dir <- file.path("..", "test_toy_output.Rdata")
+tests_data <- quickLookup("test_toy_output.Rdata")
 
-load(tests_dir)
+load(tests_data)
 
 my_tolerance <- 0.0001
 Param_names <- c( "EY(2)-EY(1)", "EY(3)-EY(1)" ,"EY(3)-EY(2)")
