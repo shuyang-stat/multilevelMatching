@@ -82,7 +82,8 @@ trt1 <- 100; trt1
 trt2 <- 100; trt2
 trt3 <- 100; trt3
 # draw Xs
-X13 <- MASS::mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
+library(MASS)
+X13 <- mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
 X1 <- X13[,1]
 X2 <- X13[,2]
 X3 <- X13[,3]

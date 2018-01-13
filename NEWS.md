@@ -13,6 +13,7 @@
 - Implemented some unit tests
 - Some checks and bug-avoidances are introduced
 - Cleaned up package dependencies
+- added stable references to functions with `::`
 - Added `estimateTau()` to unify the main 3 functions (Dont Repeat Yourself principle)
 - `multilevelGPSStratification()` now sorts by treatment level `W`
 - Vignette now illustrates how user can supply propsensity scores via `GPSM="existing"`

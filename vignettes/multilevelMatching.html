@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,7 +12,7 @@
 
 <meta name="author" content="Shu Yang" />
 
-<meta name="date" content="2017-05-17" />
+<meta name="date" content="2018-01-13" />
 
 <title>multilevelMatching Tutorial</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">multilevelMatching Tutorial</h1>
 <h4 class="author"><em>Shu Yang</em></h4>
-<h4 class="date"><em>2017-05-17</em></h4>
+<h4 class="date"><em>2018-01-13</em></h4>
 
 
 
@@ -89,7 +89,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="install" class="section level3">
 <h3>Install</h3>
 <p>with <code>devtools</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;shuyang1987/multilevelMatching&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;shuyang1987/multilevelMatching&quot;</span>)</code></pre></div>
 </div>
 <div id="use" class="section level3">
 <h3>Use</h3>
@@ -384,22 +384,22 @@ W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</sp
 ## 3:X              -0.3972373  0.05811916    -2.2797045  0.25886828</code></pre>
 <p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM=&quot;existing&quot;</code> in <code>multilevelGPSMatch()</code> or <code>multilevelGPSStratification()</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))
-pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span>-pr_w1)/<span class="dv">3</span>
-pr_w3 &lt;-<span class="st"> </span><span class="dv">1</span>-(pr_w1+pr_w2)
+pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>pr_w1)<span class="op">/</span><span class="dv">3</span>
+pr_w3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(pr_w1<span class="op">+</span>pr_w2)
 existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(pr_w1, pr_w2,pr_w3)
 <span class="co">#the following checks are also carried out under the hood</span>
-<span class="kw">nrow</span>(existing_GPS_matrix)==<span class="kw">length</span>(W)</code></pre></div>
+<span class="kw">nrow</span>(existing_GPS_matrix)<span class="op">==</span><span class="kw">length</span>(W)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(existing_GPS_matrix)==<span class="kw">length</span>(<span class="kw">unique</span>(W))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ncol</span>(existing_GPS_matrix)<span class="op">==</span><span class="kw">length</span>(<span class="kw">unique</span>(W))</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">rowSums</span>(existing_GPS_matrix)==<span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">all</span>(<span class="kw">rowSums</span>(existing_GPS_matrix)<span class="op">==</span><span class="dv">1</span>)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">multilevelGPSMatch</span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">&quot;existing&quot;</span>)</code></pre></div>
 <pre><code>## $results
-##         Param Trt1 Trt2  Estimate  Variance VarianceAI2012
-## 1 EY(2)-EY(1)    1    2 -8.888889  25.22085             NA
-## 2 EY(3)-EY(1)    1    3  6.666667 627.87654             NA
-## 3 EY(3)-EY(2)    2    3 15.555556 625.85460             NA
+##         Param Trt1 Trt2   Estimate Variance VarianceAI2012
+## 1 EY(2)-EY(1)    1    2  -8.888889  10.2085             NA
+## 2 EY(3)-EY(1)    1    3 -15.555556 743.4595             NA
+## 3 EY(3)-EY(2)    2    3  -6.666667 737.2346             NA
 ## 
 ## $analysis_idx
 ## NULL
@@ -408,18 +408,18 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 ##   Param Trt  Estimate
 ## 1 EY(1)   1 106.66667
 ## 2 EY(2)   2  97.77778
-## 3 EY(3)   3 113.33333
+## 3 EY(3)   3  91.11111
 ## 
 ## $impute_mat
 ##       [,1] [,2] [,3]
-##  [1,]  102   96   80
-##  [2,]  105  100  130
-##  [3,]  120  100  130
-##  [4,]  105  100  130
+##  [1,]  102  100   80
+##  [2,]  105  100   80
+##  [3,]  120  100   80
+##  [4,]  102   96  130
 ##  [5,]  105  100   80
-##  [6,]  105  100   80
-##  [7,]  108   94  130
-##  [8,]  108   94  130
+##  [6,]  108   94   80
+##  [7,]  108   94   80
+##  [8,]  108  100   80
 ##  [9,]  102   96  130
 ## 
 ## $estimate_args
@@ -427,7 +427,7 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 ## [1] 1 2 3
 ## 
 ## $estimate_args$meanw
-## [1] 106.66667  97.77778 113.33333
+## [1] 106.66667  97.77778  91.11111
 ## 
 ## $estimate_args$trtnumber
 ## [1] 3
@@ -440,47 +440,47 @@ existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(
 ## 
 ## $estimate_args$Yiw
 ##       [,1] [,2] [,3]
-##  [1,]  102   96   80
-##  [2,]  105  100  130
-##  [3,]  120  100  130
-##  [4,]  108   94  130
+##  [1,]  102  100   80
+##  [2,]  105  100   80
+##  [3,]  120  100   80
+##  [4,]  108  100   80
 ##  [5,]  105  100   80
-##  [6,]  108   94  130
+##  [6,]  108   94   80
 ##  [7,]  102   96  130
-##  [8,]  105  100  130
-##  [9,]  105  100   80
+##  [8,]  102   96  130
+##  [9,]  108   94   80
 ## 
 ## $estimate_args$Kiw
 ##       [,1]
-##  [1,]    1
-##  [2,]    3
+##  [1,]    2
+##  [2,]    1
 ##  [3,]    0
-##  [4,]    1
+##  [4,]    2
 ##  [5,]    4
 ##  [6,]    1
 ##  [7,]    1
-##  [8,]    5
-##  [9,]    2
+##  [8,]    1
+##  [9,]    6
 ## 
 ## $estimate_args$sigsqiw
 ##         [,1]
-##  [1,]   18.0
-##  [2,]  112.5
-##  [3,]  112.5
+##  [1,]    4.5
+##  [2,]    4.5
+##  [3,]   72.0
 ##  [4,]   18.0
 ##  [5,]   18.0
-##  [6,]    2.0
-##  [7,]    2.0
+##  [6,]   18.0
+##  [7,]    8.0
 ##  [8,] 1250.0
 ##  [9,] 1250.0
 ## 
 ## $estimate_args$W
 ## [1] 1 1 1 1 2 2 2 3 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">111</span>)
-n    &lt;-<span class="st"> </span><span class="dv">5000</span>*<span class="dv">6</span>
+n    &lt;-<span class="st"> </span><span class="dv">5000</span><span class="op">*</span><span class="dv">6</span>
 <span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>
 vars   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)
-covars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,-<span class="dv">1</span>,-.<span class="dv">5</span>)
+covars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span>.<span class="dv">5</span>)
 mu     &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)
 tau    &lt;-<span class="st"> </span><span class="dv">1</span>
 Sigma &lt;-<span class="st"> </span><span class="kw">diag</span>(vars)
@@ -494,48 +494,49 @@ trt1 &lt;-<span class="st"> </span><span class="dv">100</span>; trt1</code></pre
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">trt3 &lt;-<span class="st"> </span><span class="dv">100</span>; trt3</code></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># draw Xs</span>
-X13 &lt;-<span class="st"> </span>MASS::<span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)
+<span class="kw">library</span>(MASS)
+X13 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)
 X1 &lt;-<span class="st"> </span>X13[,<span class="dv">1</span>]
 X2 &lt;-<span class="st"> </span>X13[,<span class="dv">2</span>]
 X3 &lt;-<span class="st"> </span>X13[,<span class="dv">3</span>]
-X4 &lt;-<span class="st"> </span><span class="kw">runif</span>(n,-<span class="dv">3</span>,<span class="dv">3</span>)
+X4 &lt;-<span class="st"> </span><span class="kw">runif</span>(n,<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>)
 X5 &lt;-<span class="st"> </span><span class="kw">rchisq</span>(n, <span class="dt">df=</span><span class="dv">1</span>)
 X6 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n,<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">prob=</span>.<span class="dv">5</span>)
 
-xb2 &lt;-<span class="st"> </span><span class="fl">0.1</span>*(X1^<span class="dv">2</span>+X2+X3+X4+X5+X6)
-xb3 &lt;-<span class="st"> </span><span class="fl">0.1</span>*(X1+X2^<span class="dv">2</span>+X3^<span class="dv">2</span>+X4+X5+X6)
+xb2 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X2<span class="op">+</span>X3<span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)
+xb3 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">+</span>X2<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X3<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)
 exb2&lt;-<span class="kw">exp</span>(xb2)
 exb3&lt;-<span class="kw">exp</span>(xb3)
-pi1&lt;-<span class="dv">1</span>/(<span class="dv">1</span>+<span class="kw">exp</span>(xb2)+<span class="kw">exp</span>(xb3))
-pi2&lt;-<span class="kw">exp</span>(xb2)/(<span class="dv">1</span>+<span class="kw">exp</span>(xb2)+<span class="kw">exp</span>(xb3))
-pi3&lt;-<span class="kw">exp</span>(xb3)/(<span class="dv">1</span>+<span class="kw">exp</span>(xb2)+<span class="kw">exp</span>(xb3))
+pi1&lt;-<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))
+pi2&lt;-<span class="kw">exp</span>(xb2)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))
+pi3&lt;-<span class="kw">exp</span>(xb3)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))
 pi&lt;-<span class="kw">cbind</span>(pi1,pi2,pi3)
 <span class="kw">apply</span>(pi,<span class="dv">2</span>,mean)</code></pre></div>
 <pre><code>##       pi1       pi2       pi3 
 ## 0.2637337 0.3681104 0.3681559</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">W&lt;-<span class="kw">matrix</span>(<span class="ot">NA</span>,n,<span class="dv">4</span>)
 <span class="kw">colnames</span>(W)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;W1&quot;</span>,<span class="st">&quot;W2&quot;</span>,<span class="st">&quot;W3&quot;</span>,<span class="st">&quot;W&quot;</span>)
-for(kk in <span class="dv">1</span>:n){
-    W[kk,<span class="dv">1</span>:<span class="dv">3</span>]&lt;-<span class="kw">rmultinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">prob =</span> pi[kk,])
+<span class="cf">for</span>(kk <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){
+    W[kk,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]&lt;-<span class="kw">rmultinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">prob =</span> pi[kk,])
 }
 
 sim.dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(W,X1,X2,X3,X4,X5,X6)
-trt1.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat$W1==<span class="dv">1</span>),trt1,<span class="dt">replace=</span><span class="ot">FALSE</span>)
-trt2.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat$W2==<span class="dv">1</span>),trt2,<span class="dt">replace=</span><span class="ot">FALSE</span>)
-trt3.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat$W3==<span class="dv">1</span>),trt3,<span class="dt">replace=</span><span class="ot">FALSE</span>)
+trt1.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W1<span class="op">==</span><span class="dv">1</span>),trt1,<span class="dt">replace=</span><span class="ot">FALSE</span>)
+trt2.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W2<span class="op">==</span><span class="dv">1</span>),trt2,<span class="dt">replace=</span><span class="ot">FALSE</span>)
+trt3.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W3<span class="op">==</span><span class="dv">1</span>),trt3,<span class="dt">replace=</span><span class="ot">FALSE</span>)
 sim.dat &lt;-<span class="st"> </span>sim.dat[<span class="kw">c</span>(trt1.keep,trt2.keep,trt3.keep),]
-sim.dat[,<span class="st">&quot;W&quot;</span>]&lt;-sim.dat[,<span class="st">&quot;W1&quot;</span>]+<span class="dv">2</span>*sim.dat[,<span class="st">&quot;W2&quot;</span>]+<span class="dv">3</span>*sim.dat[,<span class="st">&quot;W3&quot;</span>]
+sim.dat[,<span class="st">&quot;W&quot;</span>]&lt;-sim.dat[,<span class="st">&quot;W1&quot;</span>]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>sim.dat[,<span class="st">&quot;W2&quot;</span>]<span class="op">+</span><span class="dv">3</span><span class="op">*</span>sim.dat[,<span class="st">&quot;W3&quot;</span>]
 sim.dat[,<span class="st">&quot;W&quot;</span>]&lt;-<span class="kw">as.factor</span>(sim.dat[,<span class="st">&quot;W&quot;</span>])
 W &lt;-<span class="st"> </span>sim.dat[,<span class="st">&quot;W&quot;</span>]
-X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(sim.dat[,<span class="kw">names</span>(sim.dat)[-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)]])
+X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(sim.dat[,<span class="kw">names</span>(sim.dat)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)]])
 X1 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X1&quot;</span>]; X2 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X2&quot;</span>]; X3 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X3&quot;</span>]; X4 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X4&quot;</span>]; X5 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X5&quot;</span>];X6 &lt;-<span class="st"> </span>X[,<span class="st">&quot;X6&quot;</span>]
 
 <span class="co"># outcome: treatment effect is zero</span>
 u  &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">nrow</span>(X))
 <span class="co"># ouctome (linear)</span>
-Y &lt;-<span class="st">    </span>(W==<span class="dv">1</span>)*(  X1 +<span class="st">   </span>X2 +<span class="st">   </span>X3 +<span class="st">   </span>X4 +<span class="st">    </span>X5<span class="dv">-1</span> +<span class="st">     </span>X6<span class="fl">-0.5</span>)+
-(W==<span class="dv">2</span>)*(<span class="dv">2</span>*X1 +<span class="st"> </span><span class="dv">3</span>*X2 +<span class="st">   </span>X3 +<span class="st"> </span><span class="dv">2</span>*X4 +<span class="st"> </span><span class="dv">2</span>*(X5<span class="dv">-1</span>) +<span class="st"> </span><span class="dv">2</span>*(X6<span class="fl">-0.5</span>))+
-(W==<span class="dv">3</span>)*(<span class="dv">3</span>*X1 +<span class="st">   </span>X2 +<span class="st"> </span><span class="dv">2</span>*X3 -<span class="st">   </span>X4 -<span class="st">   </span>(X5<span class="dv">-1</span>) -<span class="st">   </span>(X6<span class="fl">-0.5</span>))+u
+Y &lt;-<span class="st">    </span>(W<span class="op">==</span><span class="dv">1</span>)<span class="op">*</span>(  X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st">   </span>X4 <span class="op">+</span><span class="st">    </span>X5<span class="op">-</span><span class="dv">1</span> <span class="op">+</span><span class="st">     </span>X6<span class="op">-</span><span class="fl">0.5</span>)<span class="op">+</span>
+(W<span class="op">==</span><span class="dv">2</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X5<span class="op">-</span><span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X6<span class="op">-</span><span class="fl">0.5</span>))<span class="op">+</span>
+(W<span class="op">==</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">*</span>X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X3 <span class="op">-</span><span class="st">   </span>X4 <span class="op">-</span><span class="st">   </span>(X5<span class="op">-</span><span class="dv">1</span>) <span class="op">-</span><span class="st">   </span>(X6<span class="op">-</span><span class="fl">0.5</span>))<span class="op">+</span>u
 
 match1&lt;-<span class="kw">multilevelMatchX</span>(Y,W,X)
 match2&lt;-<span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Trimming=</span><span class="ot">FALSE</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>)
@@ -543,22 +544,22 @@ match3&lt;-<span class="kw">multilevelGPSMatch</span>(Y,W,X,<span class="dt">Tri
 match4&lt;-<span class="kw">multilevelGPSStratification</span>(Y,W,X,<span class="dt">NS=</span><span class="dv">10</span>,<span class="dt">GPSM=</span><span class="st">&quot;multinomiallogisticReg&quot;</span>,<span class="dt">linearp=</span><span class="dv">0</span>,<span class="dt">nboot=</span><span class="dv">50</span>)
 
 
-match1$results</code></pre></div>
+match1<span class="op">$</span>results</code></pre></div>
 <pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
 ## 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186             NA
 ## 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754             NA
 ## 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616             NA</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match2$results</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match2<span class="op">$</span>results</code></pre></div>
 <pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
 ## 1 EY(2)-EY(1)    1    2 -0.7458499 0.6974908      0.4340571
 ## 2 EY(3)-EY(1)    1    3  0.5605192 0.4856579      0.2287787
 ## 3 EY(3)-EY(2)    2    3  1.3063691 0.7089620      0.4226466</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match3$results</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match3<span class="op">$</span>results</code></pre></div>
 <pre><code>##         Param Trt1 Trt2  Estimate  Variance VarianceAI2012
 ## 1 EY(2)-EY(1)    1    2 -1.056445 0.7924310      0.4876396
 ## 2 EY(3)-EY(1)    1    3  1.001189 0.4457239      0.2104603
 ## 3 EY(3)-EY(2)    2    3  2.057634 0.8310264      0.4624069</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match4$results</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match4<span class="op">$</span>results</code></pre></div>
 <pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2012
 ## 1 EY(2)-EY(1)    1    2 -0.3077249 0.3515320             NA
 ## 2 EY(3)-EY(1)    1    3  0.4170466 0.2412386             NA
@@ -572,7 +573,7 @@ match1$results</code></pre></div>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>

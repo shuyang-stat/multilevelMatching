@@ -1,4 +1,4 @@
-library(multilevelMatching)
+
 context("impute_mat is ordered as original data")
 
 
@@ -19,10 +19,10 @@ t2_in_imputemat <- multilevelGPSMatch(Y,W,X,Trimming=Trimming,GPSM=GPSM)
 # ### save(GPS_imputes_mat,file= tests_dir) #baseline_tests2 <- t2
 # save(prepared_data, file= prepared_data_dir)
 
-tests_dir <- file.path("..", "test_toy_output.Rdata")
+tests_data <- quickLookup("test_toy_output.Rdata")
 # ##GPS_imputes_mat <- t3$imputes_mat
 ### save(GPS_imputes_mat,file= tests_dir)
-load(tests_dir)
+load(tests_data)
 
 
 # existing_GPS_matrix <- cbind(
