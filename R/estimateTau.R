@@ -2,89 +2,71 @@
 #'
 #' This is a major plumbing function for the package
 #'
-#' @param trtlevels vector of the unique levels of treatment W
-#' @param meanw vector of the estimated mean w.r.t. each treatment w
-#' @param trtnumber a scalar, the number of treatment levels
-#' @param taunumber a scalar, the number of tau contrasts to estimate
+#' @inheritParams estimateTrtModel
+#' @inheritParams multiMatch
+#' @param trt_levels vector of the unique levels of treatment W
+#' @param num_trts a scalar, the number of treatment levels
+#' @param num_contrasts a scalar, the number of tau contrasts to estimate
 #' @param N A scalar for the number of rows in the data
-#' @param Yiw for AI2012 variance
-#' @param Kiw for AI2012 variance
-#' @param sigsqiw for AI2012 variance
-#' @param W for AI2012 variance
+#' @param Yiw Matrix of all imputed potential outcomes
+#' @param mean_Yiw vector of the estimated mean w.r.t. each treatment w
+#' @param Kiw Vector of times each unit is matched to
+#' @param sigsqiw Estimated sigma squared, from AI2006
 #'
-#' To estimate variance in Matching using AI2006 method in MatchX and MatchGPS,
-#' all of the following must be supplied. Otherwise, they default to NULL.
-#'   \itemize{
 #'
-#'   \item @param Yiw:  a vector of estimates for pairwise treatment effects
-#'
-#'   \item @param Kiw
-#'
-#'   \item @param sigsqiw
-#'
-#'   \item @param W
-#'   }
-#'
-#'  @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}};
-#'  \code{\link{multilevelGPSStratification}}
+#' @seealso \code{\link{multiMatch}};
 #'
 #' @return a list including the dataframes for estimates for tau and for mu
 #'
 #'
 estimateTau <- function(
-  trtlevels,meanw,
-  trtnumber,taunumber,N,
-  Yiw=NULL, Kiw=NULL,sigsqiw=NULL,W=NULL
+  trt_levels, mean_Yiw,
+  num_trts, num_contrasts, N, M_matches,
+  Yiw, Kiw, sigsqiw, W,
+  ...
 ){
 
+  blank_vec <- rep(NA, num_contrasts)
   tau_dfm <- list(
     # stringsAsFactors = FALSE, row.names = NULL,
-    Param = rep(NA, taunumber),
-    Trt1 = rep(NA, taunumber),
-    Trt2 = rep(NA, taunumber),
-    Estimate = rep(NA, taunumber),
-    Variance = rep(NA, taunumber),
-    VarianceAI2012 = rep(NA,taunumber)
+    # Easier to construct this as a list object
+    Param = blank_vec,
+    Trt1 = blank_vec,
+    Trt2 = blank_vec,
+    Estimate = blank_vec,
+    Variance = blank_vec,
+    VarianceAI2012 = blank_vec
   )
 
 
   mu_dfm <- data.frame(
-    stringsAsFactors = FALSE, row.names = NULL,
-    Param = nameMu(trtlevels),
-    Trt = trtlevels,
-    Estimate = meanw
+    Param = nameMu(trt_levels),
+    Trt = trt_levels,
+    Estimate = mean_Yiw,
+    stringsAsFactors = FALSE,
+    row.names = NULL
   )
-  imputes_mat <- Yiw#data.frame(
-  #   stringsAsFactors = FALSE, row.names = NULL,
-  #   Param = nameMu(trtlevels),
-  #   Trt = trtlevels,
-  #   Estimate = meanw
-  # )
 
   row_num <- 0
-  # cname1<-c()
-  for(jj in 1:(trtnumber-1)){
-    for(kk in (jj+1):trtnumber){
+
+  for(jj in 1:(num_trts-1)){
+    for(kk in (jj+1):num_trts){
       row_num <- row_num+1
-      # thistrt <- trtlevels[jj]
-      # thattrt <- trtlevels[kk]
 
-      tau_dfm$Trt1[row_num] <- trtlevels[jj]
-      tau_dfm$Trt2[row_num] <- trtlevels[kk]
+      tau_dfm$Trt1[row_num] <- trt_levels[jj]
+      tau_dfm$Trt2[row_num] <- trt_levels[kk]
       tau_dfm$Param[row_num] <- nameContrast(trt1=tau_dfm$Trt1[row_num], trt2=tau_dfm$Trt2[row_num])
-      tau_dfm$Estimate[row_num] <- meanw[kk]-meanw[jj]
-      tau_dfm$Variance[row_num] <- (1/N)*(
-        mean( (Yiw[,kk]-Yiw[,jj]-(tau_dfm$Estimate[row_num]))^2 ) +
-          mean( (Kiw^2+Kiw)*sigsqiw*
-                  (W==tau_dfm$Trt1[row_num] | W==tau_dfm$Trt2[row_num])
-          )
+      tau_dfm$Estimate[row_num] <- mean_Yiw[kk]-mean_Yiw[jj]
+      tau_dfm$Variance[row_num] <- estVarAI2006(
+        N = N, W = W, Kiw = Kiw, sigsqiw = sigsqiw, M_matches = M_matches,
+        Yiw[,kk],
+        Yiw2 = Yiw[,jj],
+        trt_level_1 = tau_dfm$Trt1[row_num],
+        trt_level_2 = tau_dfm$Trt2[row_num],
+        tau = tau_dfm$Estimate[row_num]
       )
-
-      # varestimate[row_num]<-mean((Yiw[,kk]-Yiw[,jj]-(meanw[kk]-meanw[jj]))^2)+
-      # mean((Kiw^2+Kiw)*sigsqiw*(W==thistrt | W==thattrt))
     }
   }
-  if (row_num != taunumber) { stop("Error in for loop") }
 
   tau_dfm <-
     as.data.frame(tau_dfm, stringsAsFactors = FALSE, row.names = NULL)
@@ -92,5 +74,27 @@ estimateTau <- function(
     tau_dfm = tau_dfm,
     mu_dfm = mu_dfm
   )
-  return(results)
+  results
+}
+
+# #' Computes Estimated Asymptotic Variance
+# #'
+# #' See Theorem 7 of Abadie and Imbens 2006 Econometrica
+estVarAI2006 <- function(
+  N, W, M_matches,
+  trt_level_1, trt_level_2,
+  Yiw1, Yiw2, tau, Kiw, sigsqiw
+){
+
+  Y_contrasts <- Yiw1-Yiw2-tau
+  K_M_factor <- (Kiw/M_matches)^2 +
+    ((2*M_matches-1)/(M_matches)) *
+    ((Kiw/M_matches))
+  W_indicator <- (W == trt_level_1 | W == trt_level_2)
+  ## From Theorem 7, page 251 of Abadie and Imbens 2006 Econometrica
+  V_hat <- mean( Y_contrasts^2 ) + mean( K_M_factor * sigsqiw * W_indicator )
+
+
+  estimated_asymptotic_variance <- (1/N)*(V_hat)
+  estimated_asymptotic_variance
 }

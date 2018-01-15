@@ -26,7 +26,7 @@ multilevelMatchX <- function(Y,W,X){
   ## some checks
   match_method <- "MatchOnX"
 
-  prepared_data <- prepareData(
+  prepared_data <- prepareData_legacy(
     Y=Y, W=W, X=X,
     match_method = match_method#,
     # Trimming = FALSE
@@ -120,7 +120,7 @@ multilevelMatchX <- function(Y,W,X){
     #also get variance estimates
     Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
-  results_list <- do.call(estimateTau,estimate_args)
+  results_list <- do.call(estimateTau_legacy,estimate_args)
 
 
   tau_dfm <- results_list$tau_dfm

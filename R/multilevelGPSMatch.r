@@ -1,8 +1,6 @@
 #' Matching on GPS with multilevel treatments
 #'
-#' @param Y a continuous response vector (1 x n)
-#' @param W a treatment vector (1 x n) with numerical values indicating
-#'   treatment groups
+#' @inheritParams multilevelMatchX
 #' @param X a covariate matrix (p x n) with no intercept. When GPSM="existing",
 #'   then X must be a vector (1 x n) of user-specified propensity scores.
 #' @param Trimming an indicator of whether trimming the sample to ensure overlap
@@ -35,17 +33,21 @@
 #'   \code{\link{multilevelGPSStratification}}
 #'
 #' @examples
-#'   X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
-#'   Y<-c(102,105,120,130,100,80,94,108,96)
-#'   W<-c(1,1,1,3,2,3,2,1,2)
+#'   X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
+#'   Y <- c(102,105,120,130,100,80,94,108,96)
+#'   W <- c(1,1,1,3,2,3,2,1,2)
 #'   multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 #'   multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 #'
 #' @import Matching boot nnet MASS
 #'
 #' @export
-multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
-                               model_options = list(reference_level = "1")){
+multilevelGPSMatch <- function(
+  Y,W,X,
+  Trimming,
+  GPSM="multinomiallogisticReg",
+  model_options = list(reference_level = "1")
+){
 
   match_method <- "MatchOnGPS"
 
@@ -64,7 +66,8 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     }
   }
 
-  prepared_data <- prepareData(
+
+  prepared_data <- prepareData_legacy(
     Y=Y, W=W, X=X,
     match_method = match_method,
     Trimming = Trimming
@@ -94,6 +97,7 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     PF.fit <- stats::fitted(PF.out)
   }
   if (GPSM == "existing") {
+    PF.out <- NULL
     ## bug checks migrated to prepareData()
     PF.fit <- X
   }
@@ -184,56 +188,51 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     #also get variance estimates
     Yiw=Yiw, Kiw=Kiw,sigsqiw=sigsqiw,W=W
   )
-  results_list <- do.call(estimateTau,estimate_args)
+
+
+
+  results_list <- do.call(estimateTau_legacy,estimate_args)
 
   tau_dfm <- results_list$tau_dfm
-  # varestimate<-varestimate/N
-  # names(tauestimate)<-cname1
-  # names(varestimate)<-cname1
-  # names(varestimateAI2012)<-cname1
-
 
   if (GPSM=="multinomiallogisticReg") {
 
     tau_dfm$VarianceAI2012 <- NA
 
-    I.inv<-vcov_coeff
+    I.inv <- vcov_coeff
     ## Adjustment term c'(I^-1)c
-    X<-as.matrix(X)
-    Cmat<-matrix(0,N,(dim(X)[2]+1)*(trtnumber-1))
-    Cvec<-matrix(0,trtnumber,(dim(X)[2]+1)*(trtnumber-1))
+    X <- as.matrix(X)
+    Cmat <- matrix(0,N,(dim(X)[2]+1)*(trtnumber-1))
+    Cvec <- matrix(0,trtnumber,(dim(X)[2]+1)*(trtnumber-1))
     for(kkk in 1:trtnumber){
-      thistrt<-trtlevels[kkk]
-      thiscnames<-c(paste(paste(paste("m",thistrt,sep=""),".",sep=""),1,sep=""),
-                    paste(paste(paste("m",thistrt,sep=""),".",sep=""),2,sep=""))
-      Y11<-matrix(Y[Matchmat[,c(thiscnames)]],ncol=2,byrow=FALSE)
-      mY11<-apply(Y11,1,mean)
+      thistrt <- trtlevels[kkk]
+      col_name <- nameCols(thistrt)
+      Y11 <- matrix(Y[Matchmat[,c(col_name)]],ncol=2,byrow=FALSE)
+      mY11 <- apply(Y11,1,mean)
       for(kk in 1:(trtnumber-1)){
         for(jj in 1:(dim(X)[2]+1)){
           if(jj==1){}
           if(jj>1){
-            X11<-matrix(X[Matchmat[,c(thiscnames)],(jj-1)],ncol=2,byrow=FALSE)
-            mX11<-apply(X11,1,mean)
-            C1.X1Y<-apply((X11-mX11)*(Y11-mY11),1,sum)
-            if(kkk==(kk+1)){C1.X1Y<-C1.X1Y*(1-PF.fit[,kk+1])}
-            else if(kkk!=(kk+1))C1.X1Y<-C1.X1Y*(-PF.fit[,kk+1])
-            Cmat[,(dim(X)[2]+1)*(kk-1)+jj]<-C1.X1Y
+            X11 <- matrix(X[Matchmat[,c(col_name)],(jj-1)],ncol=2,byrow=FALSE)
+            mX11 <- apply(X11,1,mean)
+            C1.X1Y <- apply((X11-mX11)*(Y11-mY11),1,sum)
+            if(kkk==(kk+1)){C1.X1Y <- C1.X1Y*(1-PF.fit[,kk+1])}
+            else if(kkk!=(kk+1))C1.X1Y <- C1.X1Y*(-PF.fit[,kk+1])
+            Cmat[,(dim(X)[2]+1)*(kk-1)+jj] <- C1.X1Y
           }
         }
       }
-      Cvec[kkk,]<-apply(Cmat,2,mean)
+      Cvec[kkk,] <- apply(Cmat,2,mean)
     }
 
     for(jj in 1:(trtnumber-1)){
       for(kk in (jj+1):trtnumber){
-        thistrt<-trtlevels[jj]
-        thattrt<-trtlevels[kk]
+        thistrt <- trtlevels[jj]
+        thattrt <- trtlevels[kk]
         result_row_num <- which(tau_dfm$Param  ==
                                   nameContrast(trt1=thistrt, trt2=thattrt))
-        # cname1<-c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
-        # varestimateAI2012[cname1]<-varestimate[cname1]-
-        #   t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
-        tau_dfm$VarianceAI2012[result_row_num] <-
+
+        tau_dfm$VarianceAI2012[result_row_num]  <-
           tau_dfm$Variance[result_row_num] -
             t(Cvec[jj,]+Cvec[kk,]) %*% vcov_coeff %*% (Cvec[jj,]+Cvec[kk,])
       }
@@ -244,26 +243,21 @@ multilevelGPSMatch <- function(Y,W,X,Trimming,GPSM="multinomiallogisticReg",
     )
   }
 
-  # tau_dfm <-
-  #   as.data.frame(tau_dfm, stringsAsFactors = FALSE, row.names = NULL)
-  # untidy_output <- list(tauestimate=tauestimate,
-  #             varestimate=varestimate,
-  #             varestimateAI2012=varestimateAI2012,
-  #             analysis_idx=analysis_idx)
 
-  # tidy_output <- tidyOutput(untidy_output=untidy_output)
 
   tidy_output <- list(
     results = tau_dfm,
     analysis_idx = analysis_idx,
     mu = results_list$mu_dfm,
     impute_mat = Yiw[prepared_data$sorted_to_orig,],
-    estimate_args = estimate_args
+    estimate_args = estimate_args,
+    model = PF.out,
+    propensity_scores = PF.fit
   )
 
   if (GPSM=="multinomiallogisticReg") {
     tidy_output$AI2012_args <- AI2012_args
   }
 
-  return(tidy_output)
+  tidy_output
 }

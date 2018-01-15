@@ -13,11 +13,43 @@ existing_GPS_matrix <- cbind(
 )
 
 t1 <- multilevelMatchX(Y, W, X)
+t1_v2 <- multiMatch(Y, W, X, match_on = "covariates")
+# t1_v2$estimate_args$meanw <- t1_v2$estimate_args$mean_Yiw
+# t1_v2$estimate_args$mean_Yiw <- NULL
+
+test_that("matching on X returns same with new multiMatch function", {
+  expect_equal(
+    object = t1[1:4],
+    expected = t1_v2[1:4],
+    tolerance = 1e-7
+  )
+})
+
+
+reorder_estimate_args <- c(
+  "trtlevels", "meanw","trtnumber","taunumber","N","Yiw","Kiw","sigsqiw","W"
+)
+
 t2 <- multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
+# t2_v2 <- multiMatch(Y, W, X, trimming=0, match_on = "multinom")
+#
+# t2_v2b <- t2_v2
+# t2_v2b$estimate_args <- t2_v2b$estimate_args[reorder_estimate_args]
+#
+# test_that("matching on X returns same with new multiMatch function", {
+#   expect_equal(
+#     object = t2,
+#     expected = t2_v2b,
+#     tolerance = 1e-7
+#   )
+# })
+
 t3 <- multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
-# t4 <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
+t4 <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
 t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
+
+
 
 tests_data <- quickLookup("test_toy_output.Rdata")
 
@@ -85,6 +117,8 @@ test_that("match on GPS with one X with trimming returns same output", {
   #               tolerance = my_tolerance)
 })
 
+
+# ## failing test
 # this_t <- t4
 # test_that("match on GPS with existing GPS returns same output", {
 #   expect_equal( (t4$results)$Estimate,
@@ -108,3 +142,20 @@ test_that("match on X with X a one-column matrix returns same output", {
   expect_identical( (this_t$results)$Trt2, Trt2s)
 
 })
+
+
+## moved to test_multiMatch
+# t5 <- multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="ordinallogisticReg")
+# t5_v2 <- multiMatch(Y, W, X, match_on = "polr")
+#
+# t5_v2b <- t5_v2
+# t5_v2b$estimate_args <- t5_v2b$estimate_args[reorder_estimate_args]
+#
+# test_that("polr-match returns same with new multiMatch function", {
+#   expect_equal(
+#     object = t5,
+#     expected = t5_v2b,
+#     tolerance = 1e-7
+#   )
+# })
+
