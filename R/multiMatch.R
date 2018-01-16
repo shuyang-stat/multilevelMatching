@@ -69,7 +69,7 @@ multiMatch <- function(
     trimming = trimming,
     model_options = model_options
   )
-  X <- prepared_data$X ## Necessary for AI2012 variance
+  X_covars <- prepared_data$X ## Necessary for AI2012 variance
 
 
   ## Fit treatment model to estimate propensity scores
@@ -99,80 +99,23 @@ multiMatch <- function(
   tau_dfm <- results_list$tau_dfm
 
 
-  ## TODO: cleanup Abadie & Imbens 2012 variance estimation
-  ##    migrate it to a subfunction
-  W <- prepared_data$W
-  # X <- prepared_data$X ## Do not re-assign, as it's been reassigned to PS
-  Y <- prepared_data$Y
-  N <- prepared_data$N
-  num_trts <- prepared_data$num_trts
-  trt_levels <- prepared_data$trt_levels
-  N_per_trt <- prepared_data$N_per_trt
-  num_contrasts <- prepared_data$num_contrasts
-  analysis_idx <- prepared_data$analysis_idx
-
   if (match_on == "multinom") {
-    match_mat_AI2012 <- matching_estimates$match_mat_AI2012
+    est_var_AI2012_args <- append(estimate_contrasts_args,trt_model)
+    est_var_AI2012_args$tau_dfm <- tau_dfm
+    est_var_AI2012_args$X_covars <- X_covars
 
-    tau_dfm$VarianceAI2012 <- NA
+    ## Estimate AI2012 variance for multinomial logistic regression
+    est_var_AI2012 <- do.call(estVarAI2012, est_var_AI2012_args)
 
-    vcov_coeff <- trt_model$vcov_coeff
-    # I_inverse <- trt_model$vcov_coeff
-    ## Adjustment term c'(I^-1)c
-    X <- as.matrix(X)
-    c_matrix <- matrix(0,N,(dim(X)[2]+1)*(num_trts-1))
-    c_vector <- matrix(0,num_trts,(dim(X)[2]+1)*(num_trts-1))
-
-    for(trt_kk in 1:num_trts){
-      col_name <- nameCols(trt_levels[trt_kk])
-      Y11 <- matrix( Y[match_mat_AI2012[,c(col_name)]], ncol=2, byrow=FALSE)
-      mY11 <- apply(Y11,1,mean)
-      for(trt_k in 1:(num_trts-1)){
-        for(trt_jj in 1:(dim(X)[2]+1)){
-          if(trt_jj==1){}
-          if(trt_jj>1){
-            X11 <- matrix( X[match_mat_AI2012[,c(col_name)],(trt_jj-1)],
-                          ncol=2, byrow=FALSE)
-            mX11 <- apply(X11,1,mean)
-
-            c1_X1Y_temp <- apply((X11-mX11)*(Y11-mY11),1,sum)
-            if ( trt_kk == (trt_k+1) ) {
-              mult_factor <- (1-prop_score_ests[,trt_k+1])
-            } else
-              if ( trt_kk != (trt_k+1) ) {
-                mult_factor <- (-1)*prop_score_ests[,trt_k+1]
-              }
-            c1_X1Y <- c1_X1Y_temp*mult_factor
-            c_matrix[,(dim(X)[2]+1)*(trt_k-1)+trt_jj] <- c1_X1Y
-          }
-        }
-      }
-      c_vector[trt_kk,] <- apply(c_matrix,2,mean)
-    }
-
-    for(trt_jj in 1:(num_trts-1)){
-      for(trt_k in (trt_jj+1):num_trts){
-        result_row_num <-
-          which( tau_dfm$Param == nameContrast(
-            trt1 = trt_levels[trt_jj], trt2 = trt_levels[trt_k]))
-
-        tau_dfm$VarianceAI2012[result_row_num]  <-
-          tau_dfm$Variance[result_row_num] -
-          t(c_vector[trt_jj,] + c_vector[trt_k,]) %*% vcov_coeff %*% ( c_vector[trt_jj,] + c_vector[trt_k,])
-      }
-    }
-    AI2012_args <- list(
-      c_vector = c_vector,
-      vcov_coeff = vcov_coeff,
-      c_matrix = c_matrix
-    )
+    ##This will be added to the output. So will AI2012_args.
+    tau_dfm <- est_var_AI2012$tau_dfm
   }
 
 
 
   tidy_output <- list(
     results = tau_dfm,
-    analysis_idx = analysis_idx,
+    analysis_idx = prepared_data$analysis_idx,
     mu = results_list$mu_dfm,
     impute_mat = matching_estimates$Yiw[prepared_data$sorted_to_orig,],
     estimate_args = estimate_contrasts_args,
@@ -182,8 +125,97 @@ multiMatch <- function(
   )
 
   if (match_on == "multinom") {
-    tidy_output$AI2012_args <- AI2012_args
+    tidy_output$AI2012_args <- est_var_AI2012$AI2012_args
   }
 
   tidy_output
+}
+
+
+#' Estimate Variance as in Abadie & Imebens 2012 JASA
+#'
+#' This function estimates variance of matching estimator when matching on
+#' propensity scores that were estimated with multinomial logistic regression.
+#' This method takes into account the uncertainty from the treatment model.
+#'
+#' @inheritParams multiMatch
+#' @inheritParams matchAllTreatments
+#' @param X_covars The matrix of covariates (not the matrix of estimated GPS)
+#' @param prop_score_ests The matrix of propensity scores
+#' @param vcov_coeff The variance-covariance (inverse fisher information) matrix
+#'   from the multinomial logistic regression model
+#' @param tau_dfm The dataframe of estimates and estimated standard errors
+#'   output from \code{\link{estimateTau}}
+#' @param match_mat_AI2012 Information on matches from
+#'   \code{\link{matchAllTreatments}}
+#'
+#' @return A list with the updated \code{tau_dfm} includeing a column for
+#'   \code{VarianceAI2012}, and a list object \code{AI2012_args} with
+#'   potentially helpful extra information.
+estVarAI2012 <- function(
+  W, X_covars, Y, N,
+  num_trts, trt_levels,
+  match_mat_AI2012,
+  prop_score_ests,
+  vcov_coeff,
+  tau_dfm,
+  ...
+){
+  tau_dfm$VarianceAI2012 <- NA
+
+  ncol_X <- dim(X_covars)[2]
+  c_matrix <- matrix(0, nrow=N, ncol=(dim(X_covars)[2]+1)*(num_trts-1))
+  c_vector <- matrix(0, nrow=num_trts, ncol=(ncol_X+1)*(num_trts-1))
+
+  for ( trt_kk in 1:num_trts ) {
+    col_name <- nameCols(trt_levels[trt_kk])
+    Y11 <- matrix( Y[match_mat_AI2012[,c(col_name)]], ncol=2, byrow=FALSE)
+    mY11 <- apply(Y11,1,mean)
+    for ( trt_k in 1:(num_trts-1) ) {
+      for ( trt_jj in 1:(ncol_X+1) ) {
+        if ( trt_jj==1 ) {}
+        if ( trt_jj>1 ) {
+          X11 <- matrix( X_covars[match_mat_AI2012[,c(col_name)],(trt_jj-1)],
+                         ncol=2, byrow=FALSE)
+          mX11 <- apply(X11,1,mean)
+
+          c1_X1Y_temp <- apply((X11-mX11)*(Y11-mY11),1,sum)
+          if ( trt_kk == (trt_k+1) ) {
+            mult_factor <- (1-prop_score_ests[,trt_k+1])
+          } else
+            if ( trt_kk != (trt_k+1) ) {
+              mult_factor <- (-1)*prop_score_ests[,trt_k+1]
+            }
+          c1_X1Y <- c1_X1Y_temp*mult_factor
+          c_matrix[,(ncol_X+1)*(trt_k-1)+trt_jj] <- c1_X1Y
+        }
+      }
+    }
+    c_vector[trt_kk,] <- apply(c_matrix,2,mean)
+  }
+
+  for ( trt_jj in 1:(num_trts-1) ) {
+    for ( trt_k in (trt_jj+1):num_trts ) {
+      result_row_num <-
+        which( tau_dfm$Param == nameContrast(
+          trt1 = trt_levels[trt_jj], trt2 = trt_levels[trt_k]))
+
+      tau_dfm$VarianceAI2012[result_row_num]  <-
+        tau_dfm$Variance[result_row_num] -
+        (
+          t(c_vector[trt_jj,] + c_vector[trt_k,]) %*%
+            vcov_coeff %*%
+            ( c_vector[trt_jj,] + c_vector[trt_k,])
+        )
+    }
+  }
+
+
+  AI2012_args <- list(
+    c_vector = c_vector,
+    vcov_coeff = vcov_coeff,
+    c_matrix = c_matrix
+  )
+
+  list(tau_dfm = tau_dfm, AI2012_args = AI2012_args)
 }

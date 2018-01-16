@@ -1,9 +1,30 @@
 
-# #' estimates all imputed potential outcomes, as well as AI06 variance estimates,
-# #' for all individuals on all treatment levels.
-# #'
-# #' Mostly calls a subfcuntion for each treatment level, which calls subfunctions
-# #' that either carry out the matched imputation or the variance estimation
+#' Estimate Imputed Outcomes and AI06 Variance Components
+#'
+#' Mostly calls a subfunction for each treatment level, which calls subfunctions
+#' that either carry out the matched imputation or the variance estimation
+#'
+#' @inheritParams multiMatch
+#' @inheritParams estimateTrtModel
+#' @param num_trts The number of unique treatments (3+), a scalar
+#' @param trt_levels A vector (of length \code{num_trts} providing the unique
+#'   treatment levels
+#' @param N_per_trt A vector (of length \code{num_trts}) indicating the number
+#'   of units observed to have each treatment level
+#' @param N The total number of units
+#'
+#' @return A list including at most: \itemize{
+#'
+#'   \item Yiw: A matrix of all imputed (or observed) potential outcomes for
+#'   each unit \item mean_Yiw: A vector of the average (across all units) of
+#'   estimated/imputed potential outcomes \item sigsqiw: Estimated variance
+#'   components (from AI2006) for each unit \item Kiw: The vector of number of
+#'   times unit i used as a match \item impute_match_data: extra information
+#'   from the main matching procedure \item match_mat_AI2012: When
+#'   \code{match_on=`multinom`} this additional information will be output for
+#'   \code{\link{estVarAI2012}}
+#'   }
+#'
 matchAllTreatments <- function(
   N, X, W, Y,
   num_trts, trt_levels, N_per_trt,
