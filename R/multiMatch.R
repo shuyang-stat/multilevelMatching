@@ -60,7 +60,6 @@ multiMatch <- function(
   J_var_matches=1
 ){
 
-  warning("match_on='existing' needs further unit testing")
 
   ## Argument checks and defensive programming
   prepared_data <- prepareData(

@@ -87,7 +87,7 @@ prepareData <- function(
 
   if ( match_on == "existing" ) {
     ## Check that "existing" X has the correctly specified number of levels
-
+    warning("match_on='existing' needs further unit testing")
     warning("user-supplied propensity scores has not been passing checks as of 2017-03-26")
     if (nrow(X) != ordered_data_list$N) {
       stop("user-supplied propensity scores (through argument X and
