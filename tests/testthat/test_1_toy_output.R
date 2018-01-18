@@ -105,7 +105,9 @@ test_that("match on GPS with one X with trimming returns same output", {
 })
 
 
-# ## failing test
+## Failing test
+## Moved to test_existing_GPS_matching.R
+
 # this_t <- t4
 # test_that("match on GPS with existing GPS returns same output", {
 #   expect_equal( (t4$results)$Estimate,

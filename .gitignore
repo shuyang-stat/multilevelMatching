@@ -2,3 +2,4 @@
 .Rhistory
 vignettes/*.R
 vignettes/*.html
+scratch/
