@@ -16,12 +16,17 @@ t1 <- multilevelMatchX(Y, W, X)
 t1_v2 <- multiMatch(Y, W, X, match_on = "covariates")
 # t1_v2$estimate_args$meanw <- t1_v2$estimate_args$mean_Yiw
 # t1_v2$estimate_args$mean_Yiw <- NULL
-
 test_that("matching on X returns same with new multiMatch function", {
   expect_equal(
-    object = t1[1:4],
-    expected = t1_v2[1:4],
+    object = t1[1:3],
+    expected = t1_v2[1:3],
     tolerance = 1e-7
+  )
+  expect_equal(
+    object = t1$impute_mat,
+    expected = t1_v2$impute_mat,
+    tolerance = 1e-7,
+    check.attributes = FALSE
   )
 })
 

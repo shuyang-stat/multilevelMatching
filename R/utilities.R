@@ -1,7 +1,9 @@
 
-# #' for naming columns in the matching matrix
-nameCols <- function(trtlevels){
-  col_names <- lapply(trtlevels, function(x){
+#' Name Columns in the Matching Matrix
+#'
+#' @inheritParams matchAllTreatments
+nameCols <- function(trt_levels){
+  col_names <- lapply(trt_levels, function(x){
     c(paste0("m",x, ".1"), paste0("m", x, ".2"))
   })
   unlist(col_names)
@@ -41,41 +43,42 @@ argChecks <- function(Y,W,X,N=NULL) {
 
 
 
-# #' order the treatment increasingly
-# #'
-# #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
-# #' @param X a covariate matrix (p x n) with no intercept
-# #' @param Y a continuous response vector (1 x n)
-# #'
-# #' @return the following elements, ordered according to levels of W
-# #' \itemize{
-# #'
-# #'  \item W: a treatment vector (1 x n) with numerical values indicating treatment groups
-# #'
-# #'  \item X: a covariate matrix (p x n) with no intercept
-# #'
-# #'  \item Y: a continuous response vector (1 x n)
-# #
-# #' }
-# #' along with these downstream elements of treatment:
-# #' \itemize{
-# #' \item trtnumber: number of treatment levels
-# #' \item trtlevels: all treatment levels
-# #' \item pertrtlevelnumber: number of observations by treatment level
-# #' \item taunumber: number of pairwise treatment effects
-# #' }
+#' order the treatment increasingly
+#'
+#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
+#' @param X a covariate matrix (p x n) with no intercept
+#' @param Y a continuous response vector (1 x n)
+#'
+#' @return the following elements, ordered according to levels of \code{W}
+#' \itemize{
+#'
+#'  \item \code{W}: a treatment vector (1 x n) with numerical values indicating treatment groups
+#'
+#'  \item \code{X}: a covariate matrix (p x n) with no intercept
+#'
+#'  \item \code{Y}: a continuous response vector (1 x n)
+#
+#' }
+#' along with these downstream elements of treatment:
+#' \itemize{
+#' \item \code{num_trts}: number of treatment levels
+#' \item \code{trt_levels}: all treatment levels
+#' \item \code{N_per_trt}: number of observations by treatment level
+#' \item \code{num_contrasts}: number of pairwise treatment effects
+#' \item \code{orig_to_sorted}: vector to rearrange from original to sorted by treatment
+#' \item \code{sorted_to_orig}: vector to rearrange from sorted to original order
+#' }
 reorderByTreatment <- function(Y,W,X){
 
   N <- length(Y)
 
-  if (1-is.unsorted(W)) {
-    temp <- sort(W, index.return=TRUE)
-    temp <- list(x = temp)
-    ## TODO: recode this into
-    ## temp <- list(ix = 1:length(W))
-    ## (add unit test before attempting)
+  if (!is.unsorted(W)) {
+    # temp <- sort(W, index.return=TRUE)
+    ## Above does not work with factor variables
+    ## (See test_utilities.R)
+    temp <- list(x = W)
     temp$ix <- 1:length(W)
-  }
+  } else
   if (is.unsorted(W)) {
     temp <- sort(W,index.return=TRUE)
   }

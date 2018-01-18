@@ -47,10 +47,12 @@ A list including at most: \itemize{
   times unit i used as a match \item impute_match_data: extra information
   from the main matching procedure \item match_mat_AI2012: When
   \code{match_on=`multinom`} this additional information will be output for
-  \code{\link{estVarAI2012}}
-  }
+  \code{\link{estVarAI2012}} }
+
+  A few of the necessary arguments are output from the
+  \code{\link{reorderByTreatment}} function.
 }
 \description{
 Mostly calls a subfunction for each treatment level, which calls subfunctions
-that either carry out the matched imputation or the variance estimation
+that either carry out the matched imputation or the variance estimation.
 }

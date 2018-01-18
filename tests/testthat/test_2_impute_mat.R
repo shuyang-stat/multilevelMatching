@@ -25,24 +25,6 @@ tests_data <- quickLookup("test_toy_output.Rdata")
 load(tests_data)
 
 
-# existing_GPS_matrix <- cbind(
-#   c(0.5, 0.3, 0.5, 0.5, 0.5, 0.3, 0.3, 0.5, 0.3),
-#   c(1,1.6, 1, 1, 1, 1.6,1.6, 1,1.6)/6,
-#   c(2, 2.6, 2, 2, 2, 2.6, 2.6, 2, 2.6)/6
-# )
-
-# t1 <- multilevelMatchX(Y, W, X)
-# t3 <- multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
-# t4 <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
-# t_matX <- multilevelMatchX(Y, W, as.matrix(X))
-# t_factorW <- multilevelMatchX(Y, as.factor(W), X)
-
-# tests_dir <- file.path("..", "test_toy_output.Rdata")
-# # tests_dir <- file.path("tests","test_toy_output.Rdata")
-# # ##GPS_imputes_mat <- t3$imputes_mat
-# ### save(GPS_imputes_mat,file= tests_dir) #baseline_tests2 <- t2
-# # save(baseline_tests2, file= tests_dir)
-# load(tests_dir)
 
 
 my_tolerance <- 1e-3
@@ -80,13 +62,3 @@ test_that("impute_mat behaves well", {
                 tolerance = my_tolerance)
 })
 
-
-# load(prepared_data_dir)
-# test_that("impute_mat behaves well, 2", {
-# expect_equal( new_imputes[1:3,],
-#               baseline_imputes[1:3,],
-#               tolerance = my_tolerance)
-# expect_equal( new_imputes ,
-#               baseline_imputes ,
-#               tolerance = my_tolerance)
-# })

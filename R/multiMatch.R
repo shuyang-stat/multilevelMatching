@@ -111,16 +111,22 @@ multiMatch <- function(
   }
 
 
+  # impute_mat_sorted <- matching_estimates$Yiw
+  impute_mat <- matching_estimates$Yiw[prepared_data$sorted_to_orig,]
+  colnames(impute_mat) <- prepared_data$trt_levels
+  rownames(impute_mat) <- paste0("unit",1:NROW(impute_mat))
+  impute_mat_resorted <- impute_mat[prepared_data$orig_to_sorted,]
 
   tidy_output <- list(
     results = tau_dfm,
     analysis_idx = prepared_data$analysis_idx,
     mu = results_list$mu_dfm,
-    impute_mat = matching_estimates$Yiw[prepared_data$sorted_to_orig,],
+    impute_mat = impute_mat,
     estimate_args = estimate_contrasts_args,
     model = trt_model$prop_score_model,
     propensity_scores = prop_score_ests,
-    impute_match_data = matching_estimates$impute_match_data
+    impute_match_data = matching_estimates$impute_match_data,
+    impute_mat_resorted = impute_mat_resorted
   )
 
   if (match_on == "multinom") {

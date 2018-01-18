@@ -26,10 +26,17 @@ mnom2 <- mnom_new
 
 test_that("multinom-matching returns same with new multiMatch function", {
   expect_equal(
-    object = mnom[1:4],
-    expected = mnom2[1:4],
+    object = mnom[1:3],
+    expected = mnom2[1:3],
     tolerance = 1e-7
   )
+  expect_equal(
+    object = mnom$impute_mat,
+    expected = mnom2$impute_mat,
+    tolerance = 1e-7,
+    check.attributes = FALSE
+  )
+
 })
 
 
@@ -45,9 +52,16 @@ polr2$estimate_args <- polr2$estimate_args[reorder_estimate_args]
 
 test_that("polr-matching returns same with new multiMatch function", {
   expect_equal(
-    object = polr[1:4],
-    expected = polr2[1:4],
+    object = polr[1:3],
+    expected = polr2[1:3],
     tolerance = 1e-7
+  )
+
+  expect_equal(
+    object = polr$impute_mat,
+    expected = polr2$impute_mat,
+    tolerance = 1e-7,
+    check.attributes = FALSE
   )
 })
 
@@ -127,9 +141,16 @@ covarsmm <- multiMatch(Y=Y,W=W,X=X,trimming=0,match_on="covariates")
 test_that("existing ps-matching returns same with new multiMatch function", {
   ## not passing tests
   expect_equal(
-    object = covar[1:4],
-    expected = covarsmm[1:4],
+    object = covar[1:3],
+    expected = covarsmm[1:3],
     tolerance = 1e-7
+  )
+
+  expect_equal(
+    object = covar$impute_mat,
+    expected = covarsmm$impute_mat,
+    tolerance = 1e-7,
+    check.attributes = FALSE
   )
 
 })
