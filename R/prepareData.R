@@ -1,9 +1,28 @@
 
+
+#' Prepare data for estimation
+#'
+#' A series of checks, tests, re-ordering, and other operations to prepare the
+#' data for matching. This function can be run standalone, before running
+#' \code{\link{multiMatch}}.
+#'
+#' @inheritParams multiMatch
+#'
+#'
+#' @return A list of information, including the \code{X, W, Y} arguments after sorting, and information on \code{unit_ids}, etc. See \code{\link{determineIDs}} for more.
+#'
+#' @export
 prepareData <- function(
   Y, W, X, match_on, trimming=NULL, model_options
 ){
 
-  #probably move this into prepareData
+  data_ids <- determineIDs(Y=Y, W=W, X=X)
+  Y <- data_ids$Y
+  W <- data_ids$W
+  X <- data_ids$X
+  unit_ids <- unit_ids_orig <- data_ids$unit_ids
+
+
   if (!is.null(model_options)){
     if (!is.list(model_options)){
       stop("model_options must be a list or NULL")
@@ -48,7 +67,10 @@ prepareData <- function(
     }
   }
 
-  if (trimming==0) {analysis_idx <- NULL} else
+  if (trimming==0) {
+    analysis_idx <- NULL
+    # analysis_idx <- list(ids_kept = unit_ids)
+    } else
     if (trimming ==1){
       message_no_trimming <- "trimming is currently only supported for multinomial logistic regression"
       if (match_on == "covariates") {
@@ -73,9 +95,13 @@ prepareData <- function(
 
         ## organize indices into 'kept' and 'dropped' for clean output
         all_indices <- 1:length(Y)
+        dropped_idx <- all_indices[!all_indices%in% overlap_idx]
+        unit_ids <- unit_ids_orig[overlap_idx]
         analysis_idx <- list(
           indices_kept = overlap_idx,
-          indices_dropped = all_indices[!all_indices%in% overlap_idx]
+          indices_dropped = dropped_idx,
+          ids_kept = unit_ids,
+          ids_dropped = unit_ids_orig[dropped_idx]
         )
       }
     } else {stop("trimming must be set to FALSE or TRUE")}
@@ -83,7 +109,7 @@ prepareData <- function(
 
 
   ## Order the treatment increasingly
-  ordered_data_list <- reorderByTreatment(W=W,X=X,Y=Y)
+  ordered_data_list <- reorderByTreatment(W=W,X=X,Y=Y, unit_ids_unsorted = unit_ids)
 
   if ( match_on == "existing" ) {
     ## Check that "existing" X has the correctly specified number of levels
@@ -118,5 +144,122 @@ prepareData <- function(
   ordered_data_list$analysis_idx <- analysis_idx
   ordered_data_list$match_on <- match_on
   ordered_data_list$model_options <- model_options
+
   ordered_data_list
+}
+
+#' Determines Unique Unit Identifiers
+#'
+#' This function attempts to determine unique identifying information,
+#' \code{unit_ids}, for each unit in the dataset. Users can apply this function
+#' on their raw data ahead of using \code{\link{multiMatch}} to ensure that the
+#' matching procedure will work. \code{unit_ids} will be used to identify study
+#' units in some of the information output from \code{\link{multiMatch}}.
+#'
+#' @inheritParams multiMatch
+#'
+#' @return \code{unit_ids}
+#'
+determineIDs <- function(Y,W,X){
+
+
+  names_list <- list(
+    "Y" = getIDs(Y),
+    "W" = getIDs(W),
+    "X" = getIDs(X)
+  )
+
+  has_null_names <- unlist(lapply(names_list, function(x){
+    ifelse(is.null(x), 1, 0)}))
+
+  num_units <- ifelse(is.matrix(W) || is.data.frame(W), NROW(W), length(W))
+
+  num_null_names <- sum(has_null_names)
+  which_not_null <- which(!has_null_names )
+
+
+  has_names <- paste( c("Y", "W", "X")[which_not_null] ,
+                      collapse = " and ")
+  unit_id_stop_message <- paste(
+    "Non-identical names were specified for arguments:",
+    has_names,
+    ". Please specify identical names/rownames to Y, W and X.",
+    "These are considered to be the unit IDs."
+  )
+
+  if ( num_null_names == 3 ) {
+    message("no unit IDs supplied; unit_ids will be assigned generically")
+    unit_ids <- paste0("unit_", 1:num_units)
+  } else
+    if ( num_null_names == 2 ) {
+      unit_ids <- names_list[[which_not_null]]
+    } else
+      if ( num_null_names == 1 ) {
+        names1 <- names_list[[which_not_null[1]]]
+        names2 <- names_list[[which_not_null[2]]]
+
+        if (identical(names1, names2)) {
+          unit_ids <- names1
+        } else {
+          stop(unit_id_stop_message)
+        }
+      } else
+        if ( num_null_names == 0 ){
+          if (
+            identical(names_list[[1]], names_list[[2]]) &&
+            identical(names_list[[1]], names_list[[3]]) &&
+            identical(names_list[[3]], names_list[[2]])
+          ) {
+            unit_ids <- names_list[[1]]
+          } else {
+            stop(unit_id_stop_message)
+          }
+
+        } else {
+          stop("Error with unit_ids. Please assign names/rownames of Y,W, and X to be the same")
+        }
+
+  if ( any(duplicated(unit_ids)) ) {
+    stop("unit_ids are duplicated. Please assign unique names/rownames of Y,W and X")
+  }
+
+  list(
+    Y = setIDs(Y,unit_ids),
+    W = setIDs(W,unit_ids),
+    X = setIDs(X,unit_ids),
+    unit_ids = unit_ids
+  )
+}
+
+#' Get/grab ID's from vector/matrix/dataframe
+#'
+#' This is a helper function for \code{\link{determineIDs}}
+#'
+#' @param x An object
+#'
+#' @return names(x), row.names(x), or NULL.
+getIDs <- function(x){
+  if (is.vector(x)) {names <- names(x)} else
+    if (is.matrix(x)) {names <- rownames(x)} else
+      if (is.data.frame(x)) {names <- row.names(x)} else {
+        stop("Y,W, and X must be vectors, matrices, or perhaps data.frames")
+      }
+  names
+}
+
+#' Set ID's from vector/matrix/dataframe
+#'
+#' This is a helper function for \code{\link{determineIDs}}
+#'
+#' @param x An object
+#' @param unit_ids Character vector to identify study units.
+#'
+#' @return names(x), row.names(x), or NULL.
+setIDs <- function(x,unit_ids){
+  if (is.vector(x)) {names(x) <- unit_ids} else
+    if (is.matrix(x)) {rownames(x) <- unit_ids} else
+      if (is.data.frame(x)) {row.names(x) <- unit_ids} else {
+        stop("Y,W, and X must be vectors, matrices, or perhaps data.frames")
+      }
+  x
 }

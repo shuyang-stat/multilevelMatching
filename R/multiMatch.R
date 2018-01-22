@@ -55,7 +55,7 @@ multiMatch <- function(
   Y,W,X,
   trimming = NULL,
   match_on,
-  model_options = list(reference_level = "1"),
+  model_options = list(reference_level = sort(W)[1]),
   M_matches=1,
   J_var_matches=1
 ){
@@ -110,12 +110,8 @@ multiMatch <- function(
     tau_dfm <- est_var_AI2012$tau_dfm
   }
 
-
-  # impute_mat_sorted <- matching_estimates$Yiw
-  impute_mat <- matching_estimates$Yiw[prepared_data$sorted_to_orig,]
-  colnames(impute_mat) <- prepared_data$trt_levels
-  rownames(impute_mat) <- paste0("unit",1:NROW(impute_mat))
-  impute_mat_resorted <- impute_mat[prepared_data$orig_to_sorted,]
+  impute_mat_sorted <- matching_estimates$Yiw
+  impute_mat <- impute_mat_sorted[prepared_data$sorted_to_orig,]
 
   tidy_output <- list(
     results = tau_dfm,
@@ -126,7 +122,7 @@ multiMatch <- function(
     model = trt_model$prop_score_model,
     propensity_scores = prop_score_ests,
     impute_match_data = matching_estimates$impute_match_data,
-    impute_mat_resorted = impute_mat_resorted
+    impute_mat_sorted = impute_mat_sorted
   )
 
   if (match_on == "multinom") {

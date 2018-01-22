@@ -11,8 +11,6 @@ estimateTrtModel <- function(
   W, X, match_on, model_options, ...
 ){
   if (match_on == "multinom") {
-    # message("Multinomial model fitted with reference level '1'")
-    ## This should probably be user-specified via the dots argument
     W.ref <- stats::relevel(as.factor(W),ref=model_options$reference_level)
     temp <- utils::capture.output(prop_score_model <- nnet::multinom(W.ref~X))
     prop_score_ests <- stats::fitted(prop_score_model)

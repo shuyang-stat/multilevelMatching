@@ -19,7 +19,9 @@ reorder_estimate_args <- c(
 mnom <- multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 
 # new function
-mnom_new <- multiMatch(Y, W, X, trimming=0, match_on = "multinom")
+mnom_new <- suppressMessages(
+  multiMatch(Y, W, X, trimming=0, match_on = "multinom")
+)
 
 mnom2 <- mnom_new
 # mnom2$estimate_args <- mnom2$estimate_args[reorder_estimate_args]
@@ -46,7 +48,9 @@ test_that("multinom-matching returns same with new multiMatch function", {
 ##old
 polr <- multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="ordinallogisticReg")
 #new
-polr_new <- multiMatch(Y, W, X, trimming=0, match_on = "polr")
+polr_new <- suppressMessages(
+  multiMatch(Y, W, X, trimming=0, match_on = "polr")
+)
 polr2 <- polr_new
 polr2$estimate_args <- polr2$estimate_args[reorder_estimate_args]
 
@@ -76,7 +80,9 @@ existing_GPS_matrix <- cbind(
 )
 eps <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
 epsmm <- suppressWarnings(
-  multiMatch(Y=Y,W=W,X=existing_GPS_matrix,trimming=0,match_on="existing")
+  suppressMessages(
+    multiMatch(Y=Y,W=W,X=existing_GPS_matrix,trimming=0,match_on="existing")
+  )
 )
 
 
@@ -135,7 +141,9 @@ epsmm <- suppressWarnings(
 
 
 covar <- multilevelMatchX(Y=Y,W=W,X=X)
-covarsmm <- multiMatch(Y=Y,W=W,X=X,trimming=0,match_on="covariates")
+covarsmm <- suppressMessages(
+  multiMatch(Y=Y,W=W,X=X,trimming=0,match_on="covariates")
+)
 
 
 test_that("existing ps-matching returns same with new multiMatch function", {

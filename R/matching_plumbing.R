@@ -12,6 +12,7 @@
 #' @param N_per_trt A vector (of length \code{num_trts}) indicating the number
 #'   of units observed to have each treatment level
 #' @param N The total number of units
+#' @param unit_ids_sorted The unit identifiers in correct, sorted order.
 #'
 #' @return A list including at most: \itemize{
 #'
@@ -29,18 +30,22 @@
 #'
 matchAllTreatments <- function(
   N, X, W, Y,
-  num_trts, trt_levels, N_per_trt,
+  num_trts, trt_levels, N_per_trt, unit_ids_sorted,
   M_matches,  J_var_matches,
   match_on,
   ...
 ){
 
+  blank_mat <- matrix(NA, ncol=num_trts, nrow=N)
+  colnames(blank_mat) <- trt_levels
+  rownames(blank_mat) <- unit_ids_sorted
+
   list_out <- list(
     impute_match_data = list(), ## extra information from the main matching proc
-    sigsqiw = matrix(NA,N,1), # The estimated sigma squared for each unit i,
-    Kiw = matrix(NA,N,1),   # The vector of number of times unit i used as a match,
-    Yiw = matrix(NA,N,num_trts), # The full imputed data set,
-    mean_Yiw = rep(NA,num_trts)) # Mean of Yiw across all units i
+    sigsqiw = blank_mat[,1, drop=FALSE], # The estimated sigma squared for each unit i,
+    Kiw = blank_mat[,1, drop=FALSE],   # The vector of number of times unit i used as a match,
+    Yiw = blank_mat, # The full imputed data set,
+    mean_Yiw = blank_mat[1,]) # Mean of Yiw across all units i
 
   basic_matching_args <- list(
     distance.tolerance = 0,
@@ -211,13 +216,13 @@ matchImputePO <- function(
   diff_trt_match <- do.call(Matching::Match,diff_trt_matching_args)
   diff_trt_match_data <- diff_trt_match$mdata
 
-  wm_args <- list(
+  weighted_mean_args <- list(
     x = c(Y[which_same_trt], diff_trt_match_data$Y[which(diff_trt_match_data$Tr==0)]),
     w = c(rep(1,length(which_same_trt)), diff_trt_match$weights)
   )
 
   ## Matching to impute potential outcomes
-  mean_po_kk  <- do.call(stats::weighted.mean, wm_args)
+  mean_po_kk  <- do.call(stats::weighted.mean, weighted_mean_args)
 
   Kiw_kk <- table(factor(diff_trt_match$index.control,levels=trtd_indiv_indices))
   Yiw_kk <- rep(NA, length(Y))

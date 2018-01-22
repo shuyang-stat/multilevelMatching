@@ -4,7 +4,7 @@
 \alias{reorderByTreatment}
 \title{order the treatment increasingly}
 \usage{
-reorderByTreatment(Y, W, X)
+reorderByTreatment(Y, W, X, unit_ids_unsorted)
 }
 \arguments{
 \item{Y}{a continuous response vector (1 x n)}
@@ -12,6 +12,8 @@ reorderByTreatment(Y, W, X)
 \item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
 
 \item{X}{a covariate matrix (p x n) with no intercept}
+
+\item{unit_ids_unsorted}{The \code{unit_ids} before the data is reordered}
 }
 \value{
 the following elements, ordered according to levels of \code{W}

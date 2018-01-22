@@ -5,7 +5,7 @@
 \title{Matching Estimators for Mutltiple Yreatments from Yang et al (2016).}
 \usage{
 multiMatch(Y, W, X, trimming = NULL, match_on,
-  model_options = list(reference_level = "1"), M_matches = 1,
+  model_options = list(reference_level = sort(W)[1]), M_matches = 1,
   J_var_matches = 1)
 }
 \arguments{

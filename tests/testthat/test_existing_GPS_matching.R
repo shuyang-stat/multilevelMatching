@@ -33,17 +33,20 @@ test_that("match on GPS (with existing GPS) returns original (v0.1) output", {
 
 set.seed(12345)
 t4mm <- suppressWarnings(
+  suppressMessages(
   multiMatch(
     Y=Y,W=W,X=existing_GPS_matrix,
     trimming=0,match_on="existing")
+  )
 )
 load(
 #   t4mm_orig <- t4mm
 # save(t4mm_orig,
-     file = rprojroot::find_package_root_file(
-       "tests", "testthat", "testing_datafiles",
+  file = quickLookup(
        "test_multiMatch_exising_GPS.Rdata"))
-# )
+
+
+
 ## Failing tests
 
 # test_that("multiMatch on GPS with existing GPS returns original (v0.1) output", {

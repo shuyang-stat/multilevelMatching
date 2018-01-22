@@ -13,7 +13,7 @@ existing_GPS_matrix <- cbind(
 )
 
 t1 <- multilevelMatchX(Y, W, X)
-t1_v2 <- multiMatch(Y, W, X, match_on = "covariates")
+t1_v2 <- suppressMessages(   multiMatch(Y, W, X, match_on = "covariates"))
 # t1_v2$estimate_args$meanw <- t1_v2$estimate_args$mean_Yiw
 # t1_v2$estimate_args$mean_Yiw <- NULL
 test_that("matching on X returns same with new multiMatch function", {

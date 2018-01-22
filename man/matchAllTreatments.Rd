@@ -4,8 +4,8 @@
 \alias{matchAllTreatments}
 \title{Estimate Imputed Outcomes and AI06 Variance Components}
 \usage{
-matchAllTreatments(N, X, W, Y, num_trts, trt_levels, N_per_trt, M_matches,
-  J_var_matches, match_on, ...)
+matchAllTreatments(N, X, W, Y, num_trts, trt_levels, N_per_trt, unit_ids_sorted,
+  M_matches, J_var_matches, match_on, ...)
 }
 \arguments{
 \item{N}{The total number of units}
@@ -26,6 +26,8 @@ treatment levels}
 
 \item{N_per_trt}{A vector (of length \code{num_trts}) indicating the number
 of units observed to have each treatment level}
+
+\item{unit_ids_sorted}{The unit identifiers in correct, sorted order.}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens 2006. Currently can only support M=1.}

@@ -45,9 +45,11 @@ argChecks <- function(Y,W,X,N=NULL) {
 
 #' order the treatment increasingly
 #'
+#' @inheritParams setIDs
 #' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
 #' @param X a covariate matrix (p x n) with no intercept
 #' @param Y a continuous response vector (1 x n)
+#' @param unit_ids_unsorted The \code{unit_ids} before the data is reordered
 #'
 #' @return the following elements, ordered according to levels of \code{W}
 #' \itemize{
@@ -68,7 +70,7 @@ argChecks <- function(Y,W,X,N=NULL) {
 #' \item \code{orig_to_sorted}: vector to rearrange from original to sorted by treatment
 #' \item \code{sorted_to_orig}: vector to rearrange from sorted to original order
 #' }
-reorderByTreatment <- function(Y,W,X){
+reorderByTreatment <- function(Y,W,X, unit_ids_unsorted){
 
   N <- length(Y)
 
@@ -86,9 +88,26 @@ reorderByTreatment <- function(Y,W,X){
   orig_to_sorted <- temp$ix
   sorted_to_orig <- order(temp$ix)
 
+  ## Defensive programming
+  stopifnot(identical(getIDs(W), unit_ids_unsorted))
+  stopifnot(identical(getIDs(Y), unit_ids_unsorted))
+  stopifnot(identical(getIDs(X), unit_ids_unsorted))
+
   W <- W[orig_to_sorted]
-  X <- X[orig_to_sorted, , drop=FALSE]
   Y <- Y[orig_to_sorted]
+  X <- X[orig_to_sorted, , drop=FALSE]
+
+
+  unit_ids_sorted <- unit_ids_unsorted[orig_to_sorted]
+
+  W <- setIDs(W, unit_ids_sorted)
+  Y <- setIDs(Y, unit_ids_sorted)
+  X <- setIDs(X, unit_ids_sorted)
+
+  ## Defensive programming
+  stopifnot(identical(getIDs(W)[sorted_to_orig], unit_ids_unsorted))
+  stopifnot(identical(getIDs(Y)[sorted_to_orig], unit_ids_unsorted))
+  stopifnot(identical(getIDs(X)[sorted_to_orig], unit_ids_unsorted))
 
   ## Defensive checks, again
   argChecks(Y = Y, W = W, X = X, N = N)
@@ -103,6 +122,9 @@ reorderByTreatment <- function(Y,W,X){
   list_to_return$num_contrasts <- (num_trts*(num_trts+1)/2)-num_trts  # number of pairwise treatment effects
   list_to_return$orig_to_sorted <- orig_to_sorted
   list_to_return$sorted_to_orig <- sorted_to_orig
+  list_to_return$unit_ids_unsorted <- unit_ids_unsorted
+  list_to_return$unit_ids_sorted <- unit_ids_sorted
+
 
   list_to_return
 }
