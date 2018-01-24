@@ -47,6 +47,9 @@ matchAllTreatments <- function(
     Yiw = blank_mat, # The full imputed data set,
     mean_Yiw = blank_mat[1,]) # Mean of Yiw across all units i
 
+  colnames(list_out$sigsqiw) <- "sigsqiw"
+  colnames(list_out$Kiw) <- "Kiw"
+
   basic_matching_args <- list(
     distance.tolerance = 0,
     ties = FALSE, ## Ties will be randomly broken.

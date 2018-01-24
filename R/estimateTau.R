@@ -86,15 +86,22 @@ estVarAI2006 <- function(
   Yiw1, Yiw2, tau, Kiw, sigsqiw
 ){
 
-  Y_contrasts <- Yiw1-Yiw2-tau
+  Y_contrasts <- (Yiw1-Yiw2)-tau
+  Y_contrasts_sq <- Y_contrasts^2
+  ## Estimating variance of conditional mean
+  V_taux <- mean(Y_contrasts_sq)
+
   K_M_factor <- (Kiw/M_matches)^2 +
     ((2*M_matches-1)/(M_matches)) *
     ((Kiw/M_matches))
   W_indicator <- (W == trt_level_1 | W == trt_level_2)
+  ## Estimating conditional variance
+  V_E <- mean( K_M_factor * sigsqiw * W_indicator )
+
+  ## Estimating marginal variance
   ## From Theorem 7, page 251 of Abadie and Imbens 2006 Econometrica
-  V_hat <- mean( Y_contrasts^2 ) + mean( K_M_factor * sigsqiw * W_indicator )
-
-
+  V_hat <- V_taux + V_E
   estimated_asymptotic_variance <- (1/N)*(V_hat)
+
   estimated_asymptotic_variance
 }
