@@ -1,6 +1,10 @@
-#' Estimate the tau contrasts, perhaps with variance estimates
+#' Calculate the estimates of population-level estimands (e.g., tau).
 #'
-#' This is a major plumbing function for the package
+#' This is a major plumbing function for the package. All matching procedures
+#' are carried out in \code{\link{matchImputePO}} (for point estimates) and
+#' \code{\link{estSigSq}} (for variance), which are subfunctions of
+#' \code{\link{matchAllTreatments}}. Most of the necessary arguments to this
+#' function are output from these two subfunctions.
 #'
 #' @inheritParams estimateTrtModel
 #' @inheritParams multiMatch
@@ -13,11 +17,9 @@
 #' @param Kiw Vector of times each unit is matched to
 #' @param sigsqiw Estimated sigma squared, from AI2006
 #'
+#' @seealso \code{\link{multiMatch}}
 #'
-#' @seealso \code{\link{multiMatch}};
-#'
-#' @return a list including the dataframes for estimates for tau and for mu
-#'
+#' @return A list, including the tidy dataframes estimates of target estimands
 #'
 estimateTau <- function(
   trt_levels, mean_Yiw,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimateTau.R
 \name{estimateTau}
 \alias{estimateTau}
-\title{Estimate the tau contrasts, perhaps with variance estimates}
+\title{Calculate the estimates of population-level estimands (e.g., tau).}
 \usage{
 estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches, Yiw,
   Kiw, sigsqiw, W, ...)
@@ -33,11 +33,15 @@ treatment groups}
 \item{...}{the dots argument}
 }
 \value{
-a list including the dataframes for estimates for tau and for mu
+A list, including the tidy dataframes estimates of target estimands
 }
 \description{
-This is a major plumbing function for the package
+This is a major plumbing function for the package. All matching procedures
+are carried out in \code{\link{matchImputePO}} (for point estimates) and
+\code{\link{estSigSq}} (for variance), which are subfunctions of
+\code{\link{matchAllTreatments}}. Most of the necessary arguments to this
+function are output from these two subfunctions.
 }
 \seealso{
-\code{\link{multiMatch}};
+\code{\link{multiMatch}}
 }

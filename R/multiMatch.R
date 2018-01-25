@@ -60,6 +60,9 @@ multiMatch <- function(
   J_var_matches=1
 ){
 
+  ###                                          ###
+  ### Step 1: Prepare data and other arguments ###
+  ###                                          ###
 
   ## Argument checks and defensive programming
   prepared_data <- prepareData(
@@ -80,7 +83,8 @@ multiMatch <- function(
     list(
       M_matches = M_matches,
       J_var_matches = J_var_matches
-    ))
+    )
+  )
 
   if (match_on != "covariates"){
     ## Instead of covariates, using propensity scores
@@ -88,30 +92,46 @@ multiMatch <- function(
   }
 
 
+  ###                                          ###
+  ### Step 2: Execute all matching procedures  ###
+  ###                                          ###
+
 
   ## Carry out all estimation for all treatment levels
-  matching_estimates <- do.call(matchAllTreatments,prepared_data)
+  matching_estimates <- do.call(matchAllTreatments, prepared_data)
+
+
+  ###                                          ###
+  ### Step 3: Organize into tidy, clean output ###
+  ###                                          ###
 
   ## Tidy the results a little
   estimate_contrasts_args <- append(prepared_data, matching_estimates)
-  results_list <- do.call(estimateTau,estimate_contrasts_args)
+  results_list <- do.call(estimateTau, estimate_contrasts_args)
   tau_dfm <- results_list$tau_dfm
-
-
-  if (match_on == "multinom") {
-    est_var_AI2012_args <- append(estimate_contrasts_args,trt_model)
-    est_var_AI2012_args$tau_dfm <- tau_dfm
-    est_var_AI2012_args$X_covars <- X_covars
-
-    ## Estimate AI2012 variance for multinomial logistic regression
-    est_var_AI2012 <- do.call(estVarAI2012, est_var_AI2012_args)
-
-    ##This will be added to the output. So will AI2012_args.
-    tau_dfm <- est_var_AI2012$tau_dfm
-  }
 
   impute_mat_sorted <- matching_estimates$Yiw
   impute_mat <- impute_mat_sorted[prepared_data$sorted_to_orig,]
+
+
+  if (match_on == "multinom") {
+
+  ###                                          ###
+  ### Step 3B: Calculate AI2012 variance ests  ###
+  ###                                          ###
+
+    ## Collect a lot of objects from other function outputs
+    est_var_AI2012_args <- append(estimate_contrasts_args, trt_model)
+    est_var_AI2012_args$tau_dfm <- tau_dfm
+    est_var_AI2012_args$X_covars <- X_covars
+
+    ## Calculate AI2012 variance estimates for multinomial logistic regression
+    est_var_AI2012 <- do.call(calcSigSqAI2012, est_var_AI2012_args)
+
+    ## Add the AI2012 variance estimates to the tidy results dataframe
+    tau_dfm$VarianceAI2012 <- est_var_AI2012$est_sigsq_AI2012
+  }
+
 
   tidy_output <- list(
     results = tau_dfm,
@@ -126,6 +146,7 @@ multiMatch <- function(
   )
 
   if (match_on == "multinom") {
+    ## Additional information from the AI2012 variance estimation
     tidy_output$AI2012_args <- est_var_AI2012$AI2012_args
   }
 
@@ -133,11 +154,14 @@ multiMatch <- function(
 }
 
 
-#' Estimate Variance as in Abadie & Imebens 2012 JASA
+#' Calculate Variance as in Abadie & Imebens 2012 JASA
 #'
-#' This function estimates variance of matching estimator when matching on
-#' propensity scores that were estimated with multinomial logistic regression.
-#' This method takes into account the uncertainty from the treatment model.
+#' This function calculates the estimated variance of matching estimator when
+#' matching on propensity scores that were estimated with multinomial logistic
+#' regression. This method takes into account the uncertainty from the treatment
+#' model. This function does no "heavy lifting" in that it only assembles pieces
+#' that have been estimated elsewhere (i.e., see \code{\link{estSigSq}} to see
+#' how the matching procedures are carried out).
 #'
 #' @inheritParams multiMatch
 #' @inheritParams matchAllTreatments
@@ -153,7 +177,7 @@ multiMatch <- function(
 #' @return A list with the updated \code{tau_dfm} includeing a column for
 #'   \code{VarianceAI2012}, and a list object \code{AI2012_args} with
 #'   potentially helpful extra information.
-estVarAI2012 <- function(
+calcSigSqAI2012 <- function(
   W, X_covars, Y, N,
   num_trts, trt_levels,
   match_mat_AI2012,
@@ -162,7 +186,7 @@ estVarAI2012 <- function(
   tau_dfm,
   ...
 ){
-  tau_dfm$VarianceAI2012 <- NA
+  est_sigsq_AI2012 <- rep(NA, NROW(tau_dfm))
 
   ncol_X <- dim(X_covars)[2]
   c_matrix <- matrix(0, nrow=N, ncol=(dim(X_covars)[2]+1)*(num_trts-1))
@@ -201,7 +225,7 @@ estVarAI2012 <- function(
         which( tau_dfm$Param == nameContrast(
           trt1 = trt_levels[trt_jj], trt2 = trt_levels[trt_k]))
 
-      tau_dfm$VarianceAI2012[result_row_num]  <-
+      est_sigsq_AI2012[result_row_num]  <-
         tau_dfm$Variance[result_row_num] -
         (
           t(c_vector[trt_jj,] + c_vector[trt_k,]) %*%
@@ -218,5 +242,5 @@ estVarAI2012 <- function(
     c_matrix = c_matrix
   )
 
-  list(tau_dfm = tau_dfm, AI2012_args = AI2012_args)
+  list(est_sigsq_AI2012 = est_sigsq_AI2012, AI2012_args = AI2012_args)
 }

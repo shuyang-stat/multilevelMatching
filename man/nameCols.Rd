@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{nameCols}
 \alias{nameCols}
-\title{Name Columns in the Matching Matrix}
+\title{Name Two or All Columns in the Matching Matrix}
 \usage{
 nameCols(trt_levels)
 }
@@ -11,5 +11,5 @@ nameCols(trt_levels)
 treatment levels}
 }
 \description{
-Name Columns in the Matching Matrix
+Useful for AI2012 matching
 }

@@ -1,5 +1,7 @@
 
-#' Name Columns in the Matching Matrix
+#' Name Two or All Columns in the Matching Matrix
+#'
+#' Useful for AI2012 matching
 #'
 #' @inheritParams matchAllTreatments
 nameCols <- function(trt_levels){
