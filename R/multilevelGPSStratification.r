@@ -53,7 +53,7 @@ multilevelGPSStratification <- function(
     }
   }
 
-  prepared_data <- prepareData(
+  prepared_data <- prepareData_legacy(
     Y=Y, W=W, X=X,
     match_method = match_method#,
     # Trimming = Trimming
@@ -125,7 +125,7 @@ multilevelGPSStratification <- function(
   # cname1<-c()
 
   ## Calculate estimates for tau
-  results_list <- estimateTau(
+  results_list <- estimateTau_legacy(
     trtlevels = trtlevels,
     meanw = meanw,
     trtnumber = trtnumber,

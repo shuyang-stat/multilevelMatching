@@ -2,49 +2,46 @@
 % Please edit documentation in R/estimateTau.R
 \name{estimateTau}
 \alias{estimateTau}
-\title{Estimate the tau contrasts, perhaps with variance estimates}
+\title{Calculate the estimates of population-level estimands (e.g., tau).}
 \usage{
-estimateTau(trtlevels, meanw, trtnumber, taunumber, N, Yiw = NULL,
-  Kiw = NULL, sigsqiw = NULL, W = NULL)
+estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches, Yiw,
+  Kiw, sigsqiw, W, ...)
 }
 \arguments{
-\item{trtlevels}{vector of the unique levels of treatment W}
+\item{trt_levels}{vector of the unique levels of treatment W}
 
-\item{meanw}{vector of the estimated mean w.r.t. each treatment w}
+\item{mean_Yiw}{vector of the estimated mean w.r.t. each treatment w}
 
-\item{trtnumber}{a scalar, the number of treatment levels}
+\item{num_trts}{a scalar, the number of treatment levels}
 
-\item{taunumber}{a scalar, the number of tau contrasts to estimate}
+\item{num_contrasts}{a scalar, the number of tau contrasts to estimate}
 
 \item{N}{A scalar for the number of rows in the data}
 
-\item{Yiw}{for AI2012 variance}
+\item{M_matches}{Number of matches per unit for imputing potential outcomes,
+as in Abadie and Imbens 2006. Currently can only support M=1.}
 
-\item{Kiw}{for AI2012 variance}
+\item{Yiw}{Matrix of all imputed potential outcomes}
 
-\item{sigsqiw}{for AI2012 variance}
+\item{Kiw}{Vector of times each unit is matched to}
 
-\item{W}{for AI2012 variance
+\item{sigsqiw}{Estimated sigma squared, from AI2006}
 
-To estimate variance in Matching using AI2006 method in MatchX and MatchGPS,
-all of the following must be supplied. Otherwise, they default to NULL.
-  \itemize{
+\item{W}{a treatment vector (1 x n) with numerical values indicating
+treatment groups}
 
-  \item @param Yiw:  a vector of estimates for pairwise treatment effects
-
-  \item @param Kiw
-
-  \item @param sigsqiw
-
-  \item @param W
-  }
-
- @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}};
- \code{\link{multilevelGPSStratification}}}
+\item{...}{the dots argument}
 }
 \value{
-a list including the dataframes for estimates for tau and for mu
+A list, including the tidy dataframes estimates of target estimands
 }
 \description{
-This is a major plumbing function for the package
+This is a major plumbing function for the package. All matching procedures
+are carried out in \code{\link{matchImputePO}} (for point estimates) and
+\code{\link{estSigSq}} (for variance), which are subfunctions of
+\code{\link{matchAllTreatments}}. Most of the necessary arguments to this
+function are output from these two subfunctions.
+}
+\seealso{
+\code{\link{multiMatch}}
 }

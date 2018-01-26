@@ -42,16 +42,22 @@ To download the original repo from the package's original creator who was also f
 devtools::install_github("shuyang1987/multilevelMatching")
 ```
 
-### use
-There are only three main functions in this package. `multilevelMatchX()`, `multilevelGPSMatch()`, `multilevelGPSStratification()` make super awesome illustrations. 
+### Use
+
+- In version 0.2, the `multiMatch()` function was introduced to combine the `multilevelMatchX()` and `multilevelGPSMatch()` functions. For stratification on the propensity score, use `multilevelGPSStratification`.
 
 ```S
 X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 Y<-c(102,105,120,130,100,80,94,108,96)
 W<-c(1,1,1,3,2,3,2,1,2)
+
 multilevelMatchX(Y,W,X)
 multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
+
+multiMatch(Y,W,X, match_on = "covariates")$results
+multiMatch(Y,W,X,trimming = 0, match_on = "multinom")$results
+multiMatch(Y,W,X,trimming = 1, match_on = "multinom")$results
 ```
 ```S
 set.seed(111)
@@ -111,16 +117,24 @@ Y <- 	(W==1)*(  X1 +   X2 +   X3 +   X4 +    X5-1 +     X6-0.5)+
 (W==2)*(2*X1 + 3*X2 +   X3 + 2*X4 + 2*(X5-1) + 2*(X6-0.5))+
 (W==3)*(3*X1 +   X2 + 2*X3 -   X4 -   (X5-1) -   (X6-0.5))+u
 
-match1<-multilevelMatchX(Y,W,X)
-match2<-multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM="multinomiallogisticReg")
-match3<-multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="multinomiallogisticReg")
-match4<-multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg",linearp=0,nboot=50)
+match1  <- multilevelMatchX(Y,W,X)
+match1b <- multiMatch(Y,W,X, match_on="covariates")
+match2  <- multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM="multinomiallogisticReg") 
+match2b  <- multiMatch(Y,W,X,Trimming=FALSE,match_on="multinom") 
+match3  <- multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="multinomiallogisticReg") 
+match3b  <- multiMatch(Y,W,X,Trimming=TRUE,match_on="multinom") 
 
 match1$results
+match1b$results
 match2$results
+match2b$results
 match3$results
-match4$results
+match3b$results
+
+strat1  <- multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg",linearp=0,nboot=50)
+strat1$results
 ```
+
 
 
 

@@ -13,11 +13,35 @@ existing_GPS_matrix <- cbind(
 )
 
 t1 <- multilevelMatchX(Y, W, X)
+t1_v2 <- suppressMessages(   multiMatch(Y, W, X, match_on = "covariates"))
+# t1_v2$estimate_args$meanw <- t1_v2$estimate_args$mean_Yiw
+# t1_v2$estimate_args$mean_Yiw <- NULL
+test_that("matching on X returns same with new multiMatch function", {
+  expect_equal(
+    object = t1[1:3],
+    expected = t1_v2[1:3],
+    tolerance = 1e-7
+  )
+  expect_equal(
+    object = t1$impute_mat,
+    expected = t1_v2$impute_mat,
+    tolerance = 1e-7,
+    check.attributes = FALSE
+  )
+})
+
+
+reorder_estimate_args <- c(
+  "trtlevels", "meanw","trtnumber","taunumber","N","Yiw","Kiw","sigsqiw","W"
+)
+
 t2 <- multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 t3 <- multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
-# t4 <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
+t4 <- multilevelGPSMatch(Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
 t_matX <- multilevelMatchX(Y, W, as.matrix(X))
 # t_factorW <- multilevelMatchX(Y, as.factor(W), X)
+
+
 
 tests_data <- quickLookup("test_toy_output.Rdata")
 
@@ -84,6 +108,10 @@ test_that("match on GPS with one X with trimming returns same output", {
   #               c(  5.072057 ,383.848575, 430.978089),
   #               tolerance = my_tolerance)
 })
+
+
+## Failing test
+## Moved to test_existing_GPS_matching.R
 
 # this_t <- t4
 # test_that("match on GPS with existing GPS returns same output", {
