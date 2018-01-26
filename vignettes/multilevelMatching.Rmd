@@ -34,10 +34,13 @@ devtools::install_github("BarkleyBG/multilevelMatching") ## active fork
 ```
  
 ### Use
-There are only three functions in this package. 
-`multilevelMatchX()`,\code{\link{multilevelMatchX}};
-`multilevelGPSMatch()`, \code{\link{multilevelGPSMatch}};
-`multilevelGPSStratification()` \code{\link{multilevelGPSStratification}} make super awesome illustrations. 
+
+- In version 0.2, the `multiMatch()` function was introduced to combine the `multilevelMatchX()` and `multilevelGPSMatch()` functions. - For stratification on the propensity score, use `multilevelGPSStratification`.
+
+<!-- There are only three functions in this package.  -->
+<!-- `multilevelMatchX()`,\code{\link{multilevelMatchX}}; -->
+<!-- `multilevelGPSMatch()`, \code{\link{multilevelGPSMatch}}; -->
+<!-- `multilevelGPSStratification()` \code{\link{multilevelGPSStratification}} make super awesome illustrations.  -->
 
 ```{r, echo = TRUE, eval = TRUE, message=FALSE, warning=FALSE}
 library(multilevelMatching)
@@ -45,6 +48,7 @@ library(multilevelMatching)
 
 
 ```{r}
+
 X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 Y<-c(102,105,120,130,100,80,94,108,96)
 W<-c(1,1,1,3,2,3,2,1,2)
@@ -53,6 +57,10 @@ set.seed(1)
 multilevelMatchX(Y,W,X)
 multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
+
+multiMatch(Y,W,X, match_on = "covariates")$results
+multiMatch(Y,W,X,trimming = 0, match_on = "multinom")$results
+multiMatch(Y,W,X,trimming = 1, match_on = "multinom")$results
 ```
 
 #### User-supplied propensity scores
@@ -131,32 +139,56 @@ X1 <- X[,"X1"]; X2 <- X[,"X2"]; X3 <- X[,"X3"]; X4 <- X[,"X4"]; X5 <- X[,"X5"];X
 
 # outcome: treatment effect is zero
 u  <- rnorm(nrow(X))
-# ouctome (linear)
+# outcome (linear)
 Y <- 	(W==1)*(  X1 +   X2 +   X3 +   X4 +    X5-1 +     X6-0.5)+
 (W==2)*(2*X1 + 3*X2 +   X3 + 2*X4 + 2*(X5-1) + 2*(X6-0.5))+
 (W==3)*(3*X1 +   X2 + 2*X3 -   X4 -   (X5-1) -   (X6-0.5))+u
+
+W <- as.integer(as.character(W)) ## Factors give issues sometimes
 ```
 
-Here's four ways of estimating this:
+We can estimate this by:
+
+#### Matching on the covariates
 
 ```{r}
-match1 <- multilevelMatchX(Y,W,X)
-match2 <- multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM="multinomiallogisticReg")
-match3 <- multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="multinomiallogisticReg")
-match4 <- multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg",linearp=0,nboot=50)
-
+match1  <- multilevelMatchX(Y,W,X)
+match1b <- multiMatch(Y,W,X, match_on="covariates")
 
 match1$results
-match2$results
-match3$results
-match4$results
+match1b$results
 ```
 
-You could also use proportional odds logistic regression:
+#### Matching on estimated propensity scores
+
+##### Multinomial logistic regression 
 
 ```{r}
-match5 <- multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="ordinallogisticReg")
-match5$results
+match2  <- multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM="multinomiallogisticReg") 
+match2b <- multiMatch(Y,W,X,trimming=FALSE,match_on="multinom") 
+match3  <- multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM="multinomiallogisticReg") 
+match3b  <- multiMatch(Y,W,X,trimming=TRUE,match_on="multinom")
+
+match2$results
+match2b$results
+match3$results
+match3b$results
 ```
 
+##### Proportional odds logistic regression:
 
+```{r}
+match4 <- multilevelGPSMatch(Y,W,X,Trimming=0, GPSM="ordinallogisticReg")
+match4b <- multiMatch(Y,W,X,match_on = "polr")
+
+match4$results
+match4b$results
+```
+
+#### Stratifying on generalized propensity scores
+
+```{r}
+strat1  <- multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg",linearp=0,nboot=50)
+
+strat1$results
+```

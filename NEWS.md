@@ -1,18 +1,33 @@
-# multilevelMatching 0.1.5.9+ (under development)
+# multilevelMatching 0.2
 
-- Cleaning up the matching procedures with subfunctions
+- Author and maintainer of the package is Shu Yang
+- Improvements from version 0.1 to version 0.2 were contributed by Brian Barkley
+- The original version (v0.1) can be accessed from:
+    - forked repo: https://github.com/BarkleyBG/multilevelMatching
+    - original repo: https://github.com/shuyang1987/multilevelMatching
 
 
-## This is a forked repo 
+## New development for v0.2: the `multiMatch()` function
 
-- [Original version by Shu Yang](https://github.com/shuyang1987/multilevelMatching)
+- Added `multiMatch()` function to carry out all types of matching. This effectively combines `multilevelGPSMatch()` and `multilevelMatchX()` into one function.
+- `multiMatch()` has a number of small improvements built in.
+- New development on matching for the foreseeable future will be on the `multiMatch()` function.
+- `multiMatch()` does not implement stratification, which is still carried out through `multilevelGPSStratification()` 
+    - FWIW, `multilevelGPSStratification()` needs work and has not improved much since v0.1.
+- Some subfunctions to carry out procedures have changed in `multiMatch()` from the `multilevelGPSMatch()` and `multilevelMatchX()`. 
+    - For example, `prepareData()` is used in `multiMatch()`
+    - whereas `prepareData_legacy()` and `estimateTau_legacy()` are used in `multilevelGPSMatch()` and `multilevelMatchX()`. 
 
+## Other improvements
+
+- Cleaned code w/ DRY principle
+- Allowed for more user-specified arguments (for fitting PS models) i.e. `model_options`
+- Names/rownames from the `X`, `Y`, or `W` args should be handled and treated as identifying information for the study units, and passed on to some of the output information.
 
 ## Planned improvements
 
-- cleanup code w/ DRY principle
-- perhaps merge main 3 user-facing functions into 1
-- Allow for more user-specified arguments (for fitting PS models) i.e. `model_options`
+See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
+
 
 # multilevelMatching 0.1.5
 
@@ -48,5 +63,5 @@
 
 # multilevelMatching 0.1
 
-- Link to the [original version by Shu Yang](https://github.com/shuyang1987/multilevelMatching)
+- Link: the [original version by Shu Yang](https://github.com/shuyang1987/multilevelMatching)
 - Instructions for downloading original version available [here](README.md) and [here](https://github.com/shuyang1987/multilevelMatching/blob/master/README.md)
