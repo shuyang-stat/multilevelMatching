@@ -61,7 +61,7 @@ estimateTau <- function(
       tau_dfm$Estimate[row_num] <- mean_Yiw[kk]-mean_Yiw[jj]
       tau_dfm$Variance[row_num] <- estVarAI2006(
         N = N, W = W, Kiw = Kiw, sigsqiw = sigsqiw, M_matches = M_matches,
-        Yiw[,kk],
+        Yiw1 = Yiw[,kk],
         Yiw2 = Yiw[,jj],
         trt_level_1 = tau_dfm$Trt1[row_num],
         trt_level_2 = tau_dfm$Trt2[row_num],
@@ -79,9 +79,23 @@ estimateTau <- function(
   results
 }
 
-# #' Computes Estimated Asymptotic Variance
-# #'
-# #' See Theorem 7 of Abadie and Imbens 2006 Econometrica
+#' Computes Estimated Asymptotic Variance of matching estimators.
+#'
+#' See Theorem 7 of Abadie and Imbens 2006 Econometrica for the formula.
+#'
+#' @inheritParams estimateTau
+#' @inheritParams multiMatch
+#' @param tau Estimated value of \eqn{\tau(W_1, W_2)}.
+#' @param trt_level_1 Unique treatment level 1; aka \eqn{W_1} in \eqn{\tau(W_1,
+#'   W_2)}
+#' @param trt_level_2 Unique treatment level 2; aka \eqn{W_2} in \eqn{\tau(W_1,
+#'   W_2)}
+#' @param Yiw1 Vector of imputed outcomes for all units for \code{trt_level_2}.
+#' @param Yiw2 Vector of imputed outcomes for all units for \code{trt_level_2}.
+#'
+#' @return A single numeric value for the estimated asymptotic variance of the
+#'   estimator.
+#'
 estVarAI2006 <- function(
   N, W, M_matches,
   trt_level_1, trt_level_2,
@@ -93,9 +107,7 @@ estVarAI2006 <- function(
   ## Estimating variance of conditional mean
   V_taux <- mean(Y_contrasts_sq)
 
-  K_M_factor <- (Kiw/M_matches)^2 +
-    ((2*M_matches-1)/(M_matches)) *
-    ((Kiw/M_matches))
+  K_M_factor <- calcKMFactor(Kiw, M_matches)
   W_indicator <- (W == trt_level_1 | W == trt_level_2)
   ## Estimating conditional variance
   V_E <- mean( K_M_factor * sigsqiw * W_indicator )
@@ -106,4 +118,25 @@ estVarAI2006 <- function(
   estimated_asymptotic_variance <- (1/N)*(V_hat)
 
   estimated_asymptotic_variance
+}
+
+#' Calculate the variance component for number of times unit is a match.
+#'
+#' This function calculates \code{K_M_factor}, a numeric vector. Each entry in
+#' this vector is a function of the number of times each unit is matched to, aka
+#' \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
+#' in this function comes from Theorem 7, page 251 of Abadie and Imbens 2006
+#' Econometrica. The \code{K_M_factor} is an important component in the variance
+#' estimation, and is called from \code{\link{estVarAI2006}} in
+#' \code{\link{estimateTau}}.
+#'
+#' @inheritParams estVarAI2006
+#'
+#' @return A numeric vector.
+#'
+#' This function is exported for use in other packages.
+#'
+#' @export
+calcKMFactor <- function(Kiw, M_matches){
+  (Kiw/M_matches)^2 + ( (2*M_matches-1)/(M_matches) ) * (Kiw/M_matches)
 }

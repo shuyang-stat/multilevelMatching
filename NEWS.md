@@ -1,11 +1,21 @@
-# multilevelMatching 0.2
+# multilevelMatching 0.2.1
+
+- Added + exported `calcKMFactor()` function for a variance component. It passes unit tests.
+
+## Package information
 
 - Author and maintainer of the package is Shu Yang
-- Improvements from version 0.1 to version 0.2 were contributed by Brian Barkley
+- Improvements from version 0.1 to version 0.2.1 were contributed by Brian Barkley
 - The original version (v0.1) can be accessed from:
     - forked repo: https://github.com/BarkleyBG/multilevelMatching
     - original repo: https://github.com/shuyang1987/multilevelMatching
+    
+    
+## Planned improvements
 
+See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
+    
+# multilevelMatching 0.2
 
 ## New development for v0.2: the `multiMatch()` function
 
@@ -23,10 +33,6 @@
 - Cleaned code w/ DRY principle
 - Allowed for more user-specified arguments (for fitting PS models) i.e. `model_options`
 - Names/rownames from the `X`, `Y`, or `W` args should be handled and treated as identifying information for the study units, and passed on to some of the output information.
-
-## Planned improvements
-
-See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
 
 
 # multilevelMatching 0.1.5
