@@ -13,8 +13,17 @@
 #'
 #' @export
 prepareData <- function(
-  Y, W, X, match_on, trimming=NULL, model_options
+  Y, W, X, match_on, trimming=NULL, model_options,
+  M_matches, J_var_matches
 ){
+
+  if (M_matches !=1){
+    stop("M_matches=1 must be supplied; one-to-many matching not yet implemented")
+  }
+  if ( (J_var_matches<=0)|| (J_var_matches %%1 !=0) ) {
+    stop("J_var_matches must be a positive integer")
+  }
+
 
   data_ids <- determineIDs(Y=Y, W=W, X=X)
   Y <- data_ids$Y
@@ -110,6 +119,13 @@ prepareData <- function(
 
   ## Order the treatment increasingly
   ordered_data_list <- reorderByTreatment(W=W,X=X,Y=Y, unit_ids_unsorted = unit_ids)
+
+  if ( any(ordered_data_list$N_per_trt <= J_var_matches) ) {
+    stop("J_var_matches is too large: there are not enough treatments in at least one treatment level to successfully match")
+  }
+  if ( any(ordered_data_list$N_per_trt < M_matches) ) {
+    stop("M_matches is too large: there are not enough treatments in at least one treatment level to successfully match")
+  }
 
   if ( match_on == "existing" ) {
     ## Check that "existing" X has the correctly specified number of levels

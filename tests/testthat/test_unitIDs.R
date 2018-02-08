@@ -1,5 +1,5 @@
 
-context("unit names")
+context("unitIDs")
 ## Issue #16
 
 
@@ -89,6 +89,8 @@ test_that(
     )
     prep_data_args <- append(
       data_list, list( trimming=0, match_on = "multinom", model_options=NULL))
+    prep_data_args$M_matches <- 1
+    prep_data_args$J_var_matches <- 1
     prep_data <- do.call(prepareData,prep_data_args)
 
     new_ids <- orig_ids[prep_data$orig_to_sorted]
@@ -124,6 +126,8 @@ test_that(
     )
     prep_data_args <- append(
       data_list, list( trimming=0, match_on = "multinom", model_options=NULL))
+    prep_data_args$M_matches <- 1
+    prep_data_args$J_var_matches <- 1
     prep_data <- do.call(prepareData,prep_data_args)
 
     new_ids <- orig_ids[order_W][prep_data$orig_to_sorted]
@@ -252,6 +256,8 @@ test_that(
     )
     prep_data_args <- append(
       data_list, list( trimming=0, match_on = "multinom", model_options=NULL))
+    prep_data_args$M_matches <- 1
+    prep_data_args$J_var_matches <- 1
     prep_data <- do.call(prepareData,prep_data_args)
 
     new_ids <- orig_ids[order_W][prep_data$orig_to_sorted]
@@ -325,6 +331,8 @@ test_that(
     )
     prep_data_args <- append(
       data_list, list( trimming=0, match_on = "multinom", model_options=NULL))
+    prep_data_args$M_matches <- 1
+    prep_data_args$J_var_matches <- 1
     prep_data <- do.call(prepareData,prep_data_args)
 
     new_ids <- orig_ids[order_W][prep_data$orig_to_sorted]

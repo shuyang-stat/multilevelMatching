@@ -2,7 +2,7 @@ Package: multilevelMatching
 Type: Package
 Title: Propensity Score Matching and Subclassification in Observational Studies
     with Multi-level Treatments
-Version: 0.2.1
+Version: 0.2.2
 Date: 2017-02-08
 Authors@R: c(
     person("Shu", "Yang", email = "shuyang@hsph.harvard.edu",

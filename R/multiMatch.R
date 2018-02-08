@@ -69,7 +69,9 @@ multiMatch <- function(
     Y = Y, W = W, X = X,
     match_on = match_on,
     trimming = trimming,
-    model_options = model_options
+    model_options = model_options,
+    M_matches = M_matches,
+    J_var_matches = J_var_matches
   )
   X_covars <- prepared_data$X ## Necessary for AI2012 variance
 

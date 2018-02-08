@@ -75,20 +75,12 @@ estSigSq <- function(
   # Step 3: Calculate some components  #
   #                                    #
 
-  same_trt_match_data <- same_trt_match$mdata
-
-  J_var_matches <- var_options$M
-  ## TODO: Allow for J>1.
-  sigsq_est_temp <- ((J_var_matches)/(1+J_var_matches))*
-    (same_trt_match_data$Y[which(same_trt_match_data$Tr==1)] -
-       same_trt_match_data$Y[which(same_trt_match_data$Tr==0)])^2
-
-  #                                    #
-  # Step 4: Organize output,           #
-  #                                    #
-
   out_sigma <- list(
-    sigsqiw_kk = sigsq_est_temp
+    sigsqiw_kk = calcSigSqAI2006(
+      match_output = same_trt_match,
+      J_var_matches = same_trt_match_args$M
+      ## originally J_var_matches in `multiMatch()`
+    )
   )
 
   ## Abadie&Imbens2012 variance estimator for multinomial logistic regression
@@ -146,4 +138,48 @@ estSigSq <- function(
   }
 
   out_sigma
+}
+
+
+#' Calculates \code{sigsqiw}
+#'
+#' This function estimates the conditional variance as seen in equation 14 in
+#' Section 4.1 of Abadie and Imbens 2006 Econometrica. The matching procedure in
+#' \code{\link{estSigSq}} matches units within the same treatment level (level
+#' kk), and compares their outcomes to estimate a variance component. This
+#' function was introduced to extend this variance matching procedure to
+#' \code{J_var_matches >=1}, as it takes care of some of the bookeeping aspects
+#' of one-to-many matching.
+#'
+#' @inheritParams multiMatch
+#' @param match_output Output of the \code{Matching::Match()} function for the
+#'   same-treatment matching, from \code{\link{estSigSq}}.
+#'
+#' @return A vector of the \code{sigsqiw} values for those individuals observed
+#'   to have the \code{kk}th treatment level
+calcSigSqAI2006 <- function(match_output,J_var_matches){
+  md <- match_output$mdata
+  J_factor <- ( (J_var_matches)/(1+J_var_matches) )
+  orig_outcomes_temp <- md$Y[which(md$Tr==1)]
+  matched_outcomes_temp <- md$Y[which(md$Tr==0)]
+
+  if (J_var_matches==1){
+    orig_outcomes <- orig_outcomes_temp
+    matched_outcomes <- matched_outcomes_temp
+  } else {
+    unique_indivs <- seq(1, length(orig_outcomes_temp), by = J_var_matches)
+    orig_outcomes <- orig_outcomes_temp[unique_indivs]
+
+    matched_outcomes_matrix <- matrix(
+      matched_outcomes_temp,
+      ncol = (1/J_var_matches) * length(matched_outcomes_temp),
+      nrow = J_var_matches,
+      byrow = FALSE
+    )
+    matched_outcomes <- (1/J_var_matches) * colSums(matched_outcomes_matrix)
+  }
+
+  ## The estimated conditional variance as in AI2006
+  ## for those units observed to have the kk^th treatment level
+  sigsqiw_kk <- J_factor * ( orig_outcomes - matched_outcomes )^2
 }

@@ -4,7 +4,8 @@
 \alias{prepareData}
 \title{Prepare data for estimation}
 \usage{
-prepareData(Y, W, X, match_on, trimming = NULL, model_options)
+prepareData(Y, W, X, match_on, trimming = NULL, model_options, M_matches,
+  J_var_matches)
 }
 \arguments{
 \item{Y}{a continuous response vector (1 x n)}
@@ -23,6 +24,12 @@ propensity scores.}
 \item{model_options}{A list of the options to pass to propensity model.
 Currently under development. Can only pass reference level to multinomial
 logisitc regression.}
+
+\item{M_matches}{Number of matches per unit for imputing potential outcomes,
+as in Abadie and Imbens 2006. Currently can only support M=1.}
+
+\item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
+Abadie and Imbens 2006. Currently can only support J=1.}
 }
 \value{
 A list of information, including the \code{X, W, Y} arguments after sorting, and information on \code{unit_ids}, etc. See \code{\link{determineIDs}} for more.
