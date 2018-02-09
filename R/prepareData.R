@@ -17,8 +17,8 @@ prepareData <- function(
   M_matches, J_var_matches
 ){
 
-  if (M_matches !=1){
-    stop("M_matches=1 must be supplied; one-to-many matching not yet implemented")
+  if ( (M_matches<=0)|| (M_matches %%1 !=0) ) {
+    stop("M_matches must be a positive integer")
   }
   if ( (J_var_matches<=0)|| (J_var_matches %%1 !=0) ) {
     stop("J_var_matches must be a positive integer")

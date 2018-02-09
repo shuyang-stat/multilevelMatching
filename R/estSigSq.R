@@ -160,26 +160,17 @@ estSigSq <- function(
 calcSigSqAI2006 <- function(match_output,J_var_matches){
   md <- match_output$mdata
   J_factor <- ( (J_var_matches)/(1+J_var_matches) )
-  orig_outcomes_temp <- md$Y[which(md$Tr==1)]
-  matched_outcomes_temp <- md$Y[which(md$Tr==0)]
 
-  if (J_var_matches==1){
-    orig_outcomes <- orig_outcomes_temp
-    matched_outcomes <- matched_outcomes_temp
-  } else {
-    unique_indivs <- seq(1, length(orig_outcomes_temp), by = J_var_matches)
-    orig_outcomes <- orig_outcomes_temp[unique_indivs]
-
-    matched_outcomes_matrix <- matrix(
-      matched_outcomes_temp,
-      ncol = (1/J_var_matches) * length(matched_outcomes_temp),
-      nrow = J_var_matches,
-      byrow = FALSE
-    )
-    matched_outcomes <- (1/J_var_matches) * colSums(matched_outcomes_matrix)
-  }
+  outcomes_list <- averageMultipleMatches(
+    num_matches = J_var_matches,
+    orig_outcomes = md$Y[which(md$Tr==1)],
+    matched_outcomes = md$Y[which(md$Tr==0)]
+  )
+  orig_outcomes <- outcomes_list$orig_outcomes
+  matched_outcomes <- outcomes_list$matched_outcomes
 
   ## The estimated conditional variance as in AI2006
   ## for those units observed to have the kk^th treatment level
   sigsqiw_kk <- J_factor * ( orig_outcomes - matched_outcomes )^2
 }
+

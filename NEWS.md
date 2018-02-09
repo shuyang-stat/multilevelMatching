@@ -1,7 +1,11 @@
-# multilevelMatching 0.2.2
+# multilevelMatchign 0.2.3
 
-- Now allows for one-to-many matches for the variance component when `J_var_matches >1`
-- Added `calcSigSqAI2006()` (and unit tests and defensive programming) to implement the one-to-many matching for $\hat{\sigma}^2(X_i, W_i)$ estimator as introduced in Abadie and Imbens 2006 Econometrica
+- Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify `M_matches >=1`
+- Renamed the exported function `calcKMVarFactor()` from `calcKMFactor()`.
+- Added plumbing functions to streaming the one-to-many matches in v0.2.3 and v0.2.2:
+  - `wrangleImputations()`
+  - `averageMultipleMatches()`
+  - Added some defensive programming and unit tests
 
 ## Package information
 
@@ -15,6 +19,11 @@
 ## Planned improvements
 
 See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
+
+# multilevelMatching 0.2.2
+
+- Now allows for one-to-many matches for the variance component when `J_var_matches >1`
+- Added `calcSigSqAI2006()` (and unit tests and defensive programming) to implement the one-to-many matching for $\hat{\sigma}^2(X_i, W_i)$ estimator as introduced in Abadie and Imbens 2006 Econometrica
 
 # multilevelMatching 0.2.1
 

@@ -5,16 +5,13 @@
 \title{Perform matching methods to estimate (or impute) potential outcomes for one
 treatment level (level kk)}
 \usage{
-matchImputePO(X, W, Y, vec_diff_trt, which_diff_trt, vec_same_trt,
-  which_same_trt, est_options)
+matchImputePO(X, Y, vec_diff_trt, which_diff_trt, vec_same_trt, which_same_trt,
+  est_options)
 }
 \arguments{
 \item{X}{A covariate matrix (p x n) with no intercept. When
 match_on="existing", then X must be a vector (1 x n) of user-specified
 propensity scores.}
-
-\item{W}{a treatment vector (1 x n) with numerical values indicating
-treatment groups}
 
 \item{Y}{a continuous response vector (1 x n)}
 

@@ -107,10 +107,10 @@ estVarAI2006 <- function(
   ## Estimating variance of conditional mean
   V_taux <- mean(Y_contrasts_sq)
 
-  K_M_factor <- calcKMFactor(Kiw, M_matches)
+  K_M_var_factor <- calcKMVarFactor(Kiw, M_matches)
   W_indicator <- (W == trt_level_1 | W == trt_level_2)
   ## Estimating conditional variance
-  V_E <- mean( K_M_factor * sigsqiw * W_indicator )
+  V_E <- mean( K_M_var_factor * sigsqiw * W_indicator )
 
   ## Estimating marginal variance
   ## From Theorem 7, page 251 of Abadie and Imbens 2006 Econometrica
@@ -122,11 +122,11 @@ estVarAI2006 <- function(
 
 #' Calculate the variance component for number of times unit is a match.
 #'
-#' This function calculates \code{K_M_factor}, a numeric vector. Each entry in
+#' This function calculates \code{K_M_var_factor}, a numeric vector. Each entry in
 #' this vector is a function of the number of times each unit is matched to, aka
 #' \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
 #' in this function comes from Theorem 7, page 251 of Abadie and Imbens 2006
-#' Econometrica. The \code{K_M_factor} is an important component in the variance
+#' Econometrica. The \code{K_M_var_factor} is an important component in the variance
 #' estimation, and is called from \code{\link{estVarAI2006}} in
 #' \code{\link{estimateTau}}.
 #'
@@ -137,6 +137,6 @@ estVarAI2006 <- function(
 #' This function is exported for use in other packages.
 #'
 #' @export
-calcKMFactor <- function(Kiw, M_matches){
+calcKMVarFactor <- function(Kiw, M_matches){
   (Kiw/M_matches)^2 + ( (2*M_matches-1)/(M_matches) ) * (Kiw/M_matches)
 }

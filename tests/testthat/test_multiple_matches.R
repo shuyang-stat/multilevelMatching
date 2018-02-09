@@ -1,6 +1,129 @@
 
-context("calcSigSqAI2006() and J_var_matches >= 1")
+context("test_multiple_matches: M, J >=1")
 
+
+test_that(
+  "Imputed outcomes same as before for M=1",{
+
+    load(file = quickLookup("test_M_match.Rdata"))
+
+    #                                    #
+    # Step 3: Calculate some components  #
+    #                                    #
+    set.seed(22)
+    diff_trt_matching_args$M <- 1
+    diff_trt_match <- do.call(Matching::Match, diff_trt_matching_args)
+
+
+
+    est_kk_list <- wrangleImputations(
+      match_output = diff_trt_match,
+      M_matches = diff_trt_matching_args$M,
+      Y = Y,
+      which_same_trt = 1:4,
+      which_diff_trt = 5:9
+    )
+
+
+    expect_equal(
+      est_kk_list$Yiw_kk,
+      c(102, 105, 120, 108, 102, 105, 108, 105, 105)
+    )
+
+    expect_equal(
+      est_kk_list$mean_po_kk,
+      106.666667,
+      tol=1e-4
+    )
+
+    expect_equal(
+      as.numeric(est_kk_list$Kiw),
+      c(1,3,0,1),
+      check.attributes = FALSE
+    )
+
+  }
+)
+
+test_that(
+  "Imputed outcomes same as expected for M=2",{
+
+
+    load(file = quickLookup("test_M_match.Rdata"))
+
+    #                                    #
+    # Step 3: Calculate some components  #
+    #                                    #
+    set.seed(22)
+    diff_trt_matching_args$M <- 2
+    diff_trt_match <- do.call(Matching::Match, diff_trt_matching_args)
+
+
+    est_kk_list <- wrangleImputations(
+      match_output = diff_trt_match,
+      M_matches = diff_trt_matching_args$M,
+      Y = Y,
+      which_same_trt = 1:4,
+      which_diff_trt = 5:9
+    )
+
+    expect_equal(
+      est_kk_list$Yiw_kk,
+      c(102, 105, 120, 108, 105, 103.5, 105, 103.5, 103.5)
+    )
+
+    expect_equal(
+      est_kk_list$mean_po_kk,
+      106.16666667,
+      tol=1e-4
+    )
+
+    expect_equal(
+      as.numeric(est_kk_list$Kiw),
+      c(5,3,0,2),
+      check.attributes = FALSE
+    )
+  }
+)
+
+## TODO:: test that this code works when Matching drops units
+
+
+test_that(
+  "multiMatch() does not throw errors for M_matches>=1",{
+
+
+    ### adding three more individuals so that J=2 doesn't throw errors
+    X <- matrix(c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9,10,10,10), ncol=1)
+    Y <- matrix(c(102,105,120,130,100,80,94,108,96,100,100,100), ncol=1)
+    W <- matrix(c(1, 1, 1, 3, 2, 3, 2, 1, 2,1,2,3), ncol=1)
+    rownames(W) <- letters[1:12]
+
+    output <- multiMatch(
+      Y, W, X,
+      trimming = 0,
+      match_on = "multinom",
+      M_matches = 1
+    )
+
+
+
+    output <- multiMatch(
+      Y, W, X,
+      trimming = 0,
+      match_on = "multinom",
+      M_matches = 2
+    )
+
+    output <- multiMatch(
+      Y, W, X,
+      trimming = 0,
+      match_on = "multinom",
+      M_matches = 2,
+      J_var_matches = 2
+    )
+  }
+)
 
 
 
