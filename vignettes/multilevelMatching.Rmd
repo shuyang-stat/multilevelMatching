@@ -192,3 +192,9 @@ strat1  <- multilevelGPSStratification(Y,W,X,NS=10,GPSM="multinomiallogisticReg"
 
 strat1$results
 ```
+
+
+
+### A note on `multiMatch()`
+
+The `multiMatch()` function may return slightly different estimates than the original 2 matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns. Or, see the NEWS.md for v0.2.4.

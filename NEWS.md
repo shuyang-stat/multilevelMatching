@@ -1,11 +1,18 @@
-# multilevelMatchign 0.2.3
+# multilevelMatching 0.2.4
 
-- Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify `M_matches >=1`
-- Renamed the exported function `calcKMVarFactor()` from `calcKMFactor()`.
-- Added plumbing functions to streaming the one-to-many matches in v0.2.3 and v0.2.2:
-  - `wrangleImputations()`
-  - `averageMultipleMatches()`
-  - Added some defensive programming and unit tests
+- Removes warning for using `multiMatch()` with existing GPS 
+    - (Fixes BarkleyBG/multilevelMatching/#4)
+
+#### A note on matching on existing GPS:
+
+- Using `multilevelGPSMatch()` on existing GPS produces same output as original version 0.1
+- Using `multiMatch()` with `match_on='existing'` does NOT ALWAYS return the same output as original version 0.1
+   - It will not necessarily return the same output when two units have the same GPS for a treatment level, and ties need to be broken. This is because the matching procedure takes place in a different order than in `multilevelGPSMatch()`, and so random number generation may/will be different.
+   - This is likely a problem for all different methods of matching (when ties need to be broken)
+   - However, without ties, the two functions may return identical estimates
+   - As such, I'm removing the warnings and proceeding as is.
+- Adds some notes in the README and vignette about this issue.
+
 
 ## Package information
 
@@ -19,6 +26,16 @@
 ## Planned improvements
 
 See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
+
+# multilevelMatching 0.2.3
+
+- Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify `M_matches >=1`
+- Renamed the exported function `calcKMVarFactor()` from `calcKMFactor()`.
+- Added plumbing functions to streaming the one-to-many matches in v0.2.3 and v0.2.2:
+  - `wrangleImputations()`
+  - `averageMultipleMatches()`
+  - Added some defensive programming and unit tests
+
 
 # multilevelMatching 0.2.2
 
