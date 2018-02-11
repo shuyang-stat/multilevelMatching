@@ -1,5 +1,9 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
+
+[![Travis-CI Build Status](https://travis-ci.org/shuyang1987/multilevelMatching.svg?branch=master)](https://travis-ci.org/shuyang1987/multilevelMatching)
+
+
 In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.
 
 This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A. 
