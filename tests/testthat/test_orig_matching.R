@@ -1,5 +1,5 @@
 
-context("original output from v0.1")
+context("test_orig matching output from v0.1.0")
 
 X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 Y <- c(102,105,120,130,100,80,94,108,96)
