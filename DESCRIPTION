@@ -14,3 +14,5 @@ Suggests: knitr, rmarkdown,
     testthat
 LazyData: TRUE
 RoxygenNote: 5.0.0
+URL: https://github.com/shuyang1987/multilevelMatching
+BugReports: https://github.com/shuyang1987/multilevelMatching/issues
