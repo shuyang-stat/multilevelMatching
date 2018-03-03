@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 NEWS.md
 ^scratch$
+^\.travis\.yml$
+^appveyor\.yml$

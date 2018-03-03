@@ -1,55 +1,6 @@
-# multilevelMatching 0.2.4
-
-- Removes warning for using `multiMatch()` with existing GPS 
-    - (Fixes BarkleyBG/multilevelMatching/#4)
-
-#### A note on matching on existing GPS:
-
-- Using `multilevelGPSMatch()` on existing GPS produces same output as original version 0.1
-- Using `multiMatch()` with `match_on='existing'` does NOT ALWAYS return the same output as original version 0.1
-   - It will not necessarily return the same output when two units have the same GPS for a treatment level, and ties need to be broken. This is because the matching procedure takes place in a different order than in `multilevelGPSMatch()`, and so random number generation may/will be different.
-   - This is likely a problem for all different methods of matching (when ties need to be broken)
-   - However, without ties, the two functions may return identical estimates
-   - As such, I'm removing the warnings and proceeding as is.
-- Adds some notes in the README and vignette about this issue.
+# multilevelMatching 0.1.0.9000
 
 
-## Package information
-
-- Author and maintainer of the package is Shu Yang
-- Improvements from version 0.1 to version 0.2.2 were contributed by Brian Barkley
-- The original version (v0.1) can be accessed from:
-    - forked repo: https://github.com/BarkleyBG/multilevelMatching
-    - original repo: https://github.com/shuyang1987/multilevelMatching
-    
-    
-## Planned improvements
-
-See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
-
-# multilevelMatching 0.2.3
-
-- Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify `M_matches >=1`
-- Renamed the exported function `calcKMVarFactor()` from `calcKMFactor()`.
-- Added plumbing functions to streaming the one-to-many matches in v0.2.3 and v0.2.2:
-  - `wrangleImputations()`
-  - `averageMultipleMatches()`
-  - Added some defensive programming and unit tests
-
-
-# multilevelMatching 0.2.2
-
-- Now allows for one-to-many matches for the variance component when `J_var_matches >1`
-- Added `calcSigSqAI2006()` (and unit tests and defensive programming) to implement the one-to-many matching for $\hat{\sigma}^2(X_i, W_i)$ estimator as introduced in Abadie and Imbens 2006 Econometrica
-
-# multilevelMatching 0.2.1
-
-- Added + exported `calcKMFactor()` function for a variance component. It passes unit tests.
-
-    
-# multilevelMatching 0.2
-
-## New development for v0.2: the `multiMatch()` function
 
 - Added `multiMatch()` function to carry out all types of matching. This effectively combines `multilevelGPSMatch()` and `multilevelMatchX()` into one function.
 - `multiMatch()` has a number of small improvements built in.
@@ -59,47 +10,36 @@ See [GH issues](https://github.com/BarkleyBG/multilevelMatching/issues)
 - Some subfunctions to carry out procedures have changed in `multiMatch()` from the `multilevelGPSMatch()` and `multilevelMatchX()`. 
     - For example, `prepareData()` is used in `multiMatch()`
     - whereas `prepareData_legacy()` and `estimateTau_legacy()` are used in `multilevelGPSMatch()` and `multilevelMatchX()`. 
-
-## Other improvements
-
-- Cleaned code w/ DRY principle
+- Breaking: Output has become tidier. See `estimateTau()` for details
+- Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify `M_matches >=1`
+- Now allows for one-to-many matches for the variance component when `J_var_matches >1`
+- Added `calcSigSqAI2006()` (and unit tests and defensive programming) to implement the one-to-many matching for $\hat{\sigma}^2(X_i, W_i)$ estimator as introduced in Abadie and Imbens 2006 Econometrica
+- Added + exported `calcKMVarFactor()` function for a variance component. It passes unit tests.
 - Allowed for more user-specified arguments (for fitting PS models) i.e. `model_options`
 - Names/rownames from the `X`, `Y`, or `W` args should be handled and treated as identifying information for the study units, and passed on to some of the output information.
-
-
-# multilevelMatching 0.1.5
-
-- Added stable references to functions with `::`
-
-# multilevelMatching 0.1.4
-
+- Added stable references to functions from different namespaces/packages with `::`
 - Cleaned up package dependencies
 - `multilevelGPSStratification()` now sorts by treatment level `W`
 - Vignette now illustrates how user can supply propsensity scores via `GPSM="existing"`
+- Add matrix of imputed potential outcomes to the output
+- Implemented some unit tests, checks, error-avoidances, defensive programming, etc. 
 
-# multilevelMatching 0.1.3
 
-- Better sorting of dataset
-- Sorting the matrix of imputed potential outcomes
+#### A note on matching on existing GPS:
 
-# multilevelMatching 0.1.2
+- Removes warning for using `multiMatch()` with existing GPS 
+    - (Fixes BarkleyBG/multilevelMatching/#4)
+- Using `multilevelGPSMatch()` on existing GPS produces same output as original version 0.1.0
+- Using `multiMatch()` with `match_on='existing'` does NOT ALWAYS return the same output as original version 0.1.0
+   - It will not necessarily return the same output when two units have the same GPS for a treatment level, and ties need to be broken. This is because the matching procedure takes place in a different order than in `multilevelGPSMatch()`, and so random number generation may/will be different.
+   - This is likely a problem for all different methods of matching (when ties need to be broken)
+   - However, without ties, the two functions may return identical estimates
+   - As such, I'm removing the warnings and proceeding as is.
+- Adds some notes in the README and vignette about this issue.
+
  
-- Add matrix of imputed potential outcomes to output
 
-# multilevelMatching 0.1.1
-
-## Breaking changes
-
-- Output has become tidier. See `estimateTau()` for details
-
-## Small improvements
-
-- Implemented some unit tests
-- Some checks and bug-avoidances are introduced
-- Added `estimateTau()` to unify the main 3 functions (Dont Repeat Yourself principle)
-
-
-# multilevelMatching 0.1
+# multilevelMatching 0.1.0
 
 - Link: the [original version by Shu Yang](https://github.com/shuyang1987/multilevelMatching)
 - Instructions for downloading original version available [here](README.md) and [here](https://github.com/shuyang1987/multilevelMatching/blob/master/README.md)

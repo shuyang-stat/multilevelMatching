@@ -1,6 +1,10 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
 
+
+[![Travis-CI Build Status](https://travis-ci.org/shuyang1987/multilevelMatching.svg?branch=master)](https://travis-ci.org/shuyang1987/multilevelMatching)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github//shuyang1987/multilevelMatching/?branch=master&svg=true)](https://ci.appveyor.com/shuyang1987/multilevelMatching)
+
 ## This is an (active) fork 
 
 #### Original repo
