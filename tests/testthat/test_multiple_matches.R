@@ -99,29 +99,36 @@ test_that(
     W <- matrix(c(1, 1, 1, 3, 2, 3, 2, 1, 2,1,2,3), ncol=1)
     rownames(W) <- letters[1:12]
 
-    output <- multiMatch(
-      Y, W, X,
-      trimming = 0,
-      match_on = "multinom",
-      M_matches = 1
+    expect_silent(
+      output <- multiMatch(
+        Y, W, X,
+        trimming = 0,
+        match_on = "multinom",
+        M_matches = 1
+      )
     )
 
 
-
-    output <- multiMatch(
-      Y, W, X,
-      trimming = 0,
-      match_on = "multinom",
-      M_matches = 2
+    expect_silent(
+      output <- multiMatch(
+        Y, W, X,
+        trimming = 0,
+        match_on = "multinom",
+        M_matches = 2
+      )
     )
 
-    output <- multiMatch(
-      Y, W, X,
-      trimming = 0,
-      match_on = "multinom",
-      M_matches = 2,
-      J_var_matches = 2
+    expect_silent(
+      output <- multiMatch(
+        Y, W, X,
+        trimming = 0,
+        match_on = "multinom",
+        M_matches = 2,
+        J_var_matches = 2
+      )
     )
+
+
   }
 )
 
@@ -188,21 +195,25 @@ test_that(
     W <- matrix(c(1, 1, 1, 3, 2, 3, 2, 1, 2,1,2,3), ncol=1)
     rownames(W) <- letters[1:12]
 
-    output <- multiMatch(
-      Y, W, X,
-      trimming=0,
-      match_on = "multinom",
-      J_var_matches=1
+    expect_silent(
+      output <- multiMatch(
+        Y, W, X,
+        trimming=0,
+        match_on = "multinom",
+        J_var_matches=1
+      )
     )
 
 
-
-    output <- multiMatch(
+    expect_silent(
+      output <- multiMatch(
         Y, W, X,
         trimming=0,
         match_on = "multinom",
         J_var_matches=2
+      )
     )
+
   }
 )
 
