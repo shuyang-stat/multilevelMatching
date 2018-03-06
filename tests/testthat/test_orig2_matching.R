@@ -90,6 +90,7 @@ test_that(
         .Names = c("tauestimate", "varestimate")
       )
 
+    if (names(fit)[[1]] == "tauestimate"){
 
     expect_equal(
       fit$tauestimate,
@@ -102,6 +103,24 @@ test_that(
       fit_orig$varestimate,
       tol=1e-5
     )
+
+
+    } else {
+      expect_equal(
+        fit$results$Estimate,
+        fit_orig$tauestimate,
+        tol=1e-5,
+        check.names = FALSE
+      )
+
+      expect_equal(
+        fit$results$Variance,
+        fit_orig$varestimate,
+        tol=1e-5,
+        check.names = FALSE
+      )
+    }
+
   }
 )
 
@@ -168,6 +187,7 @@ test_that(
           "analysisidx"
         )
       )
+    if (names(fit)[[1]] == "tauestimate") {
 
 
 
@@ -218,6 +238,66 @@ test_that(
       tol=1e-5
     )
 
+
+
+    } else {
+      expect_equal(
+        fit$results$Estimate,
+        check.attributes = FALSE,
+        fit_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit$results$Variance,
+        check.names = FALSE,
+        fit_orig$varestimate,
+        tol=1e-5
+      )
+      expect_equal(
+        fit$results$VarianceAI2012,
+        check.names = FALSE,
+        fit_orig$varestimateAI2012,
+        tol=1e-5
+      )
+
+      ## new code outputs NULL for analysis_idx when no trimming
+      expect_failure(
+        expect_equal(
+          fit$analysis_idx$indices_kept,
+          # check.names = FALSE,
+          fit_orig$analysisidx,
+          tol=1e-5
+        )
+      )
+
+
+      expect_equal(
+        fit2$results$Estimate,
+        check.names = FALSE,
+        fit2_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$results$Variance,
+        check.names = FALSE,
+        fit2_orig$varestimate,
+        tol=1e-5
+      )
+      expect_equal(
+        fit2$results$VarianceAI2012,
+        check.names = FALSE,
+        fit2_orig$varestimateAI2012,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$analysis_idx$indices_kept,
+        fit2_orig$analysisidx,
+        tol=1e-5
+      )
+    }
 
   }
 )
@@ -292,6 +372,7 @@ test_that(
         )
       )
 
+    if (names(fit)[[1]] == "tauestimate"){
 
 
     expect_equal(
@@ -341,6 +422,66 @@ test_that(
       tol=1e-5
     )
 
+
+
+    } else {
+      expect_equal(
+        fit$results$Estimate,
+        fit_orig$tauestimate,
+        check.attributes = FALSE,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit$results$Variance,
+        check.names = FALSE,
+        fit_orig$varestimate,
+        tol=1e-5
+      )
+      expect_equal(
+        fit$results$VarianceAI2012,
+        check.names = FALSE,
+        fit_orig$varestimateAI2012,
+        tol=1e-5
+      )
+
+      ## new code outputs NULL for analysis_idx when no trimming
+      expect_failure(
+        expect_equal(
+          fit$analysis_idx$indices_kept,
+          # check.names = FALSE,
+          fit_orig$analysisidx,
+          tol=1e-5
+        )
+      )
+
+
+      expect_equal(
+        fit2$results$Estimate,
+        check.names = FALSE,
+        fit2_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$results$Variance,
+        check.names = FALSE,
+        fit2_orig$varestimate,
+        tol=1e-5
+      )
+      expect_equal(
+        fit2$results$VarianceAI2012,
+        check.names = FALSE,
+        fit2_orig$varestimateAI2012,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$analysis_idx$indices_kept,
+        fit2_orig$analysisidx,
+        tol=1e-5
+      )
+    }
 
   }
 )
@@ -425,6 +566,9 @@ test_that(
       .Names = c("tauestimate", "varestimate")
     )
 
+
+    if (names(fit)[[1]] == "tauestimate"){
+
     expect_equal(
       fit$tauestimate,
       fit_orig$tauestimate,
@@ -462,6 +606,89 @@ test_that(
       tol=1e-5
     )
 
+
+
+    } else {
+      expect_equal(
+        fit$results$Estimate,
+        check.names = FALSE,
+        fit_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit$results$Variance,
+        check.names = FALSE,
+        fit_orig$varestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit$results$VarianceAI2012,
+        rep(NA, 3)
+      )
+      expect_null(
+        fit$analysis_idx$indices_kept
+      )
+      ## new code outputs NULL for analysis_idx when no trimming
+      # expect_failure(
+        # expect_equal(
+        #   fit$analysis_idx$indices_kept,
+        #   # check.names = FALSE,
+        #   fit_orig$analysisidx,
+        #   tol=1e-5
+        # )
+      # )
+
+
+      expect_equal(
+        fit2$results$Estimate,
+        check.names = FALSE,
+        fit2_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$results$Variance,
+        check.names = FALSE,
+        fit2_orig$varestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit2$results$VarianceAI2012,
+        rep(NA, 3)
+      )
+      expect_null(
+        fit2$analysis_idx$indices_kept
+      )
+      # expect_equal(
+      #   fit2$results$VarianceAI2012,
+      #   check.names = FALSE,
+      #   fit2_orig$varestimateAI2012,
+      #   tol=1e-5
+      # )
+
+      # expect_equal(
+      #   fit2$analysis_idx$indices_kept,
+      #   fit2_orig$analysisidx,
+      #   tol=1e-5
+      # )
+
+      expect_equal(
+        fit3$results$Estimate,
+        check.names = FALSE,
+        fit3_orig$tauestimate,
+        tol=1e-5
+      )
+
+      expect_equal(
+        fit3$results$Variance,
+        check.names = FALSE,
+        fit3_orig$varestimate,
+        tol=1e-5
+      )
+    }
 
   }
 )
