@@ -5,8 +5,8 @@
 #' is similar to the 'legacy' functions \code{\link{multilevelMatchX}} and
 #' \code{\link{multilevelGPSMatch}}.
 #'
-#' @param Y a continuous response vector (1 x n)
-#' @param W a treatment vector (1 x n) with numerical values indicating
+#' @param Y A response vector (1 x n)
+#' @param W A treatment vector (1 x n) with numerical values indicating
 #'   treatment groups
 #' @param X A covariate matrix (p x n) with no intercept. When
 #'   match_on="existing", then X must be a vector (1 x n) of user-specified

@@ -30,13 +30,14 @@ estimateTau_legacy(trtlevels, meanw, trtnumber, taunumber, N, Yiw = NULL,
 
 \item{N}{A scalar for the number of rows in the data}
 
-\item{Yiw}{Matrix of all imputed potential outcomes}
+\item{Yiw}{A matrix of all imputed potential outcomes}
 
-\item{Kiw}{Vector of times each unit is matched to}
+\item{Kiw}{A vector of times each unit is matched to}
 
-\item{sigsqiw}{Estimated sigma squared, from AI2006}
+\item{sigsqiw}{Estimated sigma squared (variance), from Abadie and Imbens
+(2006)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{...}{the dots argument}
@@ -51,6 +52,15 @@ designed to work with the following functions:
 \code{\link{multilevelGPSStratification}}. The \code{\link{estimateTau}}
 function is designed to work with \code{\link{multiMatch}} which is the
 future direction of the matching estimators.
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
 }
 \seealso{
 \code{\link{estimateTau}}; \code{\link{multilevelGPSMatch}};

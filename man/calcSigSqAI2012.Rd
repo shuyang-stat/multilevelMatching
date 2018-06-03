@@ -8,12 +8,12 @@ calcSigSqAI2012(W, X_covars, Y, N, num_trts, trt_levels, match_mat_AI2012,
   prop_score_ests, vcov_coeff, tau_dfm, ...)
 }
 \arguments{
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{X_covars}{The matrix of covariates (not the matrix of estimated GPS)}
 
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
 \item{N}{The total number of units}
 

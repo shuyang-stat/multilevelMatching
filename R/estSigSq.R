@@ -5,9 +5,9 @@
 #' This function executes the matching methods to estimate the components for
 #' estimating the variance (sigma squared) of the matching estimator. All
 #' matching methods (specified with \code{match_on}) will estimate the variance
-#' as in Abadie and Imbens 2006. When \code{match_on = "multinom"} this function
+#' as in Abadie and Imbens (2006). When \code{match_on = "multinom"} this function
 #' will carry out additional matching procedures to estimate the variance as
-#' described in Abadie and Imbens 2012.
+#' described in Abadie and Imbens (2012).
 #'
 #' @inheritParams matchAllTreatments
 #' @inheritParams matchImputePO
@@ -21,11 +21,19 @@
 #'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2012}}).
 #'
 #' @return A list of one or two elements. \code{sigsqiw_kk} is a vector with the
-#'   estimated variance component for units observed to have the kk^th treatment
+#'   estimated variance component for units observed to have the \code{kk}^th treatment
 #'   level. When \code{match_on = "multinom"}, the list will also have an
-#'   element for \code{match_mat_AI2012_kk_two_cols}, which is a Ntot-by-2
+#'   element for \code{match_mat_AI2012_kk_two_cols}, which is a \code{Ntot}-by-2
 #'   matrix with matching information that will eventually be passed to
 #'   \code{\link{calcSigSqAI2012}}.
+#'
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
+#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+#'   score. Econometrica, 84(2), 781-807.
+#'   \url{https://doi.org/10.3982/ECTA11293}
 estSigSq <- function(
   X, Y,
   which_same_trt, N_this_trt,
@@ -83,7 +91,7 @@ estSigSq <- function(
     )
   )
 
-  ## Abadie&Imbens2012 variance estimator for multinomial logistic regression
+  ## Abadie & Imbens (2012) variance estimator for multinomial logistic regression
   if (match_on=="multinom") {
 
     ## First, matching to find two outsiders (different treatments) closest

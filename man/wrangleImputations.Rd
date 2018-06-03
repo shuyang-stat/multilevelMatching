@@ -7,14 +7,14 @@
 wrangleImputations(match_output, M_matches, Y, which_same_trt, which_diff_trt)
 }
 \arguments{
-\item{match_output}{THe output from \code{Matching::Match()} when matching
-different treament levels to impute potential outcomes (for point
+\item{match_output}{The output from \code{\link[Matching]{Match}} when
+matching different treament levels to impute potential outcomes (for point
 estimation of causal estimands).}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens 2006. Currently can only support M=1.}
 
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
 \item{which_same_trt}{Numeric vector providing indices of individuals
 observed to have treatment level kk}
@@ -25,12 +25,12 @@ observed to have treatment level  NOT equal to kk}
 \value{
 A list, many of which are necessary arguments for
   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
-  data set of all potential outcomes. \item \code{mean_Yiw} Mean of Yiw
-  across all units i. These are the estimates of the population-level mean
-  estimands. See \code{\link{estimateTau}}. \item \code{Kiw} The vector of
-  number of times unit i used as a match in imputation. \item
-  \code{impute_match_data} Extra information from the main matching
-  procedure. }
+  data set of all potential outcomes. \item \code{mean_Yiw} Mean of
+  \code{Yiw} across all units i. These are the estimates of the
+  population-level mean estimands. See \code{\link{estimateTau}}. \item
+  \code{Kiw} The vector of number of times unit i used as a match in
+  imputation. \item \code{impute_match_data} Extra information from the main
+  matching procedure. }
 }
 \description{
 This is a plumbing function, called from \code{\link{matchImputePO}}; they

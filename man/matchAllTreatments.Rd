@@ -14,10 +14,10 @@ matchAllTreatments(N, X, W, Y, num_trts, trt_levels, N_per_trt, unit_ids_sorted,
 match_on="existing", then X must be a vector (1 x n) of user-specified
 propensity scores.}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
 \item{num_trts}{The number of unique treatments (3+), a scalar}
 
@@ -42,14 +42,15 @@ Abadie and Imbens 2006. Currently can only support J=1.}
 \value{
 A list including at most: \itemize{
 
-  \item Yiw: A matrix of all imputed (or observed) potential outcomes for
-  each unit \item mean_Yiw: A vector of the average (across all units) of
-  estimated/imputed potential outcomes \item sigsqiw: Estimated variance
-  components (from AI2006) for each unit \item Kiw: The vector of number of
-  times unit i used as a match \item impute_match_data: extra information
-  from the main matching procedure \item match_mat_AI2012: When
+  \item \code{Yiw}: A matrix of all imputed (or observed) potential outcomes
+  for each unit \item \code{mean_Yiw}: A vector of the average (across all
+  units) of estimated/imputed potential outcomes \item \code{sigsqiw}:
+  Estimated variance components (from Abadie and Imbens (2006)'s method) for
+  each unit \item \code{Kiw}: The vector of number of times unit i used as a
+  match \item \code{impute_match_data}: extra information from the main
+  matching procedure \item \code{match_mat_AI2012}: When
   \code{match_on=`multinom`} this additional information will be output for
-  \code{\link{calcSigSqAI2012}} }
+  \code{\link{calcSigSqAI2012}} (from Abadie and Imbens (2012)'s method) }
 
   A few of the necessary arguments are output from the
   \code{\link{reorderByTreatment}} function.
@@ -57,4 +58,13 @@ A list including at most: \itemize{
 \description{
 Mostly calls a subfunction for each treatment level, which calls subfunctions
 that either carry out the matched imputation or the variance estimation.
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
 }

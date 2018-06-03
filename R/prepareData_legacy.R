@@ -34,7 +34,7 @@ prepareData_legacy <- function(
     if(Trimming==1){
       #PF modeling
       W.ref <- stats::relevel(as.factor(W),ref=1)
-      temp <- utils::capture.output(PF.out <- multinom(W.ref~X))  ##make this into a subfunction?
+      temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))  ##make this into a subfunction?
       PF.fit <- stats::fitted(PF.out)
 
       ## identify sufficient overlap

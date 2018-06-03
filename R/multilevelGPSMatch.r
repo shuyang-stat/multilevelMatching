@@ -1,31 +1,33 @@
 #' Matching on GPS with multilevel treatments
 #'
 #' @inheritParams multilevelMatchX
-#' @param X a covariate matrix (p x n) with no intercept. When GPSM="existing",
-#'   then X must be a vector (1 x n) of user-specified propensity scores.
-#' @param Trimming an indicator of whether trimming the sample to ensure overlap
-#' @param GPSM an indicator of the methods used for estimating GPS, options
-#'   include "multinomiallogisticReg", "ordinallogisticReg" for proportional
-#'   odds or cumulative logit model, and "existing" for user-specified
-#'   propensity score via the parameter X.
+#' @param X A covariate matrix (p x n) with no intercept. When
+#'   \code{GPSM="existing"}, then \code{X} must be a vector (1 x n) of
+#'   user-specified propensity scores.
+#' @param Trimming An indicator of whether trimming the sample to ensure overlap
+#' @param GPSM An indicator of the methods used for estimating GPS, options
+#'   include \code{"multinomiallogisticReg"}, \code{"ordinallogisticReg"} for
+#'   proportional odds or cumulative logit model, and \code{"existing"} for
+#'   user-specified propensity score via the parameter \code{X}.
 #' @param model_options A list of the options to pass to propensity model.
 #'   Currently under development. Can only pass reference level to multinomial
-#'   logisitc regression.
+#'   logistic regression.
 #'
 #' @return according to \code{\link{estimateTau}}, including at most: \itemize{
 #'
-#'   \item tauestimate:  a vector of estimates for pairwise treatment effects
+#'   \item \code{tauestimate}:  a vector of estimates for pairwise treatment
+#'   effects
 #'
-#'   \item varestimate:  a vector of variance estimates for tauestimate, using
-#'   Abadie&Imbens(2006)'s method
+#'   \item \code{varestimate}:  a vector of variance estimates for tauestimate,
+#'   using Abadie & Imbens (2006)'s method
 #'
-#'   \item varestimateAI2012:  a vector of variance estimates for tauestimate,
-#'   when matching on the generalized propensity score, using
-#'   Abadie&Imbens(2012)'s method. This variance estimate takes into account of
-#'   the uncertainty in estimating the GPS.
+#'   \item \code{varestimateAI2012}:  a vector of variance estimates for
+#'   tauestimate, when matching on the generalized propensity score, using
+#'   Abadie & Imbens (2012)'s method. This variance estimate takes into account
+#'   of the uncertainty in estimating the GPS.
 #'
-#'   \item analysis_idx: a list containing the indices_kept (analyzed) and
-#'   indices_dropped (trimmed) based on Crump et al. (2009)'s method.
+#'   \item \code{analysis_idx}: a list containing the indices_kept (analyzed)
+#'   and indices_dropped (trimmed) based on Crump et al. (2009)'s method.
 #'
 #'   }
 #'
@@ -39,7 +41,22 @@
 #'   multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 #'   multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 #'
-#' @import Matching boot nnet MASS
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
+#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+#'   score. Econometrica, 84(2), 781-807.
+#'   \url{https://doi.org/10.3982/ECTA11293}
+#'
+#'   Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009). Dealing
+#'   with limited overlap in estimation of average treatment effects.
+#'   Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
+#'
+#' @return Returns a list of overall and group-level IPW point estimates,
+#'   overall and group-level IPW point estimates (using the weight derivatives),
+#'   derivatives of the loglihood, the computed weight matrix, the computed
+#'   weight derivative array, and a summary.
 #'
 #' @export
 multilevelGPSMatch <- function(

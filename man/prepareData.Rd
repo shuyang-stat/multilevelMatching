@@ -8,9 +8,9 @@ prepareData(Y, W, X, match_on, trimming = NULL, model_options, M_matches,
   J_var_matches)
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{X}{A covariate matrix (p x n) with no intercept. When
@@ -32,7 +32,9 @@ as in Abadie and Imbens 2006. Currently can only support M=1.}
 Abadie and Imbens 2006. Currently can only support J=1.}
 }
 \value{
-A list of information, including the \code{X, W, Y} arguments after sorting, and information on \code{unit_ids}, etc. See \code{\link{determineIDs}} for more.
+A list of information, including the \code{X, W, Y} arguments after
+  sorting, and information on \code{unit_ids}, etc. See
+  \code{\link{determineIDs}} for more.
 }
 \description{
 A series of checks, tests, re-ordering, and other operations to prepare the

@@ -7,18 +7,18 @@
 multilevelMatchX(Y, W, X)
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A continuous response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
+\item{W}{A treatment vector (1 x n) with numerical values indicating treatment groups}
 
-\item{X}{a covariate matrix (p x n) with no intercept}
+\item{X}{A covariate matrix (p x n) with no intercept}
 }
 \value{
-according to \code{\link{estimateTau}}: a dataframe with two columns,
-tauestimate, varestimate, where
-tauestimate is a vector of estimates for pairwise treatment effects, and
-varestimate is a vector of variance estimates for tauestimate, using
-Abadie&Imbens(2006)'s method.
+According to \code{\link{estimateTau}}: a dataframe with two columns,
+\code{tauestimate}, \code{varestimate}, where
+\code{tauestimate} is a vector of estimates for pairwise treatment effects, and
+\code{varestimate} is a vector of variance estimates for \code{tauestimate}, using
+Abadie & Imbens (2006)'s method.
 }
 \description{
 Matching on X with multilevel treatments
@@ -29,6 +29,19 @@ Matching on X with multilevel treatments
   W<-c(1,1,1,3,2,3,2,1,2)
   multilevelMatchX(Y,W,X)
 
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
+
+  Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009). Dealing
+  with limited overlap in estimation of average treatment effects.
+  Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
 }
 \seealso{
 \code{\link{multilevelGPSMatch}}; \code{\link{multilevelGPSStratification}}

@@ -85,18 +85,19 @@ matchImputePO <- function(
 #'
 #' @inheritParams multiMatch
 #' @inheritParams matchImputePO
-#' @param match_output THe output from \code{Matching::Match()} when matching
-#'   different treament levels to impute potential outcomes (for point
+#' @param match_output The output from \code{\link[Matching]{Match}} when
+#'   matching different treament levels to impute potential outcomes (for point
 #'   estimation of causal estimands).
 #'
 #' @return A list, many of which are necessary arguments for
 #'   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
-#'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of Yiw
-#'   across all units i. These are the estimates of the population-level mean
-#'   estimands. See \code{\link{estimateTau}}. \item \code{Kiw} The vector of
-#'   number of times unit i used as a match in imputation. \item
-#'   \code{impute_match_data} Extra information from the main matching
-#'   procedure. }
+#'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of
+#'   \code{Yiw} across all units i. These are the estimates of the
+#'   population-level mean estimands. See \code{\link{estimateTau}}. \item
+#'   \code{Kiw} The vector of number of times unit i used as a match in
+#'   imputation. \item \code{impute_match_data} Extra information from the main
+#'   matching procedure. }
+#'
 wrangleImputations <- function(
   match_output,
   M_matches,
@@ -166,6 +167,7 @@ wrangleImputations <- function(
 #'
 #' @return A list including the averaged \code{matched_outcomes}, and also
 #'   \code{orig_outcomes} which is sometimes \code{NULL}.
+#'
 averageMultipleMatches <- function(
   num_matches, matched_outcomes, orig_outcomes = NULL
 ){

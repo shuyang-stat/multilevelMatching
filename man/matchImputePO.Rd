@@ -13,7 +13,7 @@ matchImputePO(X, Y, vec_diff_trt, which_diff_trt, vec_same_trt, which_same_trt,
 match_on="existing", then X must be a vector (1 x n) of user-specified
 propensity scores.}
 
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
 \item{vec_diff_trt}{Boolean vector indicating which individuals observed to
 have treatment level NOT equal to kk}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepareData.R
 \name{getIDs}
 \alias{getIDs}
-\title{Get/grab ID's from vector/matrix/dataframe}
+\title{Get/grab identifiers from vector/matrix/dataframe}
 \usage{
 getIDs(x)
 }
@@ -10,7 +10,7 @@ getIDs(x)
 \item{x}{An object}
 }
 \value{
-names(x), row.names(x), or NULL.
+\code{names(x)}, \code{row.names(x)}, or \code{NULL}.
 }
 \description{
 This is a helper function for \code{\link{determineIDs}}

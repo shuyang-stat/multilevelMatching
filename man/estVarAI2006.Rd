@@ -10,7 +10,7 @@ estVarAI2006(N, W, M_matches, trt_level_1, trt_level_2, Yiw1, Yiw2, tau, Kiw,
 \arguments{
 \item{N}{A scalar for the number of rows in the data}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
@@ -28,14 +28,20 @@ W_2)}}
 
 \item{tau}{Estimated value of \eqn{\tau(W_1, W_2)}.}
 
-\item{Kiw}{Vector of times each unit is matched to}
+\item{Kiw}{A vector of times each unit is matched to}
 
-\item{sigsqiw}{Estimated sigma squared, from AI2006}
+\item{sigsqiw}{Estimated sigma squared (variance), from Abadie and Imbens
+(2006)}
 }
 \value{
 A single numeric value for the estimated asymptotic variance of the
   estimator.
 }
 \description{
-See Theorem 7 of Abadie and Imbens 2006 Econometrica for the formula.
+See Theorem 7 of Abadie and Imbens (2006) Econometrica for the formula.
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }

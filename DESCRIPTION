@@ -5,8 +5,8 @@ Title: Propensity Score Matching and Subclassification in Observational Studies
 Authors@R: c(
     person("Shu", "Yang", email = "shuyang@hsph.harvard.edu",
       role = c("aut")),
-    person("Brian", "Barkley", email = "BarkleyBG@unc.edu", 
-      role = c("ctb", "cre"))
+    person("Brian", "Barkley", email = "BarkleyBG@outlook.com", 
+      role = c("aut", "cre"))
     )
 Date: 2018-03-03
 Version: 0.1.0.9000

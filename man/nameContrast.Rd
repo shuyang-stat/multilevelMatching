@@ -2,15 +2,15 @@
 % Please edit documentation in R/utilities.R
 \name{nameContrast}
 \alias{nameContrast}
-\title{naming the matching contrasts}
+\title{Naming the matching contrasts}
 \usage{
 nameContrast(trt1, trt2)
 }
 \arguments{
-\item{trt1}{former treatment level}
+\item{trt1}{Former treatment level}
 
-\item{trt2}{latter treatment level}
+\item{trt2}{Latter treatment level}
 }
 \description{
-naming the matching contrasts
+Naming the matching contrasts
 }

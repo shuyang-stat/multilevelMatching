@@ -1,4 +1,7 @@
 
+# #' Statistic for bootstrapping the standard errors from GPS Stratification
+# #'
+# #'
 estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,NS) {
   ###boot function
   #
@@ -11,7 +14,7 @@ estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,N
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){
     W.ref <- stats::relevel(as.factor(W),ref="1")
-    temp <- utils::capture.output(PF.out <- multinom(W.ref~X))
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
     PF.fit <- stats::fitted(PF.out)
     if(linearp==1){
       beta <- stats::coef(PF.out)
@@ -20,7 +23,7 @@ estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,N
     }
   }
   if(GPSM=="ordinallogisticReg"){
-    PF.out <- polr(as.factor(W)~X)
+    PF.out <- MASS::polr(as.factor(W)~X)
     PF.fit <- stats::fitted(PF.out)
   }
   if(GPSM=="existing"){

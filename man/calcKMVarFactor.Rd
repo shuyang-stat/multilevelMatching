@@ -7,7 +7,7 @@
 calcKMVarFactor(Kiw, M_matches)
 }
 \arguments{
-\item{Kiw}{Vector of times each unit is matched to}
+\item{Kiw}{A vector of times each unit is matched to}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens 2006. Currently can only support M=1.}
@@ -21,8 +21,13 @@ This function is exported for use in other packages.
 This function calculates \code{K_M_var_factor}, a numeric vector. Each entry in
 this vector is a function of the number of times each unit is matched to, aka
 \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
-in this function comes from Theorem 7, page 251 of Abadie and Imbens 2006
+in this function comes from Theorem 7, page 251 of Abadie and Imbens (2006)
 Econometrica. The \code{K_M_var_factor} is an important component in the variance
 estimation, and is called from \code{\link{estVarAI2006}} in
 \code{\link{estimateTau}}.
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }

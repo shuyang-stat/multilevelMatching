@@ -1,3 +1,7 @@
+
+#' Function to determine overlap from Crump
+#'
+#' @param PF.fit fitted propensity model
 overlap<-function(PF.fit){
   obj<-function(alpha){
     gx<-apply(1/PF.fit,1,sum)

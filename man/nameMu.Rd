@@ -2,13 +2,13 @@
 % Please edit documentation in R/utilities.R
 \name{nameMu}
 \alias{nameMu}
-\title{naming the matching mu's}
+\title{Naming the matching population mean mu's}
 \usage{
 nameMu(trt)
 }
 \arguments{
-\item{trt}{treatment level}
+\item{trt}{Treatment level}
 }
 \description{
-naming the matching mu's
+Naming the matching population mean mu's
 }

@@ -7,9 +7,9 @@
 determineIDs(Y, W, X)
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{X}{A covariate matrix (p x n) with no intercept. When

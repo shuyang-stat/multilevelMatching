@@ -31,6 +31,14 @@
 #' @return a list including the dataframes for estimates for tau and for mu
 #'
 #'
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
+#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+#'   score. Econometrica, 84(2), 781-807.
+#'   \url{https://doi.org/10.3982/ECTA11293}
+#'
 estimateTau_legacy <- function(
   trtlevels,meanw,
   trtnumber,taunumber,N,

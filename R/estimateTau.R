@@ -1,4 +1,4 @@
-#' Calculate the estimates of population-level estimands (e.g., tau).
+#' Calculate the estimates of population-level estimands (e.g., \code{tau}).
 #'
 #' This is a major plumbing function for the package. All matching procedures
 #' are carried out in \code{\link{matchImputePO}} (for point estimates) and
@@ -8,18 +8,24 @@
 #'
 #' @inheritParams estimateTrtModel
 #' @inheritParams multiMatch
-#' @param trt_levels vector of the unique levels of treatment W
-#' @param num_trts a scalar, the number of treatment levels
-#' @param num_contrasts a scalar, the number of tau contrasts to estimate
+#' @param trt_levels A Vector of the unique levels of treatment W
+#' @param num_trts A scalar for the number of treatment levels
+#' @param num_contrasts A scalar for the number of tau contrasts to estimate
 #' @param N A scalar for the number of rows in the data
-#' @param Yiw Matrix of all imputed potential outcomes
-#' @param mean_Yiw vector of the estimated mean w.r.t. each treatment w
-#' @param Kiw Vector of times each unit is matched to
-#' @param sigsqiw Estimated sigma squared, from AI2006
+#' @param Yiw A matrix of all imputed potential outcomes
+#' @param mean_Yiw A vector of the estimated mean w.r.t. each treatment w
+#' @param Kiw A vector of times each unit is matched to
+#' @param sigsqiw Estimated sigma squared (variance), from Abadie and Imbens
+#'   (2006)
 #'
 #' @seealso \code{\link{multiMatch}}
 #'
 #' @return A list, including the tidy dataframes estimates of target estimands
+#'
+#'
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 #'
 estimateTau <- function(
   trt_levels, mean_Yiw,
@@ -81,7 +87,7 @@ estimateTau <- function(
 
 #' Computes Estimated Asymptotic Variance of matching estimators.
 #'
-#' See Theorem 7 of Abadie and Imbens 2006 Econometrica for the formula.
+#' See Theorem 7 of Abadie and Imbens (2006) Econometrica for the formula.
 #'
 #' @inheritParams estimateTau
 #' @inheritParams multiMatch
@@ -95,6 +101,11 @@ estimateTau <- function(
 #'
 #' @return A single numeric value for the estimated asymptotic variance of the
 #'   estimator.
+#'
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
 #'
 estVarAI2006 <- function(
   N, W, M_matches,
@@ -125,7 +136,7 @@ estVarAI2006 <- function(
 #' This function calculates \code{K_M_var_factor}, a numeric vector. Each entry in
 #' this vector is a function of the number of times each unit is matched to, aka
 #' \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
-#' in this function comes from Theorem 7, page 251 of Abadie and Imbens 2006
+#' in this function comes from Theorem 7, page 251 of Abadie and Imbens (2006)
 #' Econometrica. The \code{K_M_var_factor} is an important component in the variance
 #' estimation, and is called from \code{\link{estVarAI2006}} in
 #' \code{\link{estimateTau}}.
@@ -135,6 +146,11 @@ estVarAI2006 <- function(
 #' @return A numeric vector.
 #'
 #' This function is exported for use in other packages.
+#'
+#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
 #'
 #' @export
 calcKMVarFactor <- function(Kiw, M_matches){

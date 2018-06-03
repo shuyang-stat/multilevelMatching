@@ -2,32 +2,33 @@
 % Please edit documentation in R/estimateTau.R
 \name{estimateTau}
 \alias{estimateTau}
-\title{Calculate the estimates of population-level estimands (e.g., tau).}
+\title{Calculate the estimates of population-level estimands (e.g., \code{tau}).}
 \usage{
 estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches, Yiw,
   Kiw, sigsqiw, W, ...)
 }
 \arguments{
-\item{trt_levels}{vector of the unique levels of treatment W}
+\item{trt_levels}{A Vector of the unique levels of treatment W}
 
-\item{mean_Yiw}{vector of the estimated mean w.r.t. each treatment w}
+\item{mean_Yiw}{A vector of the estimated mean w.r.t. each treatment w}
 
-\item{num_trts}{a scalar, the number of treatment levels}
+\item{num_trts}{A scalar for the number of treatment levels}
 
-\item{num_contrasts}{a scalar, the number of tau contrasts to estimate}
+\item{num_contrasts}{A scalar for the number of tau contrasts to estimate}
 
 \item{N}{A scalar for the number of rows in the data}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens 2006. Currently can only support M=1.}
 
-\item{Yiw}{Matrix of all imputed potential outcomes}
+\item{Yiw}{A matrix of all imputed potential outcomes}
 
-\item{Kiw}{Vector of times each unit is matched to}
+\item{Kiw}{A vector of times each unit is matched to}
 
-\item{sigsqiw}{Estimated sigma squared, from AI2006}
+\item{sigsqiw}{Estimated sigma squared (variance), from Abadie and Imbens
+(2006)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating
+\item{W}{A treatment vector (1 x n) with numerical values indicating
 treatment groups}
 
 \item{...}{the dots argument}
@@ -41,6 +42,11 @@ are carried out in \code{\link{matchImputePO}} (for point estimates) and
 \code{\link{estSigSq}} (for variance), which are subfunctions of
 \code{\link{matchAllTreatments}}. Most of the necessary arguments to this
 function are output from these two subfunctions.
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }
 \seealso{
 \code{\link{multiMatch}}

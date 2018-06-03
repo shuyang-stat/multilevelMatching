@@ -13,20 +13,26 @@ nameCols <- function(trt_levels){
 
 
 
-#' naming the matching contrasts
-#' @param trt1 former treatment level
-#' @param trt2 latter treatment level
+#' Naming the matching contrasts
+#'
+#' @param trt1 Former treatment level
+#' @param trt2 Latter treatment level
 #'
 #' @export
 nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
 
-#' naming the matching mu's
-#' @param trt treatment level
+#' Naming the matching population mean mu's
+#'
+#' @param trt Treatment level
 #'
 #' @export
 nameMu <- function(trt){ paste0("EY(", trt,")") }
 
 
+#' Defensive programming for data re-ordering
+#'
+#' @inheritParams multiMatch
+#' @param N The number of unique units
 argChecks <- function(Y,W,X,N=NULL) {
 
   if ((length(W) != length(Y))) {
@@ -45,15 +51,15 @@ argChecks <- function(Y,W,X,N=NULL) {
 
 
 
-#' order the treatment increasingly
+#' Orders the treatment increasingly
 #'
 #' @inheritParams setIDs
-#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
-#' @param X a covariate matrix (p x n) with no intercept
-#' @param Y a continuous response vector (1 x n)
+#' @param W A treatment vector (1 x n) with numerical values indicating treatment groups
+#' @param X A covariate matrix (p x n) with no intercept
+#' @param Y A continuous response vector (1 x n)
 #' @param unit_ids_unsorted The \code{unit_ids} before the data is reordered
 #'
-#' @return the following elements, ordered according to levels of \code{W}
+#' @return The following elements, ordered according to levels of \code{W}
 #' \itemize{
 #'
 #'  \item \code{W}: a treatment vector (1 x n) with numerical values indicating treatment groups

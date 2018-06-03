@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepareData.R
 \name{setIDs}
 \alias{setIDs}
-\title{Set ID's from vector/matrix/dataframe}
+\title{Set identifiers from vector/matrix/dataframe}
 \usage{
 setIDs(x, unit_ids)
 }
@@ -12,7 +12,8 @@ setIDs(x, unit_ids)
 \item{unit_ids}{Character vector to identify study units.}
 }
 \value{
-names(x), row.names(x), or NULL.
+The object \code{x} after setting its \code{names(x)},
+  \code{row.names(x)}, or \code{rownames(x)} to \code{unit_ids}.
 }
 \description{
 This is a helper function for \code{\link{determineIDs}}

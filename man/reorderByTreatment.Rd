@@ -2,21 +2,21 @@
 % Please edit documentation in R/utilities.R
 \name{reorderByTreatment}
 \alias{reorderByTreatment}
-\title{order the treatment increasingly}
+\title{Orders the treatment increasingly}
 \usage{
 reorderByTreatment(Y, W, X, unit_ids_unsorted)
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A continuous response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
+\item{W}{A treatment vector (1 x n) with numerical values indicating treatment groups}
 
-\item{X}{a covariate matrix (p x n) with no intercept}
+\item{X}{A covariate matrix (p x n) with no intercept}
 
 \item{unit_ids_unsorted}{The \code{unit_ids} before the data is reordered}
 }
 \value{
-the following elements, ordered according to levels of \code{W}
+The following elements, ordered according to levels of \code{W}
 \itemize{
 
  \item \code{W}: a treatment vector (1 x n) with numerical values indicating treatment groups
@@ -36,5 +36,5 @@ along with these downstream elements of treatment:
 }
 }
 \description{
-order the treatment increasingly
+Orders the treatment increasingly
 }
