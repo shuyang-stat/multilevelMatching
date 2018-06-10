@@ -10,8 +10,11 @@ Description: Matching and subclasfication with multilevel treatment.
 Depends: Matching, MASS, nnet, optmatch, boot
 License: GPL-2
 VignetteBuilder: knitr
-Suggests: knitr, rmarkdown,
-    testthat
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat,
+    covr
 LazyData: TRUE
 RoxygenNote: 5.0.0
 URL: https://github.com/shuyang1987/multilevelMatching

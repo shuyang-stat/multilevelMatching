@@ -3,6 +3,7 @@ Propensity Score Matching and Subclassification in Observational Studies with Mu
 
 [![Travis-CI Build Status](https://travis-ci.org/shuyang1987/multilevelMatching.svg?branch=master)](https://travis-ci.org/shuyang1987/multilevelMatching)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github//shuyang1987/multilevelMatching/?branch=master&svg=true)](https://ci.appveyor.com/shuyang1987/multilevelMatching)
+[![Coverage status](https://codecov.io/gh/shuyang1987/multilevelMatching/branch/master/graph/badge.svg)](https://codecov.io/github/shuyang1987/multilevelMatching?branch=master)
 
 In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.
 
