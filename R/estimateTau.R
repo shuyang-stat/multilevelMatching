@@ -43,7 +43,7 @@ estimateTau <- function(
     Trt2 = blank_vec,
     Estimate = blank_vec,
     Variance = blank_vec,
-    VarianceAI2012 = blank_vec
+    VarianceAI2016 = blank_vec
   )
 
 

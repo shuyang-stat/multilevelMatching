@@ -5,7 +5,7 @@
 \title{Perform matching methods to estimate variance for one treatment level}
 \usage{
 estSigSq(X, Y, which_same_trt, N_this_trt, var_options, match_on,
-  var_args_AI2012)
+  var_args_AI2016)
 }
 \arguments{
 \item{X}{A covariate matrix (p x n) with no intercept. When
@@ -23,20 +23,20 @@ observed to have treatment level kk}
 
 \item{match_on}{"multinom", "polr", "existing", or "covariates",}
 
-\item{var_args_AI2012}{A list of arguments for carrying out matching
-  procedures to estimate components in the VarianceAI2012 variance estimates
-  (see \code{\link{calcSigSqAI2012}}).
+\item{var_args_AI2016}{A list of arguments for carrying out matching
+  procedures to estimate components in the VarianceAI2016 variance estimates
+  (see \code{\link{calcSigSqAI2016}}).
 
   Note that these variance components will be put together in
-  \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2012}}).}
+  \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).}
 }
 \value{
 A list of one or two elements. \code{sigsqiw_kk} is a vector with the
   estimated variance component for units observed to have the \code{kk}^th treatment
   level. When \code{match_on = "multinom"}, the list will also have an
-  element for \code{match_mat_AI2012_kk_two_cols}, which is a \code{Ntot}-by-2
+  element for \code{match_mat_AI2016_kk_two_cols}, which is a \code{Ntot}-by-2
   matrix with matching information that will eventually be passed to
-  \code{\link{calcSigSqAI2012}}.
+  \code{\link{calcSigSqAI2016}}.
 }
 \description{
 This function executes the matching methods to estimate the components for
@@ -44,7 +44,7 @@ estimating the variance (sigma squared) of the matching estimator. All
 matching methods (specified with \code{match_on}) will estimate the variance
 as in Abadie and Imbens (2006). When \code{match_on = "multinom"} this function
 will carry out additional matching procedures to estimate the variance as
-described in Abadie and Imbens (2012).
+described in Abadie and Imbens (2016).
 }
 \references{
 Abadie, A., & Imbens, G. W. (2006). Large sample properties of

@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiMatch.R
 \name{multiMatch}
 \alias{multiMatch}
-\title{Matching Estimators for Mutltiple Yreatments from Yang et al (2016).}
+\title{Matching Estimators for Multiple Treatments from Yang et al (2016).}
 \usage{
 multiMatch(Y, W, X, trimming = NULL, match_on,
   model_options = list(reference_level = sort(W)[1]), M_matches = 1,
@@ -27,10 +27,10 @@ Currently under development. Can only pass reference level to multinomial
 logisitc regression.}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens 2006. Currently can only support M=1.}
+as in Abadie and Imbens (2006). Currently can only support M=1.}
 
 \item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens 2006. Currently can only support J=1.}
+Abadie and Imbens (2006). Currently can only support J=1.}
 }
 \value{
 according to \code{\link{estimateTau}}, including at most: \itemize{
@@ -38,11 +38,11 @@ according to \code{\link{estimateTau}}, including at most: \itemize{
   \item tauestimate:  a vector of estimates for pairwise treatment effects
 
   \item varestimate:  a vector of variance estimates for tauestimate, using
-  Abadie&Imbens(2006)'s method
+  Abadie and Imbens (2006)'s method
 
-  \item varestimateAI2012:  a vector of variance estimates for tauestimate,
+  \item varestimateAI2016:  a vector of variance estimates for tauestimate,
   when matching on the generalized propensity score, using
-  Abadie&Imbens(2012)'s method. This variance estimate takes into account of
+  Abadie & Imbens (2016)'s method. This variance estimate takes into account of
   the uncertainty in estimating the GPS.
 
   \item analysis_idx: a list containing the indices_kept (analyzed) and
@@ -65,6 +65,19 @@ is similar to the 'legacy' functions \code{\link{multilevelMatchX}} and
   multiMatch(Y,W,X,trimming=0,match_on="covariates")
 
 
+}
+\references{
+Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+  matching estimators for average treatment effects. econometrica, 74(1),
+  235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
+
+  Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009). Dealing
+  with limited overlap in estimation of average treatment effects.
+  Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
 }
 \seealso{
 \code{\link{multilevelMatchX}}; \code{\link{multilevelGPSMatch}}

@@ -7,25 +7,25 @@
 #' matching methods (specified with \code{match_on}) will estimate the variance
 #' as in Abadie and Imbens (2006). When \code{match_on = "multinom"} this function
 #' will carry out additional matching procedures to estimate the variance as
-#' described in Abadie and Imbens (2012).
+#' described in Abadie and Imbens (2016).
 #'
 #' @inheritParams matchAllTreatments
 #' @inheritParams matchImputePO
 #' @param var_options Options for carrying out matching for variance estimation.
 #' @param N_this_trt The number of units observed to have this treatment level.
-#' @param var_args_AI2012 A list of arguments for carrying out matching
-#'   procedures to estimate components in the VarianceAI2012 variance estimates
-#'   (see \code{\link{calcSigSqAI2012}}).
+#' @param var_args_AI2016 A list of arguments for carrying out matching
+#'   procedures to estimate components in the VarianceAI2016 variance estimates
+#'   (see \code{\link{calcSigSqAI2016}}).
 #'
 #'   Note that these variance components will be put together in
-#'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2012}}).
+#'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).
 #'
 #' @return A list of one or two elements. \code{sigsqiw_kk} is a vector with the
 #'   estimated variance component for units observed to have the \code{kk}^th treatment
 #'   level. When \code{match_on = "multinom"}, the list will also have an
-#'   element for \code{match_mat_AI2012_kk_two_cols}, which is a \code{Ntot}-by-2
+#'   element for \code{match_mat_AI2016_kk_two_cols}, which is a \code{Ntot}-by-2
 #'   matrix with matching information that will eventually be passed to
-#'   \code{\link{calcSigSqAI2012}}.
+#'   \code{\link{calcSigSqAI2016}}.
 #'
 #' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
 #'   matching estimators for average treatment effects. econometrica, 74(1),
@@ -39,7 +39,7 @@ estSigSq <- function(
   which_same_trt, N_this_trt,
   var_options,
   match_on,
-  var_args_AI2012
+  var_args_AI2016
 ){
 
   #                                    #
@@ -91,16 +91,16 @@ estSigSq <- function(
     )
   )
 
-  ## Abadie & Imbens (2012) variance estimator for multinomial logistic regression
+  ## Abadie & Imbens (2016) variance estimator for multinomial logistic regression
   if (match_on=="multinom") {
 
     ## First, matching to find two outsiders (different treatments) closest
 
     outside_match_args <- append(
-      var_args_AI2012$var_options_AI2012,
+      var_args_AI2016$var_options_AI2016,
       list(
         Y = Y,
-        Tr = var_args_AI2012$vec_diff_trt, ## Outsiders (between-trt-levels)
+        Tr = var_args_AI2016$vec_diff_trt, ## Outsiders (between-trt-levels)
         X = X,
         M = 2 ## Two matches per unit
       )
@@ -113,7 +113,7 @@ estSigSq <- function(
 
     X_GPS_vec_same_trt <- X[which_same_trt]
     inside_match_args <- append(
-      var_args_AI2012$var_options_AI2012,
+      var_args_AI2016$var_options_AI2016,
       list(
         Y = outcome_repeated,
         Tr = rep(c(0,1), each=N_this_trt),
@@ -130,7 +130,7 @@ estSigSq <- function(
     #                                    #
 
     mat_kk <-
-      var_args_AI2012$match_mat_AI2012_kk_two_cols
+      var_args_AI2016$match_mat_AI2016_kk_two_cols
 
     mat_kk[unique(outside_match$index.treated), ] <-
       matrix( outside_match$index.control, ncol=2, byrow=TRUE)
@@ -142,7 +142,7 @@ estSigSq <- function(
 
 
     ## Add match_mat to output of estSigSq()
-    out_sigma$match_mat_AI2012_kk_two_cols <- mat_kk
+    out_sigma$match_mat_AI2016_kk_two_cols <- mat_kk
   }
 
   out_sigma

@@ -52,26 +52,24 @@ test_that("multilevelMatchX on one X returns same output as v0.1", {
 ## More tests between multiMatch and multilevelMatchX in other files
 test_that("multiMatch returns same as multilevelMatchX on one X", {
 
-  t1 <- multilevelMatchX(Y, W, X)
-  t1_v2 <- multiMatch(Y, W, X, match_on = "covariates")
+  run_legacy <- multilevelMatchX(Y, W, X)
+  run_multiMatch <- multiMatch(Y, W, X, match_on = "covariates")
+  names(run_legacy$results)[6] <- "VarianceAI2016" #2018-06-10
 
   expect_equal(
-    object = t1[1:3],
-    expected = t1_v2[1:3],
+    object = run_legacy[1:3],
+    expected = run_multiMatch[1:3],
     tolerance = 1e-7
   )
   expect_equal(
-    object = t1$impute_mat,
-    expected = t1_v2$impute_mat,
+    object = run_legacy$impute_mat,
+    expected = run_multiMatch$impute_mat,
     tolerance = 1e-7,
     check.attributes = FALSE
   )
 })
 
 
-# reorder_estimate_args <- c(
-#   "trtlevels", "meanw","trtnumber","taunumber","N","Yiw","Kiw","sigsqiw","W"
-# )
 
 
 

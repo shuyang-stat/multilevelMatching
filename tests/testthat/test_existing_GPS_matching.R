@@ -16,7 +16,7 @@ rownames(existing_GPS_matrix) <- LETTERS[6+(10:2)]
 
 set.seed(12345)
 
-t4 <- multilevelGPSMatch(
+run_legacy <- multilevelGPSMatch(
   Y=Y,W=W,X=existing_GPS_matrix,
   Trimming=0,GPSM="existing")
 
@@ -24,12 +24,12 @@ test_that(
   "multilevelGPSMatch (with existing GPS) returns original (v0.1) output",
   {
     expect_equal(
-      (t4$results)$Estimate,
+      (run_legacy$results)$Estimate,
       c(-8.888889, 1.111111, 10.000000),
       tolerance = my_tolerance
     )
     expect_equal(
-      (t4$results)$Variance,
+      (run_legacy$results)$Variance,
       c(26.01097, 578.20850, 551.50617),
       tolerance = my_tolerance
     )
@@ -38,7 +38,7 @@ test_that(
 
 
 set.seed(12345)
-t4mm <- multiMatch(
+run_multiMatch <- multiMatch(
   Y=Y,W=W,X=existing_GPS_matrix,
   trimming=0,match_on="existing"
 )
@@ -49,22 +49,22 @@ t4mm <- multiMatch(
 test_that("multiMatch on GPS with existing GPS returns original (v0.1) output", {
   expect_failure(
     expect_equal(
-      (t4$results)$Estimate,
-      (t4mm$results)$Estimate,
+      (run_legacy$results)$Estimate,
+      (run_multiMatch$results)$Estimate,
       tolerance = my_tolerance
     )
   )
   expect_failure(
     expect_equal(
-      (t4$results)$Variance,
-      (t4mm$results)$Variance,
+      (run_legacy$results)$Variance,
+      (run_multiMatch$results)$Variance,
       tolerance = my_tolerance
     )
   )
   expect_failure(
     expect_equal(
-      (t4$results) ,
-      (t4mm$results) ,
+      (run_legacy$results) ,
+      (run_multiMatch$results) ,
       tolerance = my_tolerance
     )
   )
@@ -75,10 +75,13 @@ test_that("multiMatch on GPS with existing GPS returns original (v0.1) output", 
 test_that(
   "multiMatch on GPS with existing GPS returns as expected (v0.1.5)",
   {
-    t4mm_orig <- readRDS(file = quickLookup("existingGPS_t4mm_orig.Rds"))
+    run_multiMatch_orig <- readRDS(file = quickLookup("existingGPS_t4mm_orig.Rds"))
+
+    names(run_multiMatch_orig$results)[6] <- "VarianceAI2016" #2018-06-10
+
     expect_equal(
-      (t4mm_orig$results) ,
-      (t4mm$results) ,
+      (run_multiMatch_orig$results) ,
+      (run_multiMatch$results) ,
       tolerance = my_tolerance
     )
   }
@@ -107,23 +110,23 @@ test_that(
     # existing_GPS_matrix <- cbind(pr_w1, pr_w2,pr_w3)
 
     set.seed(12345)
-    t4 <- multilevelGPSMatch(
+    run_legacy <- multilevelGPSMatch(
       Y=Y,W=W,X=existing_GPS_matrix,Trimming=0,GPSM="existing")
 
     set.seed(12345)
-    t4mm <- multiMatch(
+    run_multiMatch <- multiMatch(
       Y=Y,W=W,X=existing_GPS_matrix,
       trimming=0,match_on="existing"
     )
 
     expect_equal(
-      (t4$results)$Estimate,
-      (t4mm$results)$Estimate,
+      (run_legacy$results)$Estimate,
+      (run_multiMatch$results)$Estimate,
       tolerance = 0.04
     )
     expect_equal(
-      (t4$results)$Variance,
-      (t4mm$results)$Variance,
+      (run_legacy$results)$Variance,
+      (run_multiMatch$results)$Variance,
       tolerance = 0.008
     )
   }
@@ -146,31 +149,33 @@ test_that(
     eX <- eX / rowSums(eX)
     set.seed(12345)
 
-    t4mm_eX <- multiMatch(
+    run_multiMatch_eX <- multiMatch(
       Y=Y,W=W,X=eX,
       trimming=0,match_on="existing"
     )
 
 
     set.seed(12345)
-    t4_eX <- multilevelGPSMatch(
+    run_legacy_eX <- multilevelGPSMatch(
       Y=Y,W=W,X=eX,Trimming=0,GPSM="existing"
     )
 
 
     expect_equal(
-      (t4_eX$results)$Estimate,
-      (t4mm_eX$results)$Estimate,
+      (run_legacy_eX$results)$Estimate,
+      (run_multiMatch_eX$results)$Estimate,
       tolerance = my_tolerance
     )
     expect_equal(
-      (t4_eX$results)$Variance,
-      (t4mm_eX$results)$Variance,
+      (run_legacy_eX$results)$Variance,
+      (run_multiMatch_eX$results)$Variance,
       tolerance = my_tolerance
     )
+
+    names(run_legacy_eX$results)[6] <- "VarianceAI2016" #2018-06-10
     expect_equal(
-      (t4_eX$results) ,
-      (t4mm_eX$results) ,
+      (run_legacy_eX$results) ,
+      (run_multiMatch_eX$results) ,
       tolerance = my_tolerance
     )
 })

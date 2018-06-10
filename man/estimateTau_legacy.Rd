@@ -2,23 +2,23 @@
 % Please edit documentation in R/estimateTau_legacy.R
 \name{estimateTau_legacy}
 \alias{estimateTau_legacy}
-\title{Estimate the tau contrasts, perhaps with variance estimates}
+\title{Estimate the contrasts "tau", perhaps with variance estimates}
 \usage{
 estimateTau_legacy(trtlevels, meanw, trtnumber, taunumber, N, Yiw = NULL,
   Kiw = NULL, sigsqiw = NULL, W = NULL, ...)
 }
 \arguments{
-\item{trtlevels}{vector of the unique levels of treatment W}
+\item{trtlevels}{A vector of the unique levels of treatment W}
 
-\item{meanw}{vector of the estimated mean w.r.t. each treatment w}
+\item{meanw}{A vector of the estimated mean w.r.t. each treatment w}
 
-\item{trtnumber}{a scalar, the number of treatment levels}
+\item{trtnumber}{A scalar, the number of treatment levels}
 
-\item{taunumber}{a scalar, the number of tau contrasts to estimate
+\item{taunumber}{A scalar, the number of tau contrasts to estimate
 
-  To estimate variance in Matching using AI2006 method in MatchX and
-  MatchGPS, all of the following must be supplied. Otherwise, they default to
-  NULL. \itemize{
+  To estimate variance in Matching using AI2006 method in
+  \code{\link{multilevelGPSMatch}} and \code{\link{multilevelMatchX}}, all of
+  the following must be supplied. Otherwise, they default to NULL. \itemize{
 
   \item @param Yiw
 
@@ -51,7 +51,9 @@ designed to work with the following functions:
 \code{\link{multilevelGPSMatch}}, \code{\link{multilevelMatchX}}, and
 \code{\link{multilevelGPSStratification}}. The \code{\link{estimateTau}}
 function is designed to work with \code{\link{multiMatch}} which is the
-future direction of the matching estimators.
+future direction of the matching estimators. Note that the AI2012 reference
+is left for backwards-compatibility, although it references the Abadie and
+Imbens (2016) Econometrica article.
 }
 \references{
 Abadie, A., & Imbens, G. W. (2006). Large sample properties of

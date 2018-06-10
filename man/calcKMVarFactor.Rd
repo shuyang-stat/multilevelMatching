@@ -10,7 +10,7 @@ calcKMVarFactor(Kiw, M_matches)
 \item{Kiw}{A vector of times each unit is matched to}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens 2006. Currently can only support M=1.}
+as in Abadie and Imbens (2006). Currently can only support M=1.}
 }
 \value{
 A numeric vector.

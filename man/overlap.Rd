@@ -2,7 +2,7 @@
 % Please edit documentation in R/overlap.r
 \name{overlap}
 \alias{overlap}
-\title{Function to determine overlap from Crump}
+\title{Function to determine overlap from Crump et al. (2009)'s method.}
 \usage{
 overlap(PF.fit)
 }
@@ -10,5 +10,10 @@ overlap(PF.fit)
 \item{PF.fit}{fitted propensity model}
 }
 \description{
-Function to determine overlap from Crump
+Function to determine overlap from Crump et al. (2009)'s method.
+}
+\references{
+Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009).
+  Dealing with limited overlap in estimation of average treatment effects.
+  Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
 }

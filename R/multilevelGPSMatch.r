@@ -13,18 +13,20 @@
 #'   Currently under development. Can only pass reference level to multinomial
 #'   logistic regression.
 #'
-#' @return according to \code{\link{estimateTau}}, including at most: \itemize{
+#' @return according to \code{\link{estimateTau_legacy}}, including at most:
+#'   \itemize{
 #'
-#'   \item \code{tauestimate}:  a vector of estimates for pairwise treatment
+#'   \item \code{tauestimate}: A vector of estimates for pairwise treatment
 #'   effects
 #'
-#'   \item \code{varestimate}:  a vector of variance estimates for tauestimate,
+#'   \item \code{varestimate}: A vector of variance estimates for tauestimate,
 #'   using Abadie & Imbens (2006)'s method
 #'
-#'   \item \code{varestimateAI2012}:  a vector of variance estimates for
+#'   \item \code{varestimateAI2012}: A vector of variance estimates for
 #'   tauestimate, when matching on the generalized propensity score, using
-#'   Abadie & Imbens (2012)'s method. This variance estimate takes into account
-#'   of the uncertainty in estimating the GPS.
+#'   Abadie & Imbens (2016)'s method. This variance estimate takes into account
+#'   of the uncertainty in estimating the GPS. This variable is named AI2012
+#'   (not AI2016) for backwards compatibility.
 #'
 #'   \item \code{analysis_idx}: a list containing the indices_kept (analyzed)
 #'   and indices_dropped (trimmed) based on Crump et al. (2009)'s method.

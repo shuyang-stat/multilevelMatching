@@ -1,7 +1,7 @@
 
 #' Name Two or All Columns in the Matching Matrix
 #'
-#' Useful for AI2012 matching
+#' Useful when using Abadie and Imbens (2016) variance estimator
 #'
 #' @inheritParams matchAllTreatments
 nameCols <- function(trt_levels){

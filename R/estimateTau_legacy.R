@@ -1,21 +1,23 @@
-#' Estimate the tau contrasts, perhaps with variance estimates
+#' Estimate the contrasts "tau", perhaps with variance estimates
 #'
 #' This is a major plumbing function for the package. It is "legacy" and
 #' designed to work with the following functions:
 #' \code{\link{multilevelGPSMatch}}, \code{\link{multilevelMatchX}}, and
 #' \code{\link{multilevelGPSStratification}}. The \code{\link{estimateTau}}
 #' function is designed to work with \code{\link{multiMatch}} which is the
-#' future direction of the matching estimators.
+#' future direction of the matching estimators. Note that the AI2012 reference
+#' is left for backwards-compatibility, although it references the Abadie and
+#' Imbens (2016) Econometrica article.
 #'
 #' @inheritParams estimateTau
-#' @param trtlevels vector of the unique levels of treatment W
-#' @param meanw vector of the estimated mean w.r.t. each treatment w
-#' @param trtnumber a scalar, the number of treatment levels
-#' @param taunumber a scalar, the number of tau contrasts to estimate
+#' @param trtlevels A vector of the unique levels of treatment W
+#' @param meanw A vector of the estimated mean w.r.t. each treatment w
+#' @param trtnumber A scalar, the number of treatment levels
+#' @param taunumber A scalar, the number of tau contrasts to estimate
 #'
-#'   To estimate variance in Matching using AI2006 method in MatchX and
-#'   MatchGPS, all of the following must be supplied. Otherwise, they default to
-#'   NULL. \itemize{
+#'   To estimate variance in Matching using AI2006 method in
+#'   \code{\link{multilevelGPSMatch}} and \code{\link{multilevelMatchX}}, all of
+#'   the following must be supplied. Otherwise, they default to NULL. \itemize{
 #'
 #'   \item @param Yiw
 #'

@@ -22,9 +22,9 @@
 #'   Estimated variance components (from Abadie and Imbens (2006)'s method) for
 #'   each unit \item \code{Kiw}: The vector of number of times unit i used as a
 #'   match \item \code{impute_match_data}: extra information from the main
-#'   matching procedure \item \code{match_mat_AI2012}: When
+#'   matching procedure \item \code{match_mat_AI2016}: When
 #'   \code{match_on=`multinom`} this additional information will be output for
-#'   \code{\link{calcSigSqAI2012}} (from Abadie and Imbens (2012)'s method) }
+#'   \code{\link{calcSigSqAI2016}} (from Abadie and Imbens (2016)'s method) }
 #'
 #'   A few of the necessary arguments are output from the
 #'   \code{\link{reorderByTreatment}} function.
@@ -90,12 +90,12 @@ matchAllTreatments <- function(
   )
 
   if (match_on == "multinom") {
-    var_args_AI2012 <- list(var_options_AI2012 = basic_matching_args)
+    var_args_AI2016 <- list(var_options_AI2016 = basic_matching_args)
 
-    match_mat_AI2012 <- matrix(NA,N,num_trts*2)
-    colnames(match_mat_AI2012) <- nameCols(trt_levels)
-    ## This matrix is the important output for AI2012 variance estimation
-    list_out$match_mat_AI2012 <- match_mat_AI2012
+    match_mat_AI2016 <- matrix(NA,N,num_trts*2)
+    colnames(match_mat_AI2016) <- nameCols(trt_levels)
+    ## This matrix is the important output for AI2016 variance estimation
+    list_out$match_mat_AI2016 <- match_mat_AI2016
   }
 
   ## Hacky but useful for incorporating matching on GPS (see below).
@@ -161,7 +161,7 @@ matchAllTreatments <- function(
 
     ##### estSigSq()
     ##### Second, matching within-treatment
-    #####   to get the AI06 (& AI2012) variance estimate
+    #####   to get the AI06 (& AI2016) variance estimate
 
     var_args <- append(
       shared_args,
@@ -173,13 +173,13 @@ matchAllTreatments <- function(
     )
 
     if (match_on == "multinom") {
-      var_args_AI2012$match_mat_AI2012_kk_two_cols <-
-        match_mat_AI2012[,2*kk+(-1:0)]
+      var_args_AI2016$match_mat_AI2016_kk_two_cols <-
+        match_mat_AI2016[,2*kk+(-1:0)]
 
-      var_args_AI2012$vec_diff_trt <- vec_diff_trt
+      var_args_AI2016$vec_diff_trt <- vec_diff_trt
 
-      ## Additional information for estimating AI2012 variance
-      var_args$var_args_AI2012 <- var_args_AI2012
+      ## Additional information for estimating AI2016 variance
+      var_args$var_args_AI2016 <- var_args_AI2016
     }
 
     sigsqiw_kk_est <- do.call(estSigSq,var_args)
@@ -188,8 +188,8 @@ matchAllTreatments <- function(
     ## Add variance ests stuff to output
     list_out$sigsqiw[which(W==trt_levels[kk]), 1] <- sigsqiw_kk_est$sigsqiw_kk
     if (match_on == "multinom"){
-      list_out$match_mat_AI2012[,2*kk+(-1:0)] <-
-        sigsqiw_kk_est$match_mat_AI2012_kk_two_cols
+      list_out$match_mat_AI2016[,2*kk+(-1:0)] <-
+        sigsqiw_kk_est$match_mat_AI2016_kk_two_cols
     }
 
   }

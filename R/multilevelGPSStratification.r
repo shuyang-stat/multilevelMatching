@@ -29,10 +29,6 @@
 #'   score. Econometrica, 84(2), 781-807.
 #'   \url{https://doi.org/10.3982/ECTA11293}
 #'
-#'   Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009). Dealing
-#'   with limited overlap in estimation of average treatment effects.
-#'   Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
-#'
 #' @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 #'
 #' @export

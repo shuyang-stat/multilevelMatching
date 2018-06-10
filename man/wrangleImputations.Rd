@@ -12,7 +12,7 @@ matching different treament levels to impute potential outcomes (for point
 estimation of causal estimands).}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens 2006. Currently can only support M=1.}
+as in Abadie and Imbens (2006). Currently can only support M=1.}
 
 \item{Y}{A response vector (1 x n)}
 

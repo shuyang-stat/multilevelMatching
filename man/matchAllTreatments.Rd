@@ -30,10 +30,10 @@ of units observed to have each treatment level}
 \item{unit_ids_sorted}{The unit identifiers in correct, sorted order.}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens 2006. Currently can only support M=1.}
+as in Abadie and Imbens (2006). Currently can only support M=1.}
 
 \item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens 2006. Currently can only support J=1.}
+Abadie and Imbens (2006). Currently can only support J=1.}
 
 \item{match_on}{"multinom", "polr", "existing", or "covariates",}
 
@@ -48,9 +48,9 @@ A list including at most: \itemize{
   Estimated variance components (from Abadie and Imbens (2006)'s method) for
   each unit \item \code{Kiw}: The vector of number of times unit i used as a
   match \item \code{impute_match_data}: extra information from the main
-  matching procedure \item \code{match_mat_AI2012}: When
+  matching procedure \item \code{match_mat_AI2016}: When
   \code{match_on=`multinom`} this additional information will be output for
-  \code{\link{calcSigSqAI2012}} (from Abadie and Imbens (2012)'s method) }
+  \code{\link{calcSigSqAI2016}} (from Abadie and Imbens (2016)'s method) }
 
   A few of the necessary arguments are output from the
   \code{\link{reorderByTreatment}} function.

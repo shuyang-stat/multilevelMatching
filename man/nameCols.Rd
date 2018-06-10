@@ -11,5 +11,5 @@ nameCols(trt_levels)
 treatment levels}
 }
 \description{
-Useful for AI2012 matching
+Useful when using Abadie and Imbens (2016) variance estimator
 }
