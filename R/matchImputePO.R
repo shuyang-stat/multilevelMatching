@@ -1,6 +1,6 @@
 
 #' Perform matching methods to estimate (or impute) potential outcomes for one
-#' treatment level (level kk)
+#' treatment level (level \code{kk})
 #'
 #' This function executes the matching methods to estimate the components for
 #' the point estimates of the population-level estimands. The components will be
@@ -25,6 +25,16 @@
 #'   number of times unit i used as a match in imputation. \item
 #'   \code{impute_match_data} Extra information from the main matching
 #'   procedure. }
+#'
+#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+#'   (2016) Propensity Score Matching and Subclassification in Observational
+#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065. \url{DOI:
+#'   10.1111/biom.12505}
+#'
+#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#'   matching estimators for average treatment effects. econometrica, 74(1),
+#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
 matchImputePO <- function(
   X,
   # W,

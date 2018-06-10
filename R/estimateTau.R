@@ -8,7 +8,7 @@
 #'
 #' @inheritParams estimateTrtModel
 #' @inheritParams multiMatch
-#' @param trt_levels A Vector of the unique levels of treatment W
+#' @param trt_levels A vector of the unique levels of treatment W
 #' @param num_trts A scalar for the number of treatment levels
 #' @param num_contrasts A scalar for the number of tau contrasts to estimate
 #' @param N A scalar for the number of rows in the data
@@ -23,7 +23,12 @@
 #' @return A list, including the tidy dataframes estimates of target estimands
 #'
 #'
-#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+#'   (2016) Propensity Score Matching and Subclassification in Observational
+#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065. \url{DOI:
+#'   10.1111/biom.12505}
+#'
+#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
 #'   matching estimators for average treatment effects. econometrica, 74(1),
 #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 #'

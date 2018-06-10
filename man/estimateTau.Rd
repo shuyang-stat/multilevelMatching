@@ -8,7 +8,7 @@ estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches, Yiw,
   Kiw, sigsqiw, W, ...)
 }
 \arguments{
-\item{trt_levels}{A Vector of the unique levels of treatment W}
+\item{trt_levels}{A vector of the unique levels of treatment W}
 
 \item{mean_Yiw}{A vector of the estimated mean w.r.t. each treatment w}
 
@@ -44,7 +44,12 @@ are carried out in \code{\link{matchImputePO}} (for point estimates) and
 function are output from these two subfunctions.
 }
 \references{
-Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+  (2016) Propensity Score Matching and Subclassification in Observational
+  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065. \url{DOI:
+  10.1111/biom.12505}
+
+  Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   matching estimators for average treatment effects. econometrica, 74(1),
   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }
