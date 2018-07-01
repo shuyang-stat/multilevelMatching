@@ -14,18 +14,24 @@ multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
 
 \item{X}{a covariate matrix (p x n) with no intercept}
 
-\item{NS}{(only required in the function multilevelGPSStratification) the number of strata}
+\item{NS}{The number of strata: (only required in the function
+\code{\link{multilevelGPSStratification}})}
 
-\item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
+\item{GPSM}{An indicator of the methods used for estimating GPS, options
+include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
 
-\item{linearp}{(only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)}
+\item{linearp}{An indicator of subclassification on GPS (=0) or linear
+predictor of GPS (=1): (only required in the function
+\code{\link{multilevelGPSStratification}})}
 
-\item{nboot}{(only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation}
+\item{nboot}{The number of boot replicates for variance estimation: (only
+required in the function \code{\link{multilevelGPSStratification}})}
 }
 \value{
-A list with 2 elements: tauestimate, varestimate, where
-tauestimate is a vector of estimates for pairwise treatment effects, and
-varestimate is a vector of variance estimates, using bootstrapping method.
+A list with two elements,
+  \code{tauestimate}, \code{varestimate}, where \code{tauestimate} is a
+  vector of estimates for pairwise treatment effects, and \code{varestimate}
+  is a vector of variance estimates, using bootstrapping method.
 }
 \description{
 Stratification on GPS with multilevel treatments
@@ -100,7 +106,20 @@ Stratification on GPS with multilevel treatments
   c(match4$tauestimate,match4$varestimate)
 
 }
+\references{
+Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+  (2016) Propensity Score Matching and Subclassification in Observational
+  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065. \url{DOI:
+  10.1111/biom.12505}
+
+  Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
+  estimators for average treatment effects. econometrica, 74(1), 235-267.
+  \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
+}
 \seealso{
 \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 }
-

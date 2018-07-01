@@ -1,5 +1,5 @@
 
-context("test_orig2 match + stratificaiton output from v0.1.0")
+context("test_orig2 match + stratification output from v0.1.0")
 
 set.seed(111)
 n    <- 5000*6
@@ -348,6 +348,7 @@ test_that(
 
 test_that(
   "GPSStratification on POLR returns same output as original",  {
+
     set.seed(22)
     fit <- multilevelGPSStratification(
       Y,W,X, GPSM = "multinomiallogisticReg",
