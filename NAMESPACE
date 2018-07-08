@@ -3,8 +3,3 @@
 export(multilevelGPSMatch)
 export(multilevelGPSStratification)
 export(multilevelMatchX)
-import(MASS)
-import(Matching)
-import(boot)
-import(nnet)
-import(optmatch)

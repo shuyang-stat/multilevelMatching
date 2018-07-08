@@ -158,11 +158,11 @@ multilevelGPSStratification <- function(
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){
-    W.ref <- relevel(as.factor(W),ref="1")
-    temp <- capture.output(PF.out <- multinom(W.ref~X))
-    PF.fit <- fitted(PF.out)
+    W.ref <- stats::relevel(as.factor(W),ref="1")
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
+    PF.fit <- stats::fitted(PF.out)
     if(linearp==1){
-      beta <- coef(PF.out)
+      beta <- stats::coef(PF.out)
       Xbeta <- X%*%t(beta[,-1])
       PF.fit[,-1] <- Xbeta
     }

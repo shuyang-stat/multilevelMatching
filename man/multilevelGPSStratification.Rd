@@ -8,11 +8,12 @@ multilevelGPSStratification(Y, W, X, NS, GPSM = "multinomiallogisticReg",
   linearp = 0, nboot)
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A continuous response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
+\item{W}{A treatment vector (1 x n) with numerical values indicating
+treatment groups}
 
-\item{X}{a covariate matrix (p x n) with no intercept}
+\item{X}{A covariate matrix (p x n) with no intercept}
 
 \item{NS}{The number of strata: (only required in the function
 \code{\link{multilevelGPSStratification}})}
