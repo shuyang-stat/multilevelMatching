@@ -37,7 +37,7 @@ pi<-cbind(pi1,pi2,pi3)
 W<-matrix(NA,n,4)
 colnames(W)   <- c("W1","W2","W3","W")
 for(kk in 1:n){
-  W[kk,1:3]<-rmultinom(1, 1, prob = pi[kk,])
+  W[kk,1:3]<-stats::rmultinom(1, 1, prob = pi[kk,])
 }
 
 sim_dat <- data.frame(W,X1,X2,X3,X4,X5,X6)

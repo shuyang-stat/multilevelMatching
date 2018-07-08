@@ -48,7 +48,7 @@
 #'   trt2 <- 100; trt2
 #'   trt3 <- 100; trt3
 #'   # draw Xs
-#'   X13 <- mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
+#'   X13 <- MASS::mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
 #'   X1 <- X13[,1]
 #'   X2 <- X13[,2]
 #'   X3 <- X13[,3]
@@ -69,7 +69,7 @@
 #'   W<-matrix(NA,n,4)
 #'   colnames(W)   <- c("W1","W2","W3","W")
 #'   for(kk in 1:n){
-#'     W[kk,1:3]<-rmultinom(1, 1, prob = pi[kk,])
+#'     W[kk,1:3]<-stats::rmultinom(1, 1, prob = pi[kk,])
 #'   }
 #'
 #'   sim.dat <- data.frame(W,X1,X2,X3,X4,X5,X6)
