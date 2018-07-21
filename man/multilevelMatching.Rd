@@ -8,9 +8,9 @@
 Multi-level Treatments}
 \description{
 \pkg{multilevelMatching} implements the estimators introduced in Yang et al.
-(2016) \emph{Propensity score matching and subclassification in observational
-studies with multi‐level treatments}:
-\url{https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12505}. These are
+(2016) \emph{Propensity Score Matching and Subclassification in Observational
+studies with Multi-level Treatments}:
+\url{https://doi.org/10.1111/biom.12505}. These are
 covariate- and propensity score-matching estimators for estimating the causal
 effect of multilevel treatment (i.e., 3 or more treatment types).
 }

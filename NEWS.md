@@ -1,7 +1,3 @@
-# multilevelMatching 0.1.0.9002
-
-- Dev version
-
 # multilevelMatching 0.1.0
 
-- Original package version, released on GitHub
+- Original package version, released to GitHub by Shu Yang (@shuyang1987)
