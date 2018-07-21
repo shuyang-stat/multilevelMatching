@@ -110,8 +110,8 @@ Stratification on GPS with multilevel treatments
 \references{
 Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
   (2016) Propensity Score Matching and Subclassification in Observational
-  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065. \url{DOI:
-  10.1111/biom.12505}
+  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+  \url{https://doi.org/10.1111/biom.12505}
 
   Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
   estimators for average treatment effects. econometrica, 74(1), 235-267.
