@@ -1,16 +1,33 @@
 #' Stratification on GPS with multilevel treatments
 #'
-#' @param Y a continuous response vector (1 x n)
-#' @param W a treatment vector (1 x n) with numerical values indicating treatment groups
-#' @param X a covariate matrix (p x n) with no intercept
-#' @param GPSM an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"
-#' @param NS (only required in the function multilevelGPSStratification) the number of strata
-#' @param linearp (only required in the function multilevelGPSStratification) an indicator of subclassification on GPS (=0) or linear predictor of GPS (=1)
-#' @param nboot (only required in the function multilevelGPSStratification) the number of boot replicates for variance estimation
+#' @inheritParams multilevelMatchX
+#' @param GPSM An indicator of the methods used for estimating GPS, options
+#'   include "multinomiallogisticReg", "ordinallogisticReg", and "existing"
+#' @param NS The number of strata: (only required in the function
+#'   \code{\link{multilevelGPSStratification}})
+#' @param linearp An indicator of subclassification on GPS (=0) or linear
+#'   predictor of GPS (=1): (only required in the function
+#'   \code{\link{multilevelGPSStratification}})
+#' @param nboot The number of boot replicates for variance estimation: (only
+#'   required in the function \code{\link{multilevelGPSStratification}})
 #'
-#' @return A list with 2 elements: tauestimate, varestimate, where
-#' tauestimate is a vector of estimates for pairwise treatment effects, and
-#' varestimate is a vector of variance estimates, using bootstrapping method.
+#' @return A list with two elements,
+#'   \code{tauestimate}, \code{varestimate}, where \code{tauestimate} is a
+#'   vector of estimates for pairwise treatment effects, and \code{varestimate}
+#'   is a vector of variance estimates, using bootstrapping method.
+#'
+#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+#'   (2016) Propensity Score Matching and Subclassification in Observational
+#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+#'   \url{https://doi.org/10.1111/biom.12505}
+#'
+#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
+#'   estimators for average treatment effects. econometrica, 74(1), 235-267.
+#'   \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'
+#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+#'   score. Econometrica, 84(2), 781-807.
+#'   \url{https://doi.org/10.3982/ECTA11293}
 #'
 #' @seealso \code{\link{multilevelGPSMatch}}; \code{\link{multilevelMatchX}}
 #'
@@ -31,7 +48,7 @@
 #'   trt2 <- 100; trt2
 #'   trt3 <- 100; trt3
 #'   # draw Xs
-#'   X13 <- mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
+#'   X13 <- MASS::mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)
 #'   X1 <- X13[,1]
 #'   X2 <- X13[,2]
 #'   X3 <- X13[,3]
@@ -52,7 +69,7 @@
 #'   W<-matrix(NA,n,4)
 #'   colnames(W)   <- c("W1","W2","W3","W")
 #'   for(kk in 1:n){
-#'     W[kk,1:3]<-rmultinom(1, 1, prob = pi[kk,])
+#'     W[kk,1:3]<-stats::rmultinom(1, 1, prob = pi[kk,])
 #'   }
 #'
 #'   sim.dat <- data.frame(W,X1,X2,X3,X4,X5,X6)
@@ -83,10 +100,10 @@
 #'   c(match3$tauestimate,match3$varestimate)
 #'   c(match4$tauestimate,match4$varestimate)
 #'
-#' @import Matching boot nnet optmatch MASS
-#'
 #' @export
-multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",linearp=0,nboot){
+multilevelGPSStratification <- function(
+  Y,W,X,NS,GPSM="multinomiallogisticReg",linearp=0,nboot
+  ){
   ### Generalized propensity score stratification
   ## PF.out=Propensity function estimation
   ## linearp=1 if use linear predictor for stratification
@@ -98,31 +115,64 @@ multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",lin
   #
   ## order the treatment increasingly
 
-  N=length(Y) # number of observations
-  X<-as.matrix(X)
+  N <- length(Y) # number of observations
+  X <- as.matrix(X)
+  # ## some checks
+  # match_method <- "StratifyOnGPS"
+  #
+  #
+  # if (!is.null(model_options)){
+  #   if (!is.list(model_options)){
+  #     stop("model_options must be a list or NULL")
+  #   }
+  #   # if (GPSM!= "existing") {
+  #   #
+  #   # }
+  #   if (GPSM == "multinomiallogisticReg"){
+  #     if (!"reference_level" %in% names(model_options)){
+  #       stop("User must supply model_options$reference_level")
+  #     } ## defensive programming for correct level variable?
+  #   }
+  # }
+  #
+  # prepared_data <- prepareData_legacy(
+  #   Y=Y, W=W, X=X,
+  #   match_method = match_method#,
+  #   # Trimming = Trimming
+  #   #Trimming_fit_args
+  # )
+  # W <- prepared_data$W
+  # X <- prepared_data$X
+  # Y <- prepared_data$Y
+  # N <- prepared_data$N
+  # trtnumber <- prepared_data$trtnumber
+  # trtlevels <- prepared_data$trtlevels
+  # pertrtlevelnumber <- prepared_data$pertrtlevelnumber
+  # taunumber <- prepared_data$taunumber
+  # analysis_idx <- prepared_data$analysis_idx
 
-  trtnumber<-length(unique(W)) # number of treatment levels
-  trtlevels<-unique(W) # all treatment levels
-  pertrtlevelnumber<-table(W) # number of observations by treatment level
-  taunumber<-trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
+  trtnumber <- length(unique(W)) # number of treatment levels
+  trtlevels <- unique(W) # all treatment levels
+  pertrtlevelnumber <- table(W) # number of observations by treatment level
+  taunumber <- trtnumber*(trtnumber+1)/2-trtnumber  # number of pairwise treatment effects
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){
-    W.ref <- relevel(as.factor(W),ref="1")
-    temp<-capture.output(PF.out <- multinom(W.ref~X))
-    PF.fit <- fitted(PF.out)
+    W.ref <- stats::relevel(as.factor(W),ref="1")
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
+    PF.fit <- stats::fitted(PF.out)
     if(linearp==1){
-      beta<-coef(PF.out)
-      Xbeta<-X%*%t(beta[,-1])
-      PF.fit[,-1]<-Xbeta
+      beta <- stats::coef(PF.out)
+      Xbeta <- X%*%t(beta[,-1])
+      PF.fit[,-1] <- Xbeta
     }
   }
-  if(GPSM=="ordinallogisticReg"){
-    PF.out <- polr(as.factor(W)~X)
-    PF.fit <- fitted(PF.out)
+  if (GPSM == "ordinallogisticReg") {
+    PF.out <- MASS::polr(as.factor(W)~X)
+    PF.fit <- stats::fitted(PF.out)
   }
-  if(GPSM=="existing"){
-    #need to check the row sum of X is 1 - debug1
+  if (GPSM == "existing") {
+    ## DEBUG: Need to add defensive programming that the row sum of X equals 1.
     PF.fit <- X
   }
 
@@ -130,7 +180,8 @@ multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",lin
 
   for(kk in 1:trtnumber){
     pwx<-PF.fit[,kk]
-    ranking<-ave(pwx,FUN=function(x)cut(x,quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE))
+    ranking <- stats::ave(pwx,FUN=function(x){
+      cut(x,stats::quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE)})
     #type=2 to have the same quintiles as in SAS
     #right=FALSE to have left side closed intervals
     for(jj in 1:NS){
@@ -151,18 +202,21 @@ multilevelGPSStratification<-function(Y,W,X,NS,GPSM="multinomiallogisticReg",lin
       cnt<-cnt+1
       thistrt<-trtlevels[jj]
       thattrt<-trtlevels[kk]
-      cname1<-c(cname1,paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
+      cname1<-c(cname1,paste(paste(
+        paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),
+              "-EY(",sep=""),thistrt,sep=""),")",sep=""))
       tauestimate[cnt]<-meanw[kk]-meanw[jj]
     }
   }
   names(tauestimate)<-cname1
 
 
+  ## Bootstrap the variance
   data<-cbind(W,Y,X)
-  results <- boot(data=data, statistic=estforboot,R=nboot,
+  results <- boot::boot(data=data, statistic=estforboot,R=nboot,
                   GPSM=GPSM,linearp=linearp,trtnumber=trtnumber,
                   trtlevels=trtlevels,taunumber=taunumber,NS=NS)
-  bootvar<-apply(results$t,2,var,na.rm = TRUE)
+  bootvar <- apply(results$t,2,stats::var,na.rm = TRUE)
   names(bootvar)<-cname1
 
   return(list(tauestimate=tauestimate,varestimate=bootvar))

@@ -1,5 +1,10 @@
 
-estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,NS) {
+# #' Statistic for bootstrapping the standard errors from GPS Stratification
+# #'
+# #'
+estforboot <- function(
+  data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,NS
+){
   ###boot function
   #
   d <- data[indices,] # allows boot to select sample
@@ -10,18 +15,18 @@ estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,N
 
   #PF modeling
   if(GPSM=="multinomiallogisticReg"){
-    W.ref <- relevel(as.factor(W),ref="1")
-    temp<-capture.output(PF.out <- multinom(W.ref~X))
-    PF.fit <- fitted(PF.out)
+    W.ref <- stats::relevel(as.factor(W),ref="1")
+    temp <- utils::capture.output(PF.out <- nnet::multinom(W.ref~X))
+    PF.fit <- stats::fitted(PF.out)
     if(linearp==1){
-      beta<-coef(PF.out)
+      beta <- stats::coef(PF.out)
       Xbeta<-X%*%t(beta[,-1])
       PF.fit[,-1]<-Xbeta
     }
   }
   if(GPSM=="ordinallogisticReg"){
-    PF.out <- polr(as.factor(W)~X)
-    PF.fit <- fitted(PF.out)
+    PF.out <- MASS::polr(as.factor(W)~X)
+    PF.fit <- stats::fitted(PF.out)
   }
   if(GPSM=="existing"){
     PF.fit <- X
@@ -31,7 +36,10 @@ estforboot <- function(data,indices,GPSM,linearp,trtnumber,trtlevels,taunumber,N
 
   for(kk in 1:trtnumber){
     pwx<-PF.fit[,kk]
-    ranking<-ave(pwx,FUN=function(x)cut(x,quantile(pwx,(0:NS)/NS,type=2),include.lowest=TRUE,right=FALSE))
+    ranking <- stats::ave( pwx, FUN=function(x) {
+      cut(x,stats::quantile(pwx,(0:NS)/NS,type=2),
+          include.lowest=TRUE,right=FALSE)
+    })
     #type=2 to have the same quintiles as in SAS
     #right=FALSE to have left side closed intervals
     for(jj in 1:NS){

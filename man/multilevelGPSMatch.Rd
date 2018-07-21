@@ -7,42 +7,74 @@
 multilevelGPSMatch(Y, W, X, Trimming, GPSM = "multinomiallogisticReg")
 }
 \arguments{
-\item{Y}{a continuous response vector (1 x n)}
+\item{Y}{A continuous response vector (1 x n)}
 
-\item{W}{a treatment vector (1 x n) with numerical values indicating treatment groups}
+\item{W}{A treatment vector (1 x n) with numerical values indicating
+treatment groups}
 
-\item{X}{a covariate matrix (p x n) with no intercept}
+\item{X}{A covariate matrix (p x n) with no intercept. When
+\code{GPSM="existing"}, then \code{X} must be a vector (1 x n) of
+user-specified propensity scores.}
 
-\item{Trimming}{an indicator of whether trimming the sample to ensure overlap}
+\item{Trimming}{An indicator of whether trimming the sample to ensure overlap}
 
-\item{GPSM}{an indicator of the methods used for estimating GPS, options include "multinomiallogisticReg", "ordinallogisticReg", and "existing"}
+\item{GPSM}{An indicator of the methods used for estimating GPS, options
+include \code{"multinomiallogisticReg"}, \code{"ordinallogisticReg"} for
+proportional odds or cumulative logit model, and \code{"existing"} for
+user-specified propensity score via the parameter \code{X}. Defaults to
+\code{"multinomiallogisticReg"}}
 }
 \value{
-\itemize{
+A list element including:
+  \itemize{
 
- \item tauestimate:  a vector of estimates for pairwise treatment effects
+    \item \code{tauestimate}: A vector of estimates for pairwise treatment
+    effects
 
- \item varestimate:  a vector of variance estimates for tauestimate, using Abadie&Imbens(2006)'s method
+    \item \code{varestimate}: A vector of variance estimates for
+    \code{tauestimate}, using Abadie & Imbens (2006)'s method
 
- \item varestimateAI2012:  a vector of variance estimates for tauestimate, when matching on the generalized propensity score, using Abadie&Imbens(2012)'s method.
- This variance estimate takes into account of the uncertainty in estimating the GPS.
+    \item \code{varestimateAI2012}: A vector of variance estimates for
+    \code{tauestimate}, when matching on the generalized propensity score,
+    using Abadie & Imbens (2016)'s method. This variance estimate takes into account
+    of the uncertainty in estimating the GPS. This variable is named AI2012
+    (not AI2016) for backwards compatibility.
 
- \item analysisidx: the index of units after trimming based on Crump et al. (2009)'s method.
+    \item \code{analysis_idx}: a list containing the indices_kept (analyzed)
+    and indices_dropped (trimmed) based on Crump et al. (2009)'s method.
 
-}
+  }
 }
 \description{
 Matching on GPS with multilevel treatments
 }
 \examples{
-  X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
-  Y<-c(102,105,120,130,100,80,94,108,96)
-  W<-c(1,1,1,3,2,3,2,1,2)
+  X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
+  Y <- c(102,105,120,130,100,80,94,108,96)
+  W <- c(1,1,1,3,2,3,2,1,2)
   multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
   multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 
 }
-\seealso{
-\code{\link{multilevelMatchX}}; \code{\link{multilevelGPSStratification}}
-}
+\references{
+Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+  (2016) Propensity Score Matching and Subclassification in Observational
+  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+  \url{https://doi.org/10.1111/biom.12505}
 
+  Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
+  estimators for average treatment effects. Econometrica, 74(1), 235-267.
+  \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+
+  Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+  score. Econometrica, 84(2), 781-807.
+  \url{https://doi.org/10.3982/ECTA11293}
+
+  Crump, R. K., Hotz, V. J., Imbens, G. W., & Mitnik, O. A. (2009). Dealing
+  with limited overlap in estimation of average treatment effects.
+  Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
+}
+\seealso{
+\code{\link{multilevelMatchX}};
+  \code{\link{multilevelGPSStratification}}
+}
