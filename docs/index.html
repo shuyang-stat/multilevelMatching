@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9001</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
       </span>
     </div>
 
@@ -71,99 +71,132 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="propensity-score-matching-and-subclassification-in-observational-studies-with-multi-level-treatments" class="section level1">
+    
+<div id="propensity-score-matching-and-subclassification-in-observational-studies-with-multi-level-treatments" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#propensity-score-matching-and-subclassification-in-observational-studies-with-multi-level-treatments" class="anchor"></a>Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments</h1></div>
 
+</div>
+<div id="multilevelmatching" class="section level1">
+<h1 class="hasAnchor">
+<a href="#multilevelmatching" class="anchor"></a>multilevelMatching</h1>
 <p>In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.</p>
 <p>This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A.</p>
 <p>We focus on estimating the average values of potential outcomes for each treatment level by matching methods, which facilitate estimation of pairwise average treatment effects for a common population.</p>
 <p>The estimation methods include generalized propensity score (GPS) matching, GPS stratification, matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels.</p>
 <p>In order to ensure sufficient overlap, Crump et al. (2009)’s trimming method can be extended to this setting as well.</p>
-<div id="install" class="section level3">
+<div id="installation-with-devtools" class="section level3">
 <h3 class="hasAnchor">
-<a href="#install" class="anchor"></a>install</h3>
-<p>with <code>devtools</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">devtools::</span>install_github(<span class="st">"shuyang1987/multilevelMatching"</span>)</a></code></pre></div>
+<a href="#installation-with-devtools" class="anchor"></a>installation with <code>devtools</code>:</h3>
+<p>This is a fork for the project. To install the ‘develop’ branch of this fork (the front-facing branch in the forked repo), use</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">devtools::</span>install_github(<span class="st">"barkleybg/multilevelMatching"</span>, ref = <span class="st">"develop"</span>)</a></code></pre></div>
+<p>To download the original repo from the package’s original creator who was also first author of the related paper, use</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">devtools::</span>install_github(<span class="st">"shuyang1987/multilevelMatching"</span>)</a></code></pre></div>
 </div>
 <div id="use" class="section level3">
 <h3 class="hasAnchor">
-<a href="#use" class="anchor"></a>use</h3>
-<p>There are only three functions in this package. <code><a href="reference/multilevelMatchX.html">multilevelMatchX()</a></code>, <code><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code>, <code><a href="reference/multilevelGPSStratification.html">multilevelGPSStratification()</a></code> make super awesome illustrations.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb2-1" data-line-number="1">X&lt;-c(<span class="dv">5</span>.5,<span class="dv">10</span>.6,<span class="dv">3</span>.1,<span class="dv">8</span>.7,<span class="dv">5</span>.1,<span class="dv">10</span>.2,<span class="dv">9</span>.8,<span class="dv">4</span>.4,<span class="dv">4</span>.9)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">Y&lt;-c(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">W&lt;-c(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">multilevelMatchX(Y,W,X)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">multilevelGPSMatch(Y,W,X,Trimming=<span class="dv">0</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">multilevelGPSMatch(Y,W,X,Trimming=<span class="dv">1</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb3-1" data-line-number="1">set.seed(<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">n    &lt;- <span class="dv">5000</span>*<span class="dv">6</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">vars   &lt;- c(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">covars &lt;- c(<span class="dv">1</span>,-<span class="dv">1</span>,-.5)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">mu     &lt;- c(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">tau    &lt;- <span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">Sigma &lt;- diag(vars)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">Sigma[<span class="dv">2</span>,<span class="dv">1</span>] &lt;- Sigma[<span class="dv">1</span>,<span class="dv">2</span>] &lt;- covars[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">Sigma[<span class="dv">3</span>,<span class="dv">1</span>] &lt;- Sigma[<span class="dv">1</span>,<span class="dv">3</span>] &lt;- covars[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">Sigma[<span class="dv">3</span>,<span class="dv">2</span>] &lt;- Sigma[<span class="dv">2</span>,<span class="dv">3</span>] &lt;- covars[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">trt1 &lt;- <span class="dv">100</span><span class="co">; trt1</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">trt2 &lt;- <span class="dv">100</span><span class="co">; trt2</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">trt3 &lt;- <span class="dv">100</span><span class="co">; trt3</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># draw Xs</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">X13 &lt;- mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">X1 &lt;- X13[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">X2 &lt;- X13[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">X3 &lt;- X13[,<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">X4 &lt;- runif(n,-<span class="dv">3</span>,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">X5 &lt;- rchisq(n, df=<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">X6 &lt;- rbinom(n,size=<span class="dv">1</span>,prob=.5)</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">xb2 &lt;- <span class="dv">0</span>.1*(X1^<span class="dv">2</span>+X2+X3+X4+X5+X6)</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">xb3 &lt;- <span class="dv">0</span>.1*(X1+X2^<span class="dv">2</span>+X3^<span class="dv">2</span>+X4+X5+X6)</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">exb2&lt;-exp(xb2)</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">exb3&lt;-exp(xb3)</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">pi1&lt;-<span class="dv">1</span>/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">pi2&lt;-exp(xb2)/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">pi3&lt;-exp(xb3)/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">pi&lt;-cbind(pi1,pi2,pi3)</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">apply(pi,<span class="dv">2</span>,mean)</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">W&lt;-matrix(NA,n,<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">colnames(W)   &lt;- c(<span class="st">"W1"</span>,<span class="st">"W2"</span>,<span class="st">"W3"</span>,<span class="st">"W"</span>)</a>
-<a class="sourceLine" id="cb3-36" data-line-number="36">for(kk in <span class="kw">1:</span>n){</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37">    W[kk,<span class="kw">1:</span><span class="dv">3</span>]&lt;-rmultinom(<span class="dv">1</span>, <span class="dv">1</span>, prob = pi[kk,])</a>
-<a class="sourceLine" id="cb3-38" data-line-number="38">}</a>
-<a class="sourceLine" id="cb3-39" data-line-number="39"></a>
-<a class="sourceLine" id="cb3-40" data-line-number="40">sim.dat &lt;- data.frame(W,X1,X2,X3,X4,X5,X6)</a>
-<a class="sourceLine" id="cb3-41" data-line-number="41">trt1.keep &lt;- sample(which(sim.dat$W1==<span class="dv">1</span>),trt1,replace=FALSE)</a>
-<a class="sourceLine" id="cb3-42" data-line-number="42">trt2.keep &lt;- sample(which(sim.dat$W2==<span class="dv">1</span>),trt2,replace=FALSE)</a>
-<a class="sourceLine" id="cb3-43" data-line-number="43">trt3.keep &lt;- sample(which(sim.dat$W3==<span class="dv">1</span>),trt3,replace=FALSE)</a>
-<a class="sourceLine" id="cb3-44" data-line-number="44">sim.dat &lt;- sim.dat[c(trt1.keep,trt2.keep,trt3.keep),]</a>
-<a class="sourceLine" id="cb3-45" data-line-number="45">sim.dat[,<span class="st">"W"</span>]&lt;-sim.dat[,<span class="st">"W1"</span>]+<span class="dv">2</span>*sim.dat[,<span class="st">"W2"</span>]+<span class="dv">3</span>*sim.dat[,<span class="st">"W3"</span>]</a>
-<a class="sourceLine" id="cb3-46" data-line-number="46">sim.dat[,<span class="st">"W"</span>]&lt;-as.factor(sim.dat[,<span class="st">"W"</span>])</a>
-<a class="sourceLine" id="cb3-47" data-line-number="47">W &lt;- sim.dat[,<span class="st">"W"</span>]</a>
-<a class="sourceLine" id="cb3-48" data-line-number="48">X &lt;- as.matrix(sim.dat[,names(sim.dat)[-c(<span class="kw">1:</span><span class="dv">4</span>)]])</a>
-<a class="sourceLine" id="cb3-49" data-line-number="49">X1 &lt;- X[,<span class="st">"X1"</span>]<span class="co">; X2 &lt;- X[,"X2"]; X3 &lt;- X[,"X3"]; X4 &lt;- X[,"X4"]; X5 &lt;- X[,"X5"];X6 &lt;- X[,"X6"]</span></a>
-<a class="sourceLine" id="cb3-50" data-line-number="50"></a>
-<a class="sourceLine" id="cb3-51" data-line-number="51"><span class="co"># outcome: treatment effect is zero</span></a>
-<a class="sourceLine" id="cb3-52" data-line-number="52">u  &lt;- rnorm(nrow(X))</a>
-<a class="sourceLine" id="cb3-53" data-line-number="53"><span class="co"># ouctome (linear)</span></a>
-<a class="sourceLine" id="cb3-54" data-line-number="54">Y &lt;-    (W==<span class="dv">1</span>)*(  X1 +   X2 +   X3 +   X4 +    X5<span class="dv">-1</span> +     X6<span class="dv">-0</span>.5)+</a>
-<a class="sourceLine" id="cb3-55" data-line-number="55">(W==<span class="dv">2</span>)*(<span class="dv">2</span>*X1 + <span class="dv">3</span>*X2 +   X3 + <span class="dv">2</span>*X4 + <span class="dv">2</span>*(X5<span class="dv">-1</span>) + <span class="dv">2</span>*(X6<span class="dv">-0</span>.5))+</a>
-<a class="sourceLine" id="cb3-56" data-line-number="56">(W==<span class="dv">3</span>)*(<span class="dv">3</span>*X1 +   X2 + <span class="dv">2</span>*X3 -   X4 -   (X5<span class="dv">-1</span>) -   (X6<span class="dv">-0</span>.5))+u</a>
-<a class="sourceLine" id="cb3-57" data-line-number="57"></a>
-<a class="sourceLine" id="cb3-58" data-line-number="58">match1&lt;-multilevelMatchX(Y,W,X)</a>
-<a class="sourceLine" id="cb3-59" data-line-number="59">match2&lt;-multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb3-60" data-line-number="60">match3&lt;-multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb3-61" data-line-number="61">match4&lt;-multilevelGPSStratification(Y,W,X,NS=<span class="dv">10</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>,linearp=<span class="dv">0</span>,nboot=<span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb3-62" data-line-number="62"></a>
-<a class="sourceLine" id="cb3-63" data-line-number="63">c(match1$tauestimate,match1$varestimate)</a>
-<a class="sourceLine" id="cb3-64" data-line-number="64">c(match2$tauestimate,match2$varestimate)</a>
-<a class="sourceLine" id="cb3-65" data-line-number="65">c(match3$tauestimate,match3$varestimate)</a>
-<a class="sourceLine" id="cb3-66" data-line-number="66">c(match4$tauestimate,match4$varestimate)</a></code></pre></div>
+<a href="#use" class="anchor"></a>Use</h3>
+<ul>
+<li>In version 0.2, the <code><a href="reference/multiMatch.html">multiMatch()</a></code> function was introduced to combine the <code><a href="reference/multilevelMatchX.html">multilevelMatchX()</a></code> and <code><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> functions. For stratification on the propensity score, use <code>multilevelGPSStratification</code>.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb3-1" data-line-number="1">X&lt;-c(<span class="dv">5</span>.5,<span class="dv">10</span>.6,<span class="dv">3</span>.1,<span class="dv">8</span>.7,<span class="dv">5</span>.1,<span class="dv">10</span>.2,<span class="dv">9</span>.8,<span class="dv">4</span>.4,<span class="dv">4</span>.9)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">Y&lt;-c(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">W&lt;-c(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">multilevelMatchX(Y,W,X)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">multilevelGPSMatch(Y,W,X,Trimming=<span class="dv">0</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">multilevelGPSMatch(Y,W,X,Trimming=<span class="dv">1</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">multiMatch(Y,W,X, match_on = <span class="st">"covariates"</span>)$results</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">multiMatch(Y,W,X,trimming = <span class="dv">0</span>, match_on = <span class="st">"multinom"</span>)$results</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">multiMatch(Y,W,X,trimming = <span class="dv">1</span>, match_on = <span class="st">"multinom"</span>)$results</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb4-1" data-line-number="1">set.seed(<span class="dv">111</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">n    &lt;- <span class="dv">5000</span>*<span class="dv">6</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">vars   &lt;- c(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">covars &lt;- c(<span class="dv">1</span>,-<span class="dv">1</span>,-.5)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">mu     &lt;- c(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">tau    &lt;- <span class="dv">1</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">Sigma &lt;- diag(vars)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">Sigma[<span class="dv">2</span>,<span class="dv">1</span>] &lt;- Sigma[<span class="dv">1</span>,<span class="dv">2</span>] &lt;- covars[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">Sigma[<span class="dv">3</span>,<span class="dv">1</span>] &lt;- Sigma[<span class="dv">1</span>,<span class="dv">3</span>] &lt;- covars[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">Sigma[<span class="dv">3</span>,<span class="dv">2</span>] &lt;- Sigma[<span class="dv">2</span>,<span class="dv">3</span>] &lt;- covars[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">trt1 &lt;- <span class="dv">100</span><span class="co">; trt1</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">trt2 &lt;- <span class="dv">100</span><span class="co">; trt2</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">trt3 &lt;- <span class="dv">100</span><span class="co">; trt3</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co"># draw Xs</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">X13 &lt;- mvrnorm(n,mu=mu,Sigma=Sigma, empirical = FALSE)</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">X1 &lt;- X13[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">X2 &lt;- X13[,<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">X3 &lt;- X13[,<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">X4 &lt;- runif(n,-<span class="dv">3</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">X5 &lt;- rchisq(n, df=<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">X6 &lt;- rbinom(n,size=<span class="dv">1</span>,prob=.5)</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">xb2 &lt;- <span class="dv">0</span>.1*(X1^<span class="dv">2</span>+X2+X3+X4+X5+X6)</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">xb3 &lt;- <span class="dv">0</span>.1*(X1+X2^<span class="dv">2</span>+X3^<span class="dv">2</span>+X4+X5+X6)</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">exb2&lt;-exp(xb2)</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">exb3&lt;-exp(xb3)</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">pi1&lt;-<span class="dv">1</span>/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">pi2&lt;-exp(xb2)/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">pi3&lt;-exp(xb3)/(<span class="dv">1</span>+exp(xb2)+exp(xb3))</a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">pi&lt;-cbind(pi1,pi2,pi3)</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">apply(pi,<span class="dv">2</span>,mean)</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34">W&lt;-matrix(NA,n,<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">colnames(W)   &lt;- c(<span class="st">"W1"</span>,<span class="st">"W2"</span>,<span class="st">"W3"</span>,<span class="st">"W"</span>)</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">for(kk in <span class="kw">1:</span>n){</a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">    W[kk,<span class="kw">1:</span><span class="dv">3</span>]&lt;-rmultinom(<span class="dv">1</span>, <span class="dv">1</span>, prob = pi[kk,])</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">}</a>
+<a class="sourceLine" id="cb4-39" data-line-number="39"></a>
+<a class="sourceLine" id="cb4-40" data-line-number="40">sim.dat &lt;- data.frame(W,X1,X2,X3,X4,X5,X6)</a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">trt1.keep &lt;- sample(which(sim.dat$W1==<span class="dv">1</span>),trt1,replace=FALSE)</a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">trt2.keep &lt;- sample(which(sim.dat$W2==<span class="dv">1</span>),trt2,replace=FALSE)</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">trt3.keep &lt;- sample(which(sim.dat$W3==<span class="dv">1</span>),trt3,replace=FALSE)</a>
+<a class="sourceLine" id="cb4-44" data-line-number="44">sim.dat &lt;- sim.dat[c(trt1.keep,trt2.keep,trt3.keep),]</a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">sim.dat[,<span class="st">"W"</span>]&lt;-sim.dat[,<span class="st">"W1"</span>]+<span class="dv">2</span>*sim.dat[,<span class="st">"W2"</span>]+<span class="dv">3</span>*sim.dat[,<span class="st">"W3"</span>]</a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">sim.dat[,<span class="st">"W"</span>]&lt;-as.factor(sim.dat[,<span class="st">"W"</span>])</a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">W &lt;- sim.dat[,<span class="st">"W"</span>]</a>
+<a class="sourceLine" id="cb4-48" data-line-number="48">X &lt;- as.matrix(sim.dat[,names(sim.dat)[-c(<span class="kw">1:</span><span class="dv">4</span>)]])</a>
+<a class="sourceLine" id="cb4-49" data-line-number="49">X1 &lt;- X[,<span class="st">"X1"</span>]<span class="co">; X2 &lt;- X[,"X2"]; X3 &lt;- X[,"X3"]; X4 &lt;- X[,"X4"]; X5 &lt;- X[,"X5"];X6 &lt;- X[,"X6"]</span></a>
+<a class="sourceLine" id="cb4-50" data-line-number="50"></a>
+<a class="sourceLine" id="cb4-51" data-line-number="51"><span class="co"># outcome: treatment effect is zero</span></a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">u  &lt;- rnorm(nrow(X))</a>
+<a class="sourceLine" id="cb4-53" data-line-number="53"><span class="co"># ouctome (linear)</span></a>
+<a class="sourceLine" id="cb4-54" data-line-number="54">Y &lt;-    (W==<span class="dv">1</span>)*(  X1 +   X2 +   X3 +   X4 +    X5<span class="dv">-1</span> +     X6<span class="dv">-0</span>.5)+</a>
+<a class="sourceLine" id="cb4-55" data-line-number="55">(W==<span class="dv">2</span>)*(<span class="dv">2</span>*X1 + <span class="dv">3</span>*X2 +   X3 + <span class="dv">2</span>*X4 + <span class="dv">2</span>*(X5<span class="dv">-1</span>) + <span class="dv">2</span>*(X6<span class="dv">-0</span>.5))+</a>
+<a class="sourceLine" id="cb4-56" data-line-number="56">(W==<span class="dv">3</span>)*(<span class="dv">3</span>*X1 +   X2 + <span class="dv">2</span>*X3 -   X4 -   (X5<span class="dv">-1</span>) -   (X6<span class="dv">-0</span>.5))+u</a>
+<a class="sourceLine" id="cb4-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb4-58" data-line-number="58">match1  &lt;- multilevelMatchX(Y,W,X)</a>
+<a class="sourceLine" id="cb4-59" data-line-number="59">match1b &lt;- multiMatch(Y,W,X, match_on=<span class="st">"covariates"</span>)</a>
+<a class="sourceLine" id="cb4-60" data-line-number="60">match2  &lt;- multilevelGPSMatch(Y,W,X,Trimming=FALSE,GPSM=<span class="st">"multinomiallogisticReg"</span>) </a>
+<a class="sourceLine" id="cb4-61" data-line-number="61">match2b  &lt;- multiMatch(Y,W,X,Trimming=FALSE,match_on=<span class="st">"multinom"</span>) </a>
+<a class="sourceLine" id="cb4-62" data-line-number="62">match3  &lt;- multilevelGPSMatch(Y,W,X,Trimming=TRUE,GPSM=<span class="st">"multinomiallogisticReg"</span>) </a>
+<a class="sourceLine" id="cb4-63" data-line-number="63">match3b  &lt;- multiMatch(Y,W,X,Trimming=TRUE,match_on=<span class="st">"multinom"</span>) </a>
+<a class="sourceLine" id="cb4-64" data-line-number="64"></a>
+<a class="sourceLine" id="cb4-65" data-line-number="65">match1$results</a>
+<a class="sourceLine" id="cb4-66" data-line-number="66">match1b$results</a>
+<a class="sourceLine" id="cb4-67" data-line-number="67">match2$results</a>
+<a class="sourceLine" id="cb4-68" data-line-number="68">match2b$results</a>
+<a class="sourceLine" id="cb4-69" data-line-number="69">match3$results</a>
+<a class="sourceLine" id="cb4-70" data-line-number="70">match3b$results</a>
+<a class="sourceLine" id="cb4-71" data-line-number="71"></a>
+<a class="sourceLine" id="cb4-72" data-line-number="72">strat1  &lt;- multilevelGPSStratification(Y,W,X,NS=<span class="dv">10</span>,GPSM=<span class="st">"multinomiallogisticReg"</span>,linearp=<span class="dv">0</span>,nboot=<span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb4-73" data-line-number="73">strat1$results</a></code></pre></div>
 </div>
 </div>
+<div id="news" class="section level1">
+<h1 class="hasAnchor">
+<a href="#news" class="anchor"></a>News</h1>
+<p>See <a href="NEWS.html" class="uri">NEWS.md</a> for changes since version 0.1.</p>
+<div id="a-note-on-multimatch" class="section level4">
+<h4 class="hasAnchor">
+<a href="#a-note-on-multimatch" class="anchor"></a>A note on <code><a href="reference/multiMatch.html">multiMatch()</a></code>
+</h4>
+<p>The <code><a href="reference/multiMatch.html">multiMatch()</a></code> function may return slightly different estimates than the original 2 matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns.</p>
+</div>
+</div>
+
   </div>
 
   <div class="col-md-3" id="sidebar">
