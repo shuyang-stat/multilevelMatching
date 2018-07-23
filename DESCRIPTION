@@ -8,8 +8,8 @@ Authors@R: c(
     person("Brian", "Barkley", email = "BarkleyBG@outlook.com", 
       role = c("aut", "cre"))
     )
-Date: 2018-07-08
-Version: 0.1.0.9001
+Date: 2018-07-15
+Version: 0.1.0.9002
 Description: Matching and subclassfication with multilevel treatment.
 Depends: R (>= 3.1.2)
 Imports:

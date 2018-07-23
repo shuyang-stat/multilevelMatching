@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9001</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
       </span>
     </div>
 
@@ -73,7 +73,7 @@
       <h1>multilevelMatching Tutorial</h1>
                         <h4 class="author">Shu Yang</h4>
             
-            <h4 class="date">2018-07-21</h4>
+            <h4 class="date">2018-07-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shuyang1987/multilevelMatching/blob/master/vignettes/multilevelMatching.Rmd"><code>vignettes/multilevelMatching.Rmd</code></a></small>
       <div class="hidden name"><code>multilevelMatching.Rmd</code></div>
@@ -100,84 +100,256 @@
 <h3 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h3>
 <p>with <code>devtools</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode s"><code class="sourceCode gnuassembler"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">devtools::</span>install_github(<span class="st">"shuyang1987/multilevelMatching"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"shuyang1987/multilevelMatching"</span>)</a></code></pre></div>
 </div>
 <div id="use" class="section level3">
 <h3 class="hasAnchor">
 <a href="#use" class="anchor"></a>Use</h3>
-<p>There are only three functions in this package. <code><a href="../reference/multilevelMatchX.html">multilevelMatchX()</a></code>,; <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code>, ; <code><a href="../reference/multilevelGPSStratification.html">multilevelGPSStratification()</a></code>  make super awesome illustrations.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">X&lt;-<span class="kw">c</span>(<span class="fl">5.5</span>,<span class="fl">10.6</span>,<span class="fl">3.1</span>,<span class="fl">8.7</span>,<span class="fl">5.1</span>,<span class="fl">10.2</span>,<span class="fl">9.8</span>,<span class="fl">4.4</span>,<span class="fl">4.9</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">Y&lt;-<span class="kw">c</span>(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="../reference/multilevelMatchX.html">multilevelMatchX</a></span>(Y,W,X)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">111</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">n    &lt;-<span class="st"> </span><span class="dv">5000</span><span class="op">*</span><span class="dv">6</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">vars   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">covars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span>.<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">mu     &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">tau    &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">Sigma &lt;-<span class="st"> </span><span class="kw">diag</span>(vars)</a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">Sigma[<span class="dv">2</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>covars[<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">Sigma[<span class="dv">3</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">1</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>covars[<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb3-11" data-line-number="11">Sigma[<span class="dv">3</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">2</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>covars[<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">trt1 &lt;-<span class="st"> </span><span class="dv">100</span>; trt1</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">trt2 &lt;-<span class="st"> </span><span class="dv">100</span>; trt2</a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">trt3 &lt;-<span class="st"> </span><span class="dv">100</span>; trt3</a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># draw Xs</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">X13 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">X1 &lt;-<span class="st"> </span>X13[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">X2 &lt;-<span class="st"> </span>X13[,<span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb3-19" data-line-number="19">X3 &lt;-<span class="st"> </span>X13[,<span class="dv">3</span>]</a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">X4 &lt;-<span class="st"> </span><span class="kw">runif</span>(n,<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">X5 &lt;-<span class="st"> </span><span class="kw">rchisq</span>(n, <span class="dt">df=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">X6 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n,<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">prob=</span>.<span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">xb2 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X2<span class="op">+</span>X3<span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25">xb3 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">+</span>X2<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X3<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)</a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">exb2&lt;-<span class="kw">exp</span>(xb2)</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">exb3&lt;-<span class="kw">exp</span>(xb3)</a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">pi1&lt;-<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">pi2&lt;-<span class="kw">exp</span>(xb2)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">pi3&lt;-<span class="kw">exp</span>(xb3)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">pi&lt;-<span class="kw">cbind</span>(pi1,pi2,pi3)</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32"><span class="kw">apply</span>(pi,<span class="dv">2</span>,mean)</a>
-<a class="sourceLine" id="cb3-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">W&lt;-<span class="kw">matrix</span>(<span class="ot">NA</span>,n,<span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb3-35" data-line-number="35"><span class="kw">colnames</span>(W)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"W1"</span>,<span class="st">"W2"</span>,<span class="st">"W3"</span>,<span class="st">"W"</span>)</a>
-<a class="sourceLine" id="cb3-36" data-line-number="36"><span class="cf">for</span>(kk <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37">    W[kk,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]&lt;-<span class="kw">rmultinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">prob =</span> pi[kk,])</a>
-<a class="sourceLine" id="cb3-38" data-line-number="38">}</a>
-<a class="sourceLine" id="cb3-39" data-line-number="39"></a>
-<a class="sourceLine" id="cb3-40" data-line-number="40">sim.dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(W,X1,X2,X3,X4,X5,X6)</a>
-<a class="sourceLine" id="cb3-41" data-line-number="41">trt1.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W1<span class="op">==</span><span class="dv">1</span>),trt1,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-42" data-line-number="42">trt2.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W2<span class="op">==</span><span class="dv">1</span>),trt2,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-43" data-line-number="43">trt3.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W3<span class="op">==</span><span class="dv">1</span>),trt3,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-44" data-line-number="44">sim.dat &lt;-<span class="st"> </span>sim.dat[<span class="kw">c</span>(trt1.keep,trt2.keep,trt3.keep),]</a>
-<a class="sourceLine" id="cb3-45" data-line-number="45">sim.dat[,<span class="st">"W"</span>]&lt;-sim.dat[,<span class="st">"W1"</span>]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>sim.dat[,<span class="st">"W2"</span>]<span class="op">+</span><span class="dv">3</span><span class="op">*</span>sim.dat[,<span class="st">"W3"</span>]</a>
-<a class="sourceLine" id="cb3-46" data-line-number="46">sim.dat[,<span class="st">"W"</span>]&lt;-<span class="kw">as.factor</span>(sim.dat[,<span class="st">"W"</span>])</a>
-<a class="sourceLine" id="cb3-47" data-line-number="47">W &lt;-<span class="st"> </span>sim.dat[,<span class="st">"W"</span>]</a>
-<a class="sourceLine" id="cb3-48" data-line-number="48">X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(sim.dat[,<span class="kw">names</span>(sim.dat)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)]])</a>
-<a class="sourceLine" id="cb3-49" data-line-number="49">X1 &lt;-<span class="st"> </span>X[,<span class="st">"X1"</span>]; X2 &lt;-<span class="st"> </span>X[,<span class="st">"X2"</span>]; X3 &lt;-<span class="st"> </span>X[,<span class="st">"X3"</span>]; X4 &lt;-<span class="st"> </span>X[,<span class="st">"X4"</span>]; X5 &lt;-<span class="st"> </span>X[,<span class="st">"X5"</span>];X6 &lt;-<span class="st"> </span>X[,<span class="st">"X6"</span>]</a>
-<a class="sourceLine" id="cb3-50" data-line-number="50"></a>
-<a class="sourceLine" id="cb3-51" data-line-number="51"><span class="co"># outcome: treatment effect is zero</span></a>
-<a class="sourceLine" id="cb3-52" data-line-number="52">u  &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">nrow</span>(X))</a>
-<a class="sourceLine" id="cb3-53" data-line-number="53"><span class="co"># ouctome (linear)</span></a>
-<a class="sourceLine" id="cb3-54" data-line-number="54">Y &lt;-<span class="st">    </span>(W<span class="op">==</span><span class="dv">1</span>)<span class="op">*</span>(  X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st">   </span>X4 <span class="op">+</span><span class="st">    </span>X5<span class="dv">-1</span> <span class="op">+</span><span class="st">     </span>X6<span class="fl">-0.5</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb3-55" data-line-number="55">(W<span class="op">==</span><span class="dv">2</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X5<span class="dv">-1</span>) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X6<span class="fl">-0.5</span>))<span class="op">+</span></a>
-<a class="sourceLine" id="cb3-56" data-line-number="56">(W<span class="op">==</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">*</span>X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X3 <span class="op">-</span><span class="st">   </span>X4 <span class="op">-</span><span class="st">   </span>(X5<span class="dv">-1</span>) <span class="op">-</span><span class="st">   </span>(X6<span class="fl">-0.5</span>))<span class="op">+</span>u</a>
-<a class="sourceLine" id="cb3-57" data-line-number="57"></a>
-<a class="sourceLine" id="cb3-58" data-line-number="58">match1&lt;-<span class="kw"><a href="../reference/multilevelMatchX.html">multilevelMatchX</a></span>(Y,W,X)</a>
-<a class="sourceLine" id="cb3-59" data-line-number="59">match2&lt;-<span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="ot">FALSE</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb3-60" data-line-number="60">match3&lt;-<span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="ot">TRUE</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a>
-<a class="sourceLine" id="cb3-61" data-line-number="61">match4&lt;-<span class="kw"><a href="../reference/multilevelGPSStratification.html">multilevelGPSStratification</a></span>(Y,W,X,<span class="dt">NS=</span><span class="dv">10</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>,<span class="dt">linearp=</span><span class="dv">0</span>,<span class="dt">nboot=</span><span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb3-62" data-line-number="62"></a>
-<a class="sourceLine" id="cb3-63" data-line-number="63"><span class="kw">c</span>(match1<span class="op">$</span>tauestimate,match1<span class="op">$</span>varestimate)</a>
-<a class="sourceLine" id="cb3-64" data-line-number="64"><span class="kw">c</span>(match2<span class="op">$</span>tauestimate,match2<span class="op">$</span>varestimate)</a>
-<a class="sourceLine" id="cb3-65" data-line-number="65"><span class="kw">c</span>(match3<span class="op">$</span>tauestimate,match3<span class="op">$</span>varestimate)</a>
-<a class="sourceLine" id="cb3-66" data-line-number="66"><span class="kw">c</span>(match4<span class="op">$</span>tauestimate,match4<span class="op">$</span>varestimate)</a></code></pre></div>
+<ul>
+<li>In the development version <code>v0.1.0.9000+</code>, the <code><a href="../reference/multiMatch.html">multiMatch()</a></code> function was introduced to combine the <code><a href="../reference/multilevelMatchX.html">multilevelMatchX()</a></code> and <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> functions.</li>
+<li>For stratification on the propensity score, use <code>multilevelGPSStratification</code>.</li>
+</ul>
+<!-- There are only three functions in this package.  --><!-- `multilevelMatchX()`,\code{\link{multilevelMatchX}}; --><!-- `multilevelGPSMatch()`, \code{\link{multilevelGPSMatch}}; --><!-- `multilevelGPSStratification()` \code{\link{multilevelGPSStratification}} make super awesome illustrations.  --><div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(multilevelMatching)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">X&lt;-<span class="kw">c</span>(<span class="fl">5.5</span>,<span class="fl">10.6</span>,<span class="fl">3.1</span>,<span class="fl">8.7</span>,<span class="fl">5.1</span>,<span class="fl">10.2</span>,<span class="fl">9.8</span>,<span class="fl">4.4</span>,<span class="fl">4.9</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">Y&lt;-<span class="kw">c</span>(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">W&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw">set.seed</span>(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="kw"><a href="../reference/multilevelMatchX.html">multilevelMatchX</a></span>(Y,W,X)</a></code></pre></div>
+<pre><code>## $tauestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##  -10.666667    6.666667   17.333333 
+## 
+## $varestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    9.111111  615.580247  613.925926</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a></code></pre></div>
+<pre><code>## $tauestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##  -10.444444    6.666667   17.111111 
+## 
+## $varestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    8.545953  616.913580  611.122085 
+## 
+## $varestimateAI2012
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    8.302024  411.456234  434.247037 
+## 
+## $analysisidx
+## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)</a></code></pre></div>
+<pre><code>## $tauestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##      -9.375       5.875      15.250 
+## 
+## $varestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    7.794922  582.654297  576.304688 
+## 
+## $varestimateAI2012
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    5.072057  383.848575  430.978089 
+## 
+## $analysisidx
+## 1 2 4 5 6 7 8 9 
+## 1 2 4 5 6 7 8 9</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X, <span class="dt">match_on =</span> <span class="st">"covariates"</span>)<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## no unit IDs supplied; unit_ids will be assigned generically</code></pre>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
+## = trimming, : It is recommended that X is a matrix. X will be coerced to a
+## matrix.</code></pre>
+<pre><code>##         Param Trt1 Trt2   Estimate   Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 -10.666667   9.111111             NA
+## 2 EY(3)-EY(1)    1    3   6.666667 615.580247             NA
+## 3 EY(3)-EY(2)    2    3  17.333333 613.925926             NA</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming =</span> <span class="dv">0</span>, <span class="dt">match_on =</span> <span class="st">"multinom"</span>)<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## no unit IDs supplied; unit_ids will be assigned generically</code></pre>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
+## = trimming, : It is recommended that X is a matrix. X will be coerced to a
+## matrix.</code></pre>
+<pre><code>##         Param Trt1 Trt2   Estimate   Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024
+## 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234
+## 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming =</span> <span class="dv">1</span>, <span class="dt">match_on =</span> <span class="st">"multinom"</span>)<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## no unit IDs supplied; unit_ids will be assigned generically</code></pre>
+<pre><code>## Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
+## = trimming, : It is recommended that X is a matrix. X will be coerced to a
+## matrix.</code></pre>
+<pre><code>##         Param Trt1 Trt2 Estimate   Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2   -9.375   7.794922       5.072057
+## 2 EY(3)-EY(1)    1    3    5.875 582.654297     383.848575
+## 3 EY(3)-EY(2)    2    3   15.250 576.304688     430.978089</code></pre>
+<div id="user-supplied-propensity-scores" class="section level4">
+<h4 class="hasAnchor">
+<a href="#user-supplied-propensity-scores" class="anchor"></a>User-supplied propensity scores</h4>
+<p>The user can supply propensity scores through the <code>X</code> argument by setting <code>GPSM="existing"</code> in <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> or <code><a href="../reference/multilevelGPSStratification.html">multilevelGPSStratification()</a></code></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">pr_w1 &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dt">x=</span><span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">0.5</span>), <span class="dt">replace=</span><span class="ot">TRUE</span>, <span class="dt">size=</span><span class="kw">length</span>(W))</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">pr_w2 &lt;-<span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>pr_w1)<span class="op">/</span><span class="dv">3</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">pr_w3 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">-</span>(pr_w1<span class="op">+</span>pr_w2)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">existing_GPS_matrix &lt;-<span class="st"> </span><span class="kw">cbind</span>(pr_w1, pr_w2,pr_w3)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#the following checks are also carried out under the hood</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="kw">nrow</span>(existing_GPS_matrix)<span class="op">==</span><span class="kw">length</span>(W)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">ncol</span>(existing_GPS_matrix)<span class="op">==</span><span class="kw">length</span>(<span class="kw">unique</span>(W))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">all</span>(<span class="kw">rowSums</span>(existing_GPS_matrix)<span class="op">==</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(<span class="dt">Y=</span>Y,<span class="dt">W=</span>W,<span class="dt">X=</span>existing_GPS_matrix,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">"existing"</span>)</a></code></pre></div>
+<pre><code>## $tauestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+## -12.8888889 -12.6666667   0.2222222 
+## 
+## $varestimate
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##    20.78875   631.39506   618.16735 
+## 
+## $varestimateAI2012
+## EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+##          NA          NA          NA 
+## 
+## $analysisidx
+## [1] 1 2 3 4 5 6 7 8 9</code></pre>
+</div>
+</div>
+<div id="another-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#another-example" class="anchor"></a>Another example</h3>
+<p>A more complex dataset:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">111</span>)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">n    &lt;-<span class="st"> </span><span class="dv">5000</span><span class="op">*</span><span class="dv">6</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co"># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">vars   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">covars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span>.<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">mu     &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">tau    &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8">Sigma &lt;-<span class="st"> </span><span class="kw">diag</span>(vars)</a>
+<a class="sourceLine" id="cb29-9" data-line-number="9">Sigma[<span class="dv">2</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">1</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>covars[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb29-10" data-line-number="10">Sigma[<span class="dv">3</span>,<span class="dv">1</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">1</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>covars[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb29-11" data-line-number="11">Sigma[<span class="dv">3</span>,<span class="dv">2</span>] &lt;-<span class="st"> </span>Sigma[<span class="dv">2</span>,<span class="dv">3</span>] &lt;-<span class="st"> </span>covars[<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb29-12" data-line-number="12">trt1 &lt;-<span class="st"> </span><span class="dv">100</span>; trt1</a></code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">trt2 &lt;-<span class="st"> </span><span class="dv">100</span>; trt2</a></code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">trt3 &lt;-<span class="st"> </span><span class="dv">100</span>; trt3</a></code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># draw Xs</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="kw">library</span>(MASS)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">X13 &lt;-<span class="st"> </span><span class="kw">mvrnorm</span>(n,<span class="dt">mu=</span>mu,<span class="dt">Sigma=</span>Sigma, <span class="dt">empirical =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4">X1 &lt;-<span class="st"> </span>X13[,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb35-5" data-line-number="5">X2 &lt;-<span class="st"> </span>X13[,<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb35-6" data-line-number="6">X3 &lt;-<span class="st"> </span>X13[,<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb35-7" data-line-number="7">X4 &lt;-<span class="st"> </span><span class="kw">runif</span>(n,<span class="op">-</span><span class="dv">3</span>,<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb35-8" data-line-number="8">X5 &lt;-<span class="st"> </span><span class="kw">rchisq</span>(n, <span class="dt">df=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb35-9" data-line-number="9">X6 &lt;-<span class="st"> </span><span class="kw">rbinom</span>(n,<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">prob=</span>.<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11">xb2 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X2<span class="op">+</span>X3<span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)</a>
+<a class="sourceLine" id="cb35-12" data-line-number="12">xb3 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span>(X1<span class="op">+</span>X2<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X3<span class="op">^</span><span class="dv">2</span><span class="op">+</span>X4<span class="op">+</span>X5<span class="op">+</span>X6)</a>
+<a class="sourceLine" id="cb35-13" data-line-number="13">exb2&lt;-<span class="kw">exp</span>(xb2)</a>
+<a class="sourceLine" id="cb35-14" data-line-number="14">exb3&lt;-<span class="kw">exp</span>(xb3)</a>
+<a class="sourceLine" id="cb35-15" data-line-number="15">pi1&lt;-<span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
+<a class="sourceLine" id="cb35-16" data-line-number="16">pi2&lt;-<span class="kw">exp</span>(xb2)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
+<a class="sourceLine" id="cb35-17" data-line-number="17">pi3&lt;-<span class="kw">exp</span>(xb3)<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw">exp</span>(xb2)<span class="op">+</span><span class="kw">exp</span>(xb3))</a>
+<a class="sourceLine" id="cb35-18" data-line-number="18">pi&lt;-<span class="kw">cbind</span>(pi1,pi2,pi3)</a>
+<a class="sourceLine" id="cb35-19" data-line-number="19"><span class="kw">apply</span>(pi,<span class="dv">2</span>,mean)</a></code></pre></div>
+<pre><code>##       pi1       pi2       pi3 
+## 0.2637337 0.3681104 0.3681559</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">W&lt;-<span class="kw">matrix</span>(<span class="ot">NA</span>,n,<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">colnames</span>(W)   &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"W1"</span>,<span class="st">"W2"</span>,<span class="st">"W3"</span>,<span class="st">"W"</span>)</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="cf">for</span>(kk <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>n){</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">    W[kk,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>]&lt;-<span class="kw">rmultinom</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dt">prob =</span> pi[kk,])</a>
+<a class="sourceLine" id="cb37-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7">sim.dat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(W,X1,X2,X3,X4,X5,X6)</a>
+<a class="sourceLine" id="cb37-8" data-line-number="8">trt1.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W1<span class="op">==</span><span class="dv">1</span>),trt1,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb37-9" data-line-number="9">trt2.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W2<span class="op">==</span><span class="dv">1</span>),trt2,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb37-10" data-line-number="10">trt3.keep &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">which</span>(sim.dat<span class="op">$</span>W3<span class="op">==</span><span class="dv">1</span>),trt3,<span class="dt">replace=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb37-11" data-line-number="11">sim.dat &lt;-<span class="st"> </span>sim.dat[<span class="kw">c</span>(trt1.keep,trt2.keep,trt3.keep),]</a>
+<a class="sourceLine" id="cb37-12" data-line-number="12">sim.dat[,<span class="st">"W"</span>]&lt;-sim.dat[,<span class="st">"W1"</span>]<span class="op">+</span><span class="dv">2</span><span class="op">*</span>sim.dat[,<span class="st">"W2"</span>]<span class="op">+</span><span class="dv">3</span><span class="op">*</span>sim.dat[,<span class="st">"W3"</span>]</a>
+<a class="sourceLine" id="cb37-13" data-line-number="13">sim.dat[,<span class="st">"W"</span>]&lt;-<span class="kw">as.factor</span>(sim.dat[,<span class="st">"W"</span>])</a>
+<a class="sourceLine" id="cb37-14" data-line-number="14">W &lt;-<span class="st"> </span>sim.dat[,<span class="st">"W"</span>]</a>
+<a class="sourceLine" id="cb37-15" data-line-number="15">X &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(sim.dat[,<span class="kw">names</span>(sim.dat)[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>)]])</a>
+<a class="sourceLine" id="cb37-16" data-line-number="16">X1 &lt;-<span class="st"> </span>X[,<span class="st">"X1"</span>]; X2 &lt;-<span class="st"> </span>X[,<span class="st">"X2"</span>]; X3 &lt;-<span class="st"> </span>X[,<span class="st">"X3"</span>]; X4 &lt;-<span class="st"> </span>X[,<span class="st">"X4"</span>]; X5 &lt;-<span class="st"> </span>X[,<span class="st">"X5"</span>];X6 &lt;-<span class="st"> </span>X[,<span class="st">"X6"</span>]</a>
+<a class="sourceLine" id="cb37-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb37-18" data-line-number="18"><span class="co"># outcome: treatment effect is zero</span></a>
+<a class="sourceLine" id="cb37-19" data-line-number="19">u  &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">nrow</span>(X))</a>
+<a class="sourceLine" id="cb37-20" data-line-number="20"><span class="co"># outcome (linear)</span></a>
+<a class="sourceLine" id="cb37-21" data-line-number="21">Y &lt;-<span class="st">    </span>(W<span class="op">==</span><span class="dv">1</span>)<span class="op">*</span>(  X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st">   </span>X4 <span class="op">+</span><span class="st">    </span>X5<span class="dv">-1</span> <span class="op">+</span><span class="st">     </span>X6<span class="fl">-0.5</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb37-22" data-line-number="22">(W<span class="op">==</span><span class="dv">2</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>X2 <span class="op">+</span><span class="st">   </span>X3 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X4 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X5<span class="dv">-1</span>) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>(X6<span class="fl">-0.5</span>))<span class="op">+</span></a>
+<a class="sourceLine" id="cb37-23" data-line-number="23">(W<span class="op">==</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">3</span><span class="op">*</span>X1 <span class="op">+</span><span class="st">   </span>X2 <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>X3 <span class="op">-</span><span class="st">   </span>X4 <span class="op">-</span><span class="st">   </span>(X5<span class="dv">-1</span>) <span class="op">-</span><span class="st">   </span>(X6<span class="fl">-0.5</span>))<span class="op">+</span>u</a>
+<a class="sourceLine" id="cb37-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb37-25" data-line-number="25">W &lt;-<span class="st"> </span><span class="kw">as.integer</span>(<span class="kw">as.character</span>(W)) ## Factors give issues sometimes</a></code></pre></div>
+<p>We can estimate this by:</p>
+<div id="matching-on-the-covariates" class="section level4">
+<h4 class="hasAnchor">
+<a href="#matching-on-the-covariates" class="anchor"></a>Matching on the covariates</h4>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">match1  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multilevelMatchX.html">multilevelMatchX</a></span>(Y,W,X)</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">match1b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X, <span class="dt">match_on=</span><span class="st">"covariates"</span>)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">match1<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">match1b<span class="op">$</span>results</a></code></pre></div>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186             NA
+## 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754             NA
+## 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616             NA</code></pre>
+</div>
+<div id="matching-on-estimated-propensity-scores" class="section level4">
+<h4 class="hasAnchor">
+<a href="#matching-on-estimated-propensity-scores" class="anchor"></a>Matching on estimated propensity scores</h4>
+<div id="multinomial-logistic-regression" class="section level5">
+<h5 class="hasAnchor">
+<a href="#multinomial-logistic-regression" class="anchor"></a>Multinomial logistic regression</h5>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">match2  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="ot">FALSE</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>) </a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">match2b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming=</span><span class="ot">FALSE</span>,<span class="dt">match_on=</span><span class="st">"multinom"</span>) </a>
+<a class="sourceLine" id="cb42-3" data-line-number="3">match3  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="ot">TRUE</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>) </a>
+<a class="sourceLine" id="cb42-4" data-line-number="4">match3b  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming=</span><span class="ot">TRUE</span>,<span class="dt">match_on=</span><span class="st">"multinom"</span>)</a>
+<a class="sourceLine" id="cb42-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb42-6" data-line-number="6">match2<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">match2b<span class="op">$</span>results</a></code></pre></div>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 -0.7458499 0.6974908      0.4340571
+## 2 EY(3)-EY(1)    1    3  0.5605192 0.4856579      0.2287787
+## 3 EY(3)-EY(2)    2    3  1.3063691 0.7089620      0.4226466</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">match3<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">match3b<span class="op">$</span>results</a></code></pre></div>
+<pre><code>##         Param Trt1 Trt2  Estimate  Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 -1.056445 0.7924310      0.4876396
+## 2 EY(3)-EY(1)    1    3  1.001189 0.4457239      0.2104603
+## 3 EY(3)-EY(2)    2    3  2.057634 0.8310264      0.4624069</code></pre>
+</div>
+<div id="proportional-odds-logistic-regression" class="section level5">
+<h5 class="hasAnchor">
+<a href="#proportional-odds-logistic-regression" class="anchor"></a>Proportional odds logistic regression:</h5>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">match4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>, <span class="dt">GPSM=</span><span class="st">"ordinallogisticReg"</span>)</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2">match4b &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">match_on =</span> <span class="st">"polr"</span>)</a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4">match4<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1">match4b<span class="op">$</span>results</a></code></pre></div>
+<pre><code>##         Param Trt1 Trt2   Estimate  Variance VarianceAI2016
+## 1 EY(2)-EY(1)    1    2 -0.7303810 0.7261450             NA
+## 2 EY(3)-EY(1)    1    3  0.3711491 0.5966005             NA
+## 3 EY(3)-EY(2)    2    3  1.1015301 0.9743341             NA</code></pre>
+</div>
+</div>
+<div id="stratifying-on-generalized-propensity-scores" class="section level4">
+<h4 class="hasAnchor">
+<a href="#stratifying-on-generalized-propensity-scores" class="anchor"></a>Stratifying on generalized propensity scores</h4>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">strat1  &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multilevelGPSStratification.html">multilevelGPSStratification</a></span>(Y,W,X,<span class="dt">NS=</span><span class="dv">10</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>,<span class="dt">linearp=</span><span class="dv">0</span>,<span class="dt">nboot=</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">strat1<span class="op">$</span>results</a></code></pre></div>
+<pre><code>## NULL</code></pre>
+</div>
+</div>
+<div id="a-note-on-multimatch" class="section level3">
+<h3 class="hasAnchor">
+<a href="#a-note-on-multimatch" class="anchor"></a>A note on <code><a href="../reference/multiMatch.html">multiMatch()</a></code>
+</h3>
+<p>The <code><a href="../reference/multiMatch.html">multiMatch()</a></code> function may return slightly different estimates than the original 2 matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns. Or, see the NEWS.md.</p>
 </div>
   </div>
 
