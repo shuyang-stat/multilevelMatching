@@ -1,8 +1,10 @@
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 =================
 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/multilevelMatching)](https://cran.r-project.org/package=multilevelMatching)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build Status](https://travis-ci.org/shuyang1987/multilevelMatching.svg?branch=master)](https://travis-ci.org/shuyang1987/multilevelMatching)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github//shuyang1987/multilevelMatching/?branch=master&svg=true)](https://ci.appveyor.com/shuyang1987/multilevelMatching)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j2o3ien2ldht07aw?svg=true)](https://ci.appveyor.com/shuyang1987/multilevelMatching)
 [![Coverage status](https://codecov.io/gh/shuyang1987/multilevelMatching/branch/master/graph/badge.svg)](https://codecov.io/github/shuyang1987/multilevelMatching?branch=master)
 
 
