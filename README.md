@@ -4,7 +4,7 @@ Propensity Score Matching and Subclassification in Observational Studies with Mu
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/multilevelMatching)](https://cran.r-project.org/package=multilevelMatching)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 [![Travis-CI Build Status](https://travis-ci.org/shuyang1987/multilevelMatching.svg?branch=master)](https://travis-ci.org/shuyang1987/multilevelMatching)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/j2o3ien2ldht07aw?svg=true)](https://ci.appveyor.com/shuyang1987/multilevelMatching)
+[![AppveyorCI Build status](https://ci.appveyor.com/api/projects/status/eu7vlcbu2j854cdo?svg=true)](https://ci.appveyor.com/project/BarkleyBG/multilevelmatching-3hh85)
 [![Coverage status](https://codecov.io/gh/shuyang1987/multilevelMatching/branch/master/graph/badge.svg)](https://codecov.io/github/shuyang1987/multilevelMatching?branch=master)
 
 
@@ -29,7 +29,7 @@ devtools::install_github("shuyang1987/multilevelMatching")
 
 ### Use
 
-- In version v0.1.0.9000+, the `multiMatch()` function was introduced to combine the `multilevelMatchX()` and `multilevelGPSMatch()` functions. For stratification on the propensity score, use `multilevelGPSStratification`.
+- In the development version (v0.1.0.9000+), the `multiMatch()` function was introduced to combine the `multilevelMatchX()` and `multilevelGPSMatch()` functions. For stratification on the propensity score, use `multilevelGPSStratification`.
 
 ```S
 X<-c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
