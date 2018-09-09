@@ -9,6 +9,7 @@
 #' will carry out additional matching procedures to estimate the variance as
 #' described in Abadie and Imbens (2016).
 #'
+#' @inheritParams multiMatch
 #' @inheritParams matchAllTreatments
 #' @inheritParams matchImputePO
 #' @param var_options Options for carrying out matching for variance estimation.
@@ -17,7 +18,7 @@
 #'   procedures to estimate components in the VarianceAI2016 variance estimates
 #'   (see \code{\link{calcSigSqAI2016}}).
 #'
-#'   Note that these variance components will be put together in
+#'   Note that these variance components are combined in
 #'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).
 #'
 #' @return A list of one or two elements. \code{sigsqiw_kk} is a vector with the

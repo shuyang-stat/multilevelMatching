@@ -27,7 +27,7 @@ observed to have treatment level kk}
   procedures to estimate components in the VarianceAI2016 variance estimates
   (see \code{\link{calcSigSqAI2016}}).
 
-  Note that these variance components will be put together in
+  Note that these variance components are combined in
   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).}
 }
 \value{
@@ -55,3 +55,4 @@ Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   score. Econometrica, 84(2), 781-807.
   \url{https://doi.org/10.3982/ECTA11293}
 }
+

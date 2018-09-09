@@ -17,3 +17,4 @@ effect of multilevel treatment (i.e., 3 or more treatment types).
 \details{
 For example, see \code{\link{multilevelMatchX}}.
 }
+

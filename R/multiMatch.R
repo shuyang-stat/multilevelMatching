@@ -169,6 +169,7 @@ multiMatch <- function(
     tidy_output$AI2016_args <- est_var_AI2016$AI2016_args
   }
 
+  class(tidy_output) <- "multiMatch"
   tidy_output
 }
 

@@ -31,3 +31,4 @@ Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   matching estimators for average treatment effects. econometrica, 74(1),
   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }
+

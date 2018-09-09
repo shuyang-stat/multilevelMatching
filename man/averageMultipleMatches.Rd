@@ -25,3 +25,4 @@ A list including the averaged \code{matched_outcomes}, and also
 This is called from \code{\link{wrangleImputations}} and from
 \code{\link{calcSigSqAI2006}}.
 }
+
