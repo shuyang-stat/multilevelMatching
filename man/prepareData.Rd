@@ -41,3 +41,4 @@ A series of checks, tests, re-ordering, and other operations to prepare the
 data for matching. This function can be run standalone, before running
 \code{\link{multiMatch}}.
 }
+

@@ -26,3 +26,4 @@ logisitc regression.}
 Note that the model_options argument must be a list with reference_level
 element
 }
+

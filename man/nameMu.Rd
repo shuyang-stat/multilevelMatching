@@ -12,3 +12,4 @@ nameMu(trt)
 \description{
 Naming the matching population mean mu's
 }
+

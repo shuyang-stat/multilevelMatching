@@ -26,3 +26,4 @@ on their raw data ahead of using \code{\link{multiMatch}} to ensure that the
 matching procedure will work. \code{unit_ids} will be used to identify study
 units in some of the information output from \code{\link{multiMatch}}.
 }
+

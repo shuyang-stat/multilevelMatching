@@ -26,3 +26,4 @@ function was introduced to extend this variance matching procedure to
 \code{J_var_matches >=1}, as it takes care of some of the bookeeping aspects
 of one-to-many matching.
 }
+
