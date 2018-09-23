@@ -262,7 +262,12 @@ getIDs <- function(x){
   if (is.vector(x)) {names <- names(x)} else
     if (is.matrix(x)) {names <- rownames(x)} else
       if (is.data.frame(x)) {names <- row.names(x)} else {
-        stop("Y,W, and X must be vectors, matrices, or perhaps data.frames")
+        stop(
+          paste0(
+            "Y,W, and X must be vectors, matrices, or perhaps data.frames. ",
+            "Factors should be avoided."
+          )
+        )
       }
   names
 }
@@ -280,7 +285,12 @@ setIDs <- function(x,unit_ids){
   if (is.vector(x)) {names(x) <- unit_ids} else
     if (is.matrix(x)) {rownames(x) <- unit_ids} else
       if (is.data.frame(x)) {row.names(x) <- unit_ids} else {
-        stop("Y,W, and X must be vectors, matrices, or perhaps data.frames")
+        stop(
+          paste0(
+            "Y,W, and X must be vectors, matrices, or perhaps data.frames. ",
+            "Factors should be avoided."
+          )
+        )
       }
   x
 }

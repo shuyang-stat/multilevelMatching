@@ -44,7 +44,7 @@ trt2.keep <- sample(which(sim.dat$W2==1),trt2,replace=FALSE)
 trt3.keep <- sample(which(sim.dat$W3==1),trt3,replace=FALSE)
 sim.dat <- sim.dat[c(trt1.keep,trt2.keep,trt3.keep),]
 sim.dat[,"W"]<-sim.dat[,"W1"]+2*sim.dat[,"W2"]+3*sim.dat[,"W3"]
-sim.dat[,"W"]<-as.factor(sim.dat[,"W"])
+# sim.dat[,"W"]<-as.factor(sim.dat[,"W"])
 W <- sim.dat[,"W"]
 X <- as.matrix(sim.dat[,names(sim.dat)[-c(1:4)]])
 X1 <- X[,"X1"]; X2 <- X[,"X2"]; X3 <- X[,"X3"]; X4 <- X[,"X4"]; X5 <- X[,"X5"];X6 <- X[,"X6"]
