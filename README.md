@@ -1,5 +1,5 @@
 ---
-output: github_document
+  output: github_document
 ---
 <!-- rmarkdown v1 -->
 
@@ -70,6 +70,7 @@ X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 
 ```r
 library(multilevelMatching)
+set.seed(123)
 
 multilevelMatchX(Y,W,X)
 #> $tauestimate
@@ -229,7 +230,7 @@ multilevelGPSStratification(
 #> 
 #> $varestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>   0.1177263   0.1692726   0.3528812
+#>   0.0752562   0.1793161   0.2744478
 ```
 
 
