@@ -7,3 +7,4 @@ NEWS.md
 ^codecov\.yml$
 ^_pkgdown\.yml$
 ^docs$
+^data_raw$
