@@ -3,3 +3,4 @@
 vignettes/*.R
 vignettes/*.html
 scratch/
+*.DS_Store
