@@ -5,7 +5,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  # fig.path = "README-"
+    fig.path = "man/figures/README-"
+)
+```
 
 # multilevelMatching
 
@@ -35,8 +42,7 @@ In order to ensure sufficient overlap, Crump et al. (2009)'s trimming method can
 
 ## Installation with `devtools`:
 
-
-```r
+```{r, eval = FALSE}
 devtools::install_github("shuyang1987/multilevelMatching")
 ```
 
@@ -56,8 +62,7 @@ Note that these functions have slightly different syntax. The `multiMatch()` fun
 
 ### Toy example
 
-
-```r
+```{r}
 ## Outcome
 Y <- c(102,105,120,130,100,80,94,108,96)
 ## Treatment level
@@ -68,101 +73,32 @@ X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 
 #### Matching on covariates
 
-
-```r
+```{r}
 library(multilevelMatching)
 multilevelMatchX(Y,W,X)
-#> $tauestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>  -10.666667    6.666667   17.333333 
-#> 
-#> $varestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>    9.111111  615.580247  613.925926
 multiMatch(Y,W,X, match_on = "covariates")
-#> no unit IDs supplied; unit_ids will be assigned generically
-#> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
-#> = trimming, : It is recommended that X is a matrix. X will be coerced to a
-#> matrix.
-#> -------------- Causal estimates ---------------
-#>         Param Trt1 Trt2   Estimate   Variance
-#> 1 EY(2)-EY(1)    1    2 -10.666667   9.111111
-#> 2 EY(3)-EY(1)    1    3   6.666667 615.580247
-#> 3 EY(3)-EY(2)    2    3  17.333333 613.925926
-#> --- Matching on 'covariates' with M=1, J=1 ---
+
 ```
 
 #### Matching on Estimated Propensity Score
 
 Using multinomial logistic regression:
-
-```r
+```{r}
 multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
-#> $tauestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>  -10.444444    6.666667   17.111111 
-#> 
-#> $varestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>    8.545953  616.913580  611.122085 
-#> 
-#> $varestimateAI2012
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>    8.302024  411.456234  434.247037 
-#> 
-#> $analysisidx
-#> [1] 1 2 3 4 5 6 7 8 9
 multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
-#> no unit IDs supplied; unit_ids will be assigned generically
-#> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
-#> = trimming, : It is recommended that X is a matrix. X will be coerced to a
-#> matrix.
-#> -------------- Causal estimates ---------------
-#>         Param Trt1 Trt2   Estimate   Variance VarianceAI2016
-#> 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024
-#> 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234
-#> 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037
-#> --- Matching on 'multinom' with M=1, J=1 ---
 ```
 
 Using ordinal logistic regression:
-
-```r
+```{r}
 multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
-#> $tauestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>      -9.375       5.875      15.250 
-#> 
-#> $varestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>    7.794922  582.654297  576.304688 
-#> 
-#> $varestimateAI2012
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>    5.072057  383.848575  430.978089 
-#> 
-#> $analysisidx
-#> 1 2 4 5 6 7 8 9 
-#> 1 2 4 5 6 7 8 9
 multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
-#> no unit IDs supplied; unit_ids will be assigned generically
-#> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
-#> = trimming, : It is recommended that X is a matrix. X will be coerced to a
-#> matrix.
-#> -------------- Causal estimates ---------------
-#>         Param Trt1 Trt2   Estimate   Variance VarianceAI2016
-#> 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024
-#> 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234
-#> 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037
-#> --- Matching on 'multinom' with M=1, J=1 ---
 ```
 
 #### Stratifying on Estimated Propensity Score
 
 There are some additional arguments for using the stratification method
 
-
-```r
+```{r}
 NS <- 5 ## The number of strata to divide into
 linearp <- FALSE ## Use subclassification, not linear prediction
 nboot <- 10 ## Number of bootstrap samples for variance estimation
@@ -171,29 +107,13 @@ nboot <- 10 ## Number of bootstrap samples for variance estimation
 
 We will use the dataset provided with this package
 
-
-```r
+```{r}
 data("simulated_data", package = "multilevelMatching")
 head(simulated_data)
-#>      outcome treatment     covar1     covar2     covar3      covar4
-#> 1 -5.1263661         1 -0.8655326  0.2365470  0.2296276 -2.89128973
-#> 2 -3.0291972         1  0.2705180 -0.3528553 -0.4021112 -2.21465345
-#> 3  3.0503040         1  1.4215891  1.3168653 -1.1991933  0.05568702
-#> 4 -6.0918947         1 -1.3918079 -1.0725496  1.1201373 -2.36120362
-#> 5 -2.4552555         1 -1.1465895  0.9467882  0.5100671 -2.67835507
-#> 6 -0.3245296         1  0.2675347  0.4166909 -0.4467756  2.42632589
-#>        covar5 covar6
-#> 1 0.211508226      0
-#> 2 0.070739054      1
-#> 3 1.258638639      1
-#> 4 0.003610748      0
-#> 5 0.069593990      0
-#> 6 0.604489077      0
 ```
 
 
-
-```r
+```{r boxplot, fig.path="man/figures/"}
 plot(
   x = simulated_data$treatment, 
   y = simulated_data$outcome, 
@@ -203,10 +123,7 @@ plot(
 )
 ```
 
-![plot of chunk boxplot](man/figures/boxplot-1.png)
-
-
-```r
+```{r}
 multilevelGPSStratification(
   Y = simulated_data$outcome,
   W = simulated_data$treatment,
@@ -216,13 +133,6 @@ multilevelGPSStratification(
   linearp = linearp,
   nboot = nboot
 )
-#> $tauestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>  -0.2593016   0.2684324   0.5277340 
-#> 
-#> $varestimate
-#> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>   0.3246198   0.2162380   0.2621231
 ```
 
 
