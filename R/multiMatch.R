@@ -58,13 +58,16 @@
 #'   Biometrika, 96(1), 187-199. \url{https://doi.org/10.1093/biomet/asn055}
 #'
 #' @examples
-#'   X <- as.matrix(c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9),ncol=1)
-#'   Y <- c(102,105,120,130,100,80,94,108,96)
-#'   W <- c(1,1,1,3,2,3,2,1,2)
-#'   multiMatch(Y,W,X,trimming=0,match_on="multinom")
-#'   multiMatch(Y,W,X,trimming=1,match_on="multinom")
-#'   multiMatch(Y,W,X,trimming=0,match_on="polr")
-#'   multiMatch(Y,W,X,trimming=0,match_on="covariates")
+#'   sim_data <- multilevelMatching::simulated_data
+#'   Y <- sim_data$outcome
+#'   W <- sim_data$treatment
+#'   X <- as.matrix(sim_data[ ,-(1:2)])
+#'   names(Y) <- paste0("ID", 1:length(Y))
+#'
+#'   trimming <- FALSE
+#'   method <- c("covariates", "polr", "multinom")[2]
+#'
+#'   multiMatch(Y,W,X,trimming=trimming,match_on=method)
 #'
 #'
 #' @export

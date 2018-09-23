@@ -6,4 +6,6 @@ NEWS.md
 ^appveyor\.yml$
 ^codecov\.yml$
 ^_pkgdown\.yml$
+^README\.Rmd$
 ^docs$
+^data_raw$
