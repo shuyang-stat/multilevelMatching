@@ -1,7 +1,7 @@
+---
+output: github_document
+---
 <!-- rmarkdown v1 -->
----
-  output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -17,10 +17,9 @@
 
 Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
 
-=================
-
-
 ### Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
+
+## Description
 
 In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.
 
@@ -71,6 +70,7 @@ X <- c(5.5,10.6,3.1,8.7,5.1,10.2,9.8,4.4,4.9)
 
 ```r
 library(multilevelMatching)
+
 multilevelMatchX(Y,W,X)
 #> $tauestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
@@ -79,6 +79,7 @@ multilevelMatchX(Y,W,X)
 #> $varestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
 #>    9.111111  615.580247  613.925926
+
 multiMatch(Y,W,X, match_on = "covariates")
 #> no unit IDs supplied; unit_ids will be assigned generically
 #> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
@@ -97,6 +98,7 @@ multiMatch(Y,W,X, match_on = "covariates")
 Using multinomial logistic regression:
 
 ```r
+## v0.1
 multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 #> $tauestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
@@ -112,6 +114,8 @@ multilevelGPSMatch(Y,W,X,Trimming=0,GPSM="multinomiallogisticReg")
 #> 
 #> $analysisidx
 #> [1] 1 2 3 4 5 6 7 8 9
+
+## v0.1.0.9000+
 multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
 #> no unit IDs supplied; unit_ids will be assigned generically
 #> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
@@ -128,6 +132,7 @@ multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
 Using ordinal logistic regression:
 
 ```r
+## v0.1
 multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 #> $tauestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
@@ -144,6 +149,8 @@ multilevelGPSMatch(Y,W,X,Trimming=1,GPSM="multinomiallogisticReg")
 #> $analysisidx
 #> 1 2 4 5 6 7 8 9 
 #> 1 2 4 5 6 7 8 9
+
+## v0.1.0.9000+
 multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
 #> no unit IDs supplied; unit_ids will be assigned generically
 #> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
@@ -222,7 +229,7 @@ multilevelGPSStratification(
 #> 
 #> $varestimate
 #> EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#>   0.3246198   0.2162380   0.2621231
+#>   0.1177263   0.1692726   0.3528812
 ```
 
 
@@ -234,3 +241,48 @@ See [the News site](https://shuyang1987.github.io/multilevelMatching/news/index.
 
 The `multiMatch()` function may return slightly different estimates than the original 2 matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns.
 
+
+```r
+fit <- multiMatch(Y,W,X,trimming = 0, match_on = "multinom")
+#> no unit IDs supplied; unit_ids will be assigned generically
+#> Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming
+#> = trimming, : It is recommended that X is a matrix. X will be coerced to a
+#> matrix.
+
+names(fit)
+#>  [1] "results"           "analysis_idx"      "mu"               
+#>  [4] "impute_mat"        "estimate_args"     "model"            
+#>  [7] "propensity_scores" "impute_match_data" "impute_mat_sorted"
+#> [10] "AI2016_args"
+
+summary(fit)
+#> ------------- Method arguments --------------
+#> $match_on
+#> [1] "multinom"
+#> 
+#> $model_options
+#> $model_options$reference_level
+#> [1] 1
+#> 
+#> 
+#> $M_matches
+#> [1] 1
+#> 
+#> $J_var_matches
+#> [1] 1
+#> 
+#> $trt_levels
+#> [1] 1 2 3
+#> 
+#> $N_per_trt
+#> W
+#> 1 2 3 
+#> 4 3 2 
+#> 
+#> ------------- Causal estimates --------------
+#>         Param Trt1 Trt2   Estimate   Variance VarianceAI2016
+#> 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024
+#> 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234
+#> 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037
+#> ---------------------------------------------
+```
