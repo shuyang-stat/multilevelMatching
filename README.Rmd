@@ -1,6 +1,7 @@
 ---
   output: github_document
 ---
+
 <!-- rmarkdown v1 -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -22,7 +23,7 @@ knitr::opts_chunk$set(
 [![AppveyorCI Build status](https://ci.appveyor.com/api/projects/status/eu7vlcbu2j854cdo?svg=true)](https://ci.appveyor.com/project/BarkleyBG/multilevelmatching-3hh85)
 [![Coverage status](https://codecov.io/gh/shuyang1987/multilevelMatching/branch/master/graph/badge.svg)](https://codecov.io/github/shuyang1987/multilevelMatching?branch=master)
 
-Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
+### Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments 
 
 ### Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
 
@@ -37,7 +38,11 @@ We focus on estimating the average values of potential outcomes for each treatme
 The estimation methods include generalized propensity score (GPS) matching, GPS stratification,
 matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels. 
 
-In order to ensure sufficient overlap, Crump et al. (2009)'s trimming method can be extended to this setting as well. 
+In order to ensure sufficient overlap, [Crump et al. (2009)](https://doi.org/10.1093/biomet/asn055)'s trimming method can be extended to this setting as well. 
+
+### Main Paper: Yang et al. (2016) 
+
+Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z. (2016) Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments. *Biometrics*, 72, 1055-1065. https://doi.org/10.1111/biom.12505
 
 ## Installation with `devtools`:
 
@@ -116,7 +121,7 @@ We will use the dataset provided with this package
 
 ```{r}
 data("simulated_data", package = "multilevelMatching")
-head(simulated_data)
+knitr::kable(head(simulated_data), digits = 2)
 ```
 
 

@@ -1,6 +1,7 @@
 ---
   output: github_document
 ---
+
 <!-- rmarkdown v1 -->
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -15,7 +16,7 @@
 [![AppveyorCI Build status](https://ci.appveyor.com/api/projects/status/eu7vlcbu2j854cdo?svg=true)](https://ci.appveyor.com/project/BarkleyBG/multilevelmatching-3hh85)
 [![Coverage status](https://codecov.io/gh/shuyang1987/multilevelMatching/branch/master/graph/badge.svg)](https://codecov.io/github/shuyang1987/multilevelMatching?branch=master)
 
-Propensity Score Matching and Subclassification in Observational Studies with Multi-level Treatments
+### Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments 
 
 ### Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
 
@@ -30,7 +31,11 @@ We focus on estimating the average values of potential outcomes for each treatme
 The estimation methods include generalized propensity score (GPS) matching, GPS stratification,
 matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels. 
 
-In order to ensure sufficient overlap, Crump et al. (2009)'s trimming method can be extended to this setting as well. 
+In order to ensure sufficient overlap, [Crump et al. (2009)](https://doi.org/10.1093/biomet/asn055)'s trimming method can be extended to this setting as well. 
+
+### Main Paper: Yang et al. (2016) 
+
+Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z. (2016) Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments. *Biometrics*, 72, 1055-1065. https://doi.org/10.1111/biom.12505
 
 ## Installation with `devtools`:
 
@@ -182,22 +187,19 @@ We will use the dataset provided with this package
 
 ```r
 data("simulated_data", package = "multilevelMatching")
-head(simulated_data)
-#>      outcome treatment     covar1     covar2     covar3      covar4
-#> 1 -5.1263661         1 -0.8655326  0.2365470  0.2296276 -2.89128973
-#> 2 -3.0291972         1  0.2705180 -0.3528553 -0.4021112 -2.21465345
-#> 3  3.0503040         1  1.4215891  1.3168653 -1.1991933  0.05568702
-#> 4 -6.0918947         1 -1.3918079 -1.0725496  1.1201373 -2.36120362
-#> 5 -2.4552555         1 -1.1465895  0.9467882  0.5100671 -2.67835507
-#> 6 -0.3245296         1  0.2675347  0.4166909 -0.4467756  2.42632589
-#>        covar5 covar6
-#> 1 0.211508226      0
-#> 2 0.070739054      1
-#> 3 1.258638639      1
-#> 4 0.003610748      0
-#> 5 0.069593990      0
-#> 6 0.604489077      0
+knitr::kable(head(simulated_data), digits = 2)
 ```
+
+
+
+| outcome|treatment | covar1| covar2| covar3| covar4| covar5| covar6|
+|-------:|:---------|------:|------:|------:|------:|------:|------:|
+|   -5.13|1         |  -0.87|   0.24|   0.23|  -2.89|   0.21|      0|
+|   -3.03|1         |   0.27|  -0.35|  -0.40|  -2.21|   0.07|      1|
+|    3.05|1         |   1.42|   1.32|  -1.20|   0.06|   1.26|      1|
+|   -6.09|1         |  -1.39|  -1.07|   1.12|  -2.36|   0.00|      0|
+|   -2.46|1         |  -1.15|   0.95|   0.51|  -2.68|   0.07|      0|
+|   -0.32|1         |   0.27|   0.42|  -0.45|   2.43|   0.60|      0|
 
 
 
