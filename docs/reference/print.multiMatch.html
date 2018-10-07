@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Perform matching methods to estimate (or impute) potential outcomes for one
-treatment level (level <code>kk</code>) — matchImputePO • multilevelMatching</title>
+<title>Prints a summary of the estimates from a multiMatch object — print.multiMatch • multilevelMatching</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -31,12 +30,9 @@ treatment level (level <code>kk</code>) — matchImputePO • multilevelMatching
 
 
 
-<meta property="og:title" content="Perform matching methods to estimate (or impute) potential outcomes for one
-treatment level (level <code>kk</code>) — matchImputePO" />
+<meta property="og:title" content="Prints a summary of the estimates from a multiMatch object — print.multiMatch" />
 
-<meta property="og:description" content="This function executes the matching methods to estimate the components for
-the point estimates of the population-level estimands. The components will be
-assembled into the estimator in the function estimateTau." />
+<meta property="og:description" content="Prints a summary of the estimates from a multiMatch object" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -116,87 +112,32 @@ assembled into the estimator in the function estimateTau." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Perform matching methods to estimate (or impute) potential outcomes for one
-treatment level (level <code>kk</code>)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shuyang1987/multilevelMatching/blob/master/R/matchImputePO.R'><code>R/matchImputePO.R</code></a></small>
-    <div class="hidden name"><code>matchImputePO.Rd</code></div>
+    <h1>Prints a summary of the estimates from a multiMatch object</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shuyang1987/multilevelMatching/blob/master/R/s3methods.R'><code>R/s3methods.R</code></a></small>
+    <div class="hidden name"><code>print.multiMatch.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function executes the matching methods to estimate the components for
-the point estimates of the population-level estimands. The components will be
-assembled into the estimator in the function <code><a href='estimateTau.html'>estimateTau</a></code>.</p>
+    <p>Prints a summary of the estimates from a multiMatch object</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>matchImputePO</span>(<span class='no'>X</span>, <span class='no'>Y</span>, <span class='no'>vec_diff_trt</span>, <span class='no'>which_diff_trt</span>, <span class='no'>vec_same_trt</span>,
-  <span class='no'>which_same_trt</span>, <span class='no'>est_options</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for multiMatch</span>
+<span class='fu'>print</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>X</th>
-      <td><p>A covariate matrix (p x n) with no intercept. When
-match_on="existing", then X must be a vector (1 x n) of user-specified
-propensity scores.</p></td>
+      <th>x</th>
+      <td><p>object of class "multiMatch"</p></td>
     </tr>
     <tr>
-      <th>Y</th>
-      <td><p>A response vector (1 x n)</p></td>
-    </tr>
-    <tr>
-      <th>vec_diff_trt</th>
-      <td><p>Boolean vector indicating which individuals observed to
-have treatment level NOT equal to kk</p></td>
-    </tr>
-    <tr>
-      <th>which_diff_trt</th>
-      <td><p>Numeric vector providing indices of individuals
-observed to have treatment level  NOT equal to kk</p></td>
-    </tr>
-    <tr>
-      <th>vec_same_trt</th>
-      <td><p>Boolean vector indicating which individuals observed to
-have treatment level kk</p></td>
-    </tr>
-    <tr>
-      <th>which_same_trt</th>
-      <td><p>Numeric vector providing indices of individuals
-observed to have treatment level kk</p></td>
-    </tr>
-    <tr>
-      <th>est_options</th>
-      <td><p>Options for carrying out matching for point estimation.</p></td>
+      <th>...</th>
+      <td><p>dots</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list, many of which are necessary arguments for
-  <code><a href='estimateTau.html'>estimateTau</a></code>:</p><ul>
-<li><p><code>Yiw</code> The fully-imputed
-  data set of all potential outcomes.</p></li>
-<li><p><code>mean_Yiw</code> Mean of Yiw
-  across all units i. These are the estimates of the population-level mean
-  estimands. See <code><a href='estimateTau.html'>estimateTau</a></code>.</p></li>
-<li><p><code>Kiw</code> The vector of
-  number of times unit i used as a match in imputation.</p></li>
-<li><p><code>impute_match_data</code> Extra information from the main matching
-  procedure.</p></li>
-</ul>
-
-    
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Yang, S., Imbens G. W., Cui, Z., Faries, D. E., &amp; Kadziola, Z.
-  (2016) Propensity Score Matching and Subclassification in Observational
-  Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
-  <a href='https://doi.org/10.1111/biom.12505'>https://doi.org/10.1111/biom.12505</a></p>
-<p>Abadie, A., &amp; Imbens, G. W. (2006). Large sample properties of
-  matching estimators for average treatment effects. econometrica, 74(1),
-  235-267. <a href='https://doi.org/10.1111/j.1468-0262.2006.00655.x'>https://doi.org/10.1111/j.1468-0262.2006.00655.x</a></p>
     
 
   </div>
@@ -204,11 +145,7 @@ observed to have treatment level kk</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#references">References</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

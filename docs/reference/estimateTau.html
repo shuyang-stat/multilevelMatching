@@ -78,10 +78,19 @@ function are output from these two subfunctions." />
   </a>
 </li>
 <li>
-  <a href="../articles/multilevelMatching.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/multilevelMatching-v1.0.0.html">multilevelMatching-v1.0.0</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -122,8 +131,8 @@ function are output from these two subfunctions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>estimateTau</span>(<span class='no'>trt_levels</span>, <span class='no'>mean_Yiw</span>, <span class='no'>num_trts</span>, <span class='no'>num_contrasts</span>, <span class='no'>N</span>, <span class='no'>M_matches</span>, <span class='no'>Yiw</span>,
-  <span class='no'>Kiw</span>, <span class='no'>sigsqiw</span>, <span class='no'>W</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>estimateTau</span>(<span class='no'>trt_levels</span>, <span class='no'>mean_Yiw</span>, <span class='no'>num_trts</span>, <span class='no'>num_contrasts</span>, <span class='no'>N</span>, <span class='no'>M_matches</span>,
+  <span class='no'>Yiw</span>, <span class='no'>Kiw</span>, <span class='no'>sigsqiw</span>, <span class='no'>W</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,7 +160,7 @@ function are output from these two subfunctions.</p>
     <tr>
       <th>M_matches</th>
       <td><p>Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens (2006). Currently can only support M=1.</p></td>
+as in Abadie and Imbens (2006).</p></td>
     </tr>
     <tr>
       <th>Yiw</th>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate imputed potential outcomes and other estimation components — wrangleImputations • multilevelMatching</title>
+<title>Simulated dataset for multilevelMatching package — simulated_data • multilevelMatching</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,12 @@
 
 
 
-<meta property="og:title" content="Calculate imputed potential outcomes and other estimation components — wrangleImputations" />
+<meta property="og:title" content="Simulated dataset for multilevelMatching package — simulated_data" />
 
-<meta property="og:description" content="This is a plumbing function, called from matchImputePO; they
-output the same list of information." />
+<meta property="og:description" content="This is a dataset with six baseline covariates, one column indicating
+treatment level, and one column indicating post-treatment outcome. This
+simulated data is purely for illustration, and any combination of the
+covariates can be assumed to sufficient to meet conditional exchangeability." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -113,75 +115,48 @@ output the same list of information." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate imputed potential outcomes and other estimation components</h1>
-    <small class="dont-index">Source: <a href='https://github.com/shuyang1987/multilevelMatching/blob/master/R/matchImputePO.R'><code>R/matchImputePO.R</code></a></small>
-    <div class="hidden name"><code>wrangleImputations.Rd</code></div>
+    <h1>Simulated dataset for multilevelMatching package</h1>
+    <small class="dont-index">Source: <a href='https://github.com/shuyang1987/multilevelMatching/blob/master/R/simulated_data.R'><code>R/simulated_data.R</code></a></small>
+    <div class="hidden name"><code>simulated_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This is a plumbing function, called from <code><a href='matchImputePO.html'>matchImputePO</a></code>; they
-output the same list of information.</p>
+    <p>This is a dataset with six baseline covariates, one column indicating
+treatment level, and one column indicating post-treatment outcome. This
+simulated data is purely for illustration, and any combination of the
+covariates can be assumed to sufficient to meet conditional exchangeability.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>wrangleImputations</span>(<span class='no'>match_output</span>, <span class='no'>M_matches</span>, <span class='no'>Y</span>, <span class='no'>which_same_trt</span>,
-  <span class='no'>which_diff_trt</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>match_output</th>
-      <td><p>The output from <code><a href='http://www.rdocumentation.org/packages/Matching/topics/Match'>Match</a></code> when
-matching different treament levels to impute potential outcomes (for point
-estimation of causal estimands).</p></td>
-    </tr>
-    <tr>
-      <th>M_matches</th>
-      <td><p>Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens (2006).</p></td>
-    </tr>
-    <tr>
-      <th>Y</th>
-      <td><p>A response vector (1 x n)</p></td>
-    </tr>
-    <tr>
-      <th>which_same_trt</th>
-      <td><p>Numeric vector providing indices of individuals
-observed to have treatment level kk</p></td>
-    </tr>
-    <tr>
-      <th>which_diff_trt</th>
-      <td><p>Numeric vector providing indices of individuals
-observed to have treatment level  NOT equal to kk</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>simulated_data</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A list, many of which are necessary arguments for
-  <code><a href='estimateTau.html'>estimateTau</a></code>:</p><ul>
-<li><p><code>Yiw</code> The fully-imputed
-  data set of all potential outcomes.</p></li>
-<li><p><code>mean_Yiw</code> Mean of
-  <code>Yiw</code> across all units i. These are the estimates of the
-  population-level mean estimands. See <code><a href='estimateTau.html'>estimateTau</a></code>.</p></li>
-<li><p><code>Kiw</code> The vector of number of times unit i used as a match in
-  imputation.</p></li>
-<li><p><code>impute_match_data</code> Extra information from the main
-  matching procedure.</p></li>
-</ul>
+    <p>A data frame with 300 rows and 8 variables:</p><dl class='dl-horizontal'>
+    <dt>outcome</dt><dd><p>Outcome of interest</p></dd>
+    <dt>treatment</dt><dd><p>Treatment level of the unit</p></dd>
+    <dt>covar1</dt><dd><p>Baseline covariate 1</p></dd>
+    <dt>covar2</dt><dd><p>Baseline covariate 2</p></dd>
+    <dt>covar3</dt><dd><p>Baseline covariate 3</p></dd>
+    <dt>covar4</dt><dd><p>Baseline covariate 4</p></dd>
+    <dt>covar5</dt><dd><p>Baseline covariate 5</p></dd>
+    <dt>covar6</dt><dd><p>Baseline covariate 6</p></dd>
+ </dl>
+    
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
+    <p><a href='http://www.diamondse.info/'>http://www.diamondse.info/</a></p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
+
+      <li><a href="#source">Source</a></li>
           </ul>
 
   </div>
