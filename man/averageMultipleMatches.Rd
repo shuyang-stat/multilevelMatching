@@ -4,7 +4,8 @@
 \alias{averageMultipleMatches}
 \title{Plumbing function for one-to-many matches}
 \usage{
-averageMultipleMatches(num_matches, matched_outcomes, orig_outcomes = NULL)
+averageMultipleMatches(num_matches, matched_outcomes,
+  orig_outcomes = NULL)
 }
 \arguments{
 \item{num_matches}{Either \code{M_matches} or \code{J_var_matches}}
@@ -25,4 +26,3 @@ A list including the averaged \code{matched_outcomes}, and also
 This is called from \code{\link{wrangleImputations}} and from
 \code{\link{calcSigSqAI2006}}.
 }
-

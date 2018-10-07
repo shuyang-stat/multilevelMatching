@@ -52,4 +52,3 @@ Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
 \code{\link{multilevelGPSMatch}};
   \code{\link{multilevelGPSStratification}}
 }
-

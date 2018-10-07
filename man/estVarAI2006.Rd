@@ -4,8 +4,8 @@
 \alias{estVarAI2006}
 \title{Computes Estimated Asymptotic Variance of matching estimators.}
 \usage{
-estVarAI2006(N, W, M_matches, trt_level_1, trt_level_2, Yiw1, Yiw2, tau, Kiw,
-  sigsqiw)
+estVarAI2006(N, W, M_matches, trt_level_1, trt_level_2, Yiw1, Yiw2, tau,
+  Kiw, sigsqiw)
 }
 \arguments{
 \item{N}{A scalar for the number of rows in the data}
@@ -45,4 +45,3 @@ Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   matching estimators for average treatment effects. econometrica, 74(1),
   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 }
-

@@ -4,8 +4,8 @@
 \alias{estimateTau}
 \title{Calculate the estimates of population-level estimands (e.g., \code{tau}).}
 \usage{
-estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches, Yiw,
-  Kiw, sigsqiw, W, ...)
+estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches,
+  Yiw, Kiw, sigsqiw, W, ...)
 }
 \arguments{
 \item{trt_levels}{A vector of the unique levels of treatment W}
@@ -56,4 +56,3 @@ Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
 \seealso{
 \code{\link{multiMatch}}
 }
-

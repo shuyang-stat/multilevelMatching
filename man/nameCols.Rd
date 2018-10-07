@@ -13,4 +13,3 @@ treatment levels}
 \description{
 Useful when using Abadie and Imbens (2016) variance estimator
 }
-

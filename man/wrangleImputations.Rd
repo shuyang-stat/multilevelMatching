@@ -4,7 +4,8 @@
 \alias{wrangleImputations}
 \title{Calculate imputed potential outcomes and other estimation components}
 \usage{
-wrangleImputations(match_output, M_matches, Y, which_same_trt, which_diff_trt)
+wrangleImputations(match_output, M_matches, Y, which_same_trt,
+  which_diff_trt)
 }
 \arguments{
 \item{match_output}{The output from \code{\link[Matching]{Match}} when
@@ -36,4 +37,3 @@ A list, many of which are necessary arguments for
 This is a plumbing function, called from \code{\link{matchImputePO}}; they
 output the same list of information.
 }
-

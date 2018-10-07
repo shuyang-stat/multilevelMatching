@@ -28,4 +28,3 @@ simulated data is purely for illustration, and any combination of the
 covariates can be assumed to sufficient to meet conditional exchangeability.
 }
 \keyword{datasets}
-

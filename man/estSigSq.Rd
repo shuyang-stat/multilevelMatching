@@ -55,4 +55,3 @@ Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   score. Econometrica, 84(2), 781-807.
   \url{https://doi.org/10.3982/ECTA11293}
 }
-

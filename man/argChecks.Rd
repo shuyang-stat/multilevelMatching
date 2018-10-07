@@ -21,4 +21,3 @@ propensity scores.}
 \description{
 Defensive programming for data re-ordering
 }
-

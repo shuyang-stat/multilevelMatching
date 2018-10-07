@@ -25,7 +25,8 @@ Suggests:
     rmarkdown,
     testthat,
     rprojroot
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.0
 LazyData: TRUE
 URL: https://github.com/shuyang1987/multilevelMatching
 BugReports: https://github.com/shuyang1987/multilevelMatching/issues
+Encoding: UTF-8

@@ -90,4 +90,3 @@ Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
 \seealso{
 \code{\link{multilevelMatchX}}; \code{\link{multilevelGPSMatch}}
 }
-

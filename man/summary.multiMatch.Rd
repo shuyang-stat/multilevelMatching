@@ -17,4 +17,3 @@ Prints a summary of a multiMatch object
 \author{
 Brian G. Barkley
 }
-

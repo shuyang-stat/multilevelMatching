@@ -14,4 +14,3 @@
 \description{
 Prints a summary of the estimates from a multiMatch object
 }
-

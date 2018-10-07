@@ -4,8 +4,8 @@
 \alias{matchAllTreatments}
 \title{Estimate Imputed Outcomes and AI06 Variance Components}
 \usage{
-matchAllTreatments(N, X, W, Y, num_trts, trt_levels, N_per_trt, unit_ids_sorted,
-  M_matches, J_var_matches, match_on, ...)
+matchAllTreatments(N, X, W, Y, num_trts, trt_levels, N_per_trt,
+  unit_ids_sorted, M_matches, J_var_matches, match_on, ...)
 }
 \arguments{
 \item{N}{The total number of units}
@@ -73,4 +73,3 @@ Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
   score. Econometrica, 84(2), 781-807.
   \url{https://doi.org/10.3982/ECTA11293}
 }
-
