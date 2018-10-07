@@ -1,0 +1,340 @@
+---
+title: "multilevelMatching-v1.0.0"
+author: "Shu Yang and Brian G. Barkley"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{multilevelMatching-v1.0.0}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Description
+
+Main Paper: [Yang et al. (2016)](https://doi.org/10.1111/biom.12505):
+
+  - Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z. (2016) Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments. *Biometrics*, 72, 1055-1065. https://doi.org/10.1111/biom.12505
+
+Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
+
+## Matching with 3 or more levels of treatment
+
+In setting with where 3 or more levels of treatment (i.e., multilevel treatment), our goal is to estimate pairwise average treatment effects from a common population using matching methods.
+
+This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A. 
+
+We focus on estimating the average values of potential outcomes for each treatment level by matching methods, which facilitate estimation of pairwise average treatment effects for a common population.
+
+The estimation methods include generalized propensity score (GPS) matching, GPS stratification, matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels. 
+
+In order to ensure sufficient overlap, [Crump et al. (2009)](https://doi.org/10.1093/biomet/asn055)'s trimming method can be extended to this setting as well. 
+
+
+
+# Tutorial
+
+
+- To estimate by stratifying on the estimating propensity score, use `multilevelGPSStratification()`.
+- The functions implementing matching methods are shown here:
+
+| S3 Class? | |Covariate Matching Function | Propensity Score Matching Function |
+|----|----|------|-----|
+| no  | | `multilevelMatchX()` | `multilevelGPSMatch()` |
+| Yes! | | `multiMatch()` | `multiMatch()` |
+
+As of version 1.0.0, the combination of `multilevelMatchX()` and `multilevelGPSMatch()` can carry out the same estimation as `multiMatch()`. The `multiMatch()` function was added to standardize some of the inputs, include more tests and checks, and provides more verbose output with S3 class `"multiMatch"`. We receommend using `multiMatch()` for these and other reasons.
+
+
+## Example dataset
+
+We will use the dataset provided with this package
+
+```{r}
+library(multilevelMatching)
+simulated_data <- multilevelMatching::simulated_data
+knitr::kable(head(simulated_data), digits = 2)
+```
+
+
+```{r boxplot, fig.height = 4, fig.width= 5, fig.align="center"}
+boxplot(
+  outcome ~ treatment, 
+  data = simulated_data,
+  xlab = "treatment level",
+  ylab = "outcome",
+  main = "Outcomes by treatment level"
+)
+```
+
+## Restructure the data
+
+As of version 1.0.0, this package does not support the use of formulas-and-dataframes for specifying the variables. Note that using a factor variable for the treatment vector should be avoided, also. We restructure the data in this manner:
+
+```{r}
+outcome <- simulated_data$outcome
+treatment <- simulated_data$treatment
+covar_matrix <- as.matrix(
+  simulated_data[ ,names(simulated_data) %in% paste0("covar", 1:6)]
+)
+```
+
+### Using identifiers for the observations
+
+Naming the rows of the covariate matrix, or the entries of the outcome or treatment variables, with ID numbers for the observations provides nice functionality with inspecting output from `multiMatch()`. Here we create some unique ID's:
+
+```{r}
+identifying_names <- paste0(
+  rep(letters[1:25],each = 12), 
+  rep(letters[1:25], 12)
+)
+(
+  length(identifying_names) == 
+    length(unique(identifying_names)) 
+) && 
+  (
+    length(identifying_names) == 
+      NROW(simulated_data)
+  )
+
+
+```
+Any of the following can be done:
+
+```{r}
+# names(outcome) <- identifying_names
+names(treatment) <- identifying_names
+# rownames(covar_matrix) <- identifying_names
+```
+
+
+## Matching on covariates
+
+We present both manners of performing this matching
+
+### Using `multilevelMatchX()`
+
+```{r}
+set.seed(123)
+fit1 <- multilevelMatchX(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix
+)
+```
+which provides the following output:
+```{r}
+fit1
+```
+
+### Using `multiMatch()`
+
+For this example, `multiMatch()` requires only one additional argument, which is `match_on = "covariates".
+```{r}
+set.seed(123)
+fit2 <- multiMatch(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  match_on = "covariates"
+)
+```
+which is an S3 object of class:
+```{r}
+class(fit2)
+```
+
+The `print.multiMatch()` method looks similar to before:
+```{r}
+class(fit2)
+```
+but there is a lot more information available now:
+```{r}
+summary(fit2)
+```
+and more output that may be useful for inspecting the method:
+```{r}
+names(fit2)
+```
+For example, we can inspect the imputed potential outcomes of each observation:
+```{r}
+knitr::kable(head(fit2$impute_mat_sorted), digits = 2)
+```
+
+
+## Matching on the Estimated Generalized Propensity Score (GPS)
+
+
+### Using `multilevelGPSMatch()`
+
+Propensity scores can be estimated with either of the following options
+
+  - `GPSM="multinomiallogisticReg"` for multinomial logistic regression from `nnet::multinom()`
+  - `GPSM="ordinallogisticReg"` for ordinal logistic regression from `MASS::polr()`
+  - Or, estimated propensity scores can be supplied via the `X` argument when `GPSM="existing"`
+
+
+In order to ensure sufficient overlap, [Crump et al. (2009)](https://doi.org/10.1093/biomet/asn055)'s trimming method can be extended to this setting as well. 
+
+```{r}
+# GPSM <- "multinomiallogisticReg" 
+GPSM <- "ordinallogisticReg"
+# GPSM <- "existing" 
+
+set.seed(123)
+fit1 <- multilevelGPSMatch(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  GPSM = GPSM,
+  Trimming = FALSE
+)
+
+rbind(Estimate = fit1$tauestimate, Variance = fit1$varestimate)
+```
+
+### Using `multiMatch()`
+
+Propensity scores can be estimated with either of the following options
+  - `match_on="multinom"` for multinomial logistic regression from `nnet::multinom()`
+  - `match_on="polr"` for ordinal logistic regression from `MASS::polr()`
+  - Or, estimated propensity scores can be supplied via the `X` argument when `match_on="existing"`
+  
+### Example: ordinal logistic regression
+  
+```{r}
+set.seed(123)
+fit2 <- multiMatch(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  match_on = "polr",
+  trimming = FALSE
+)
+
+summary(fit2)
+```
+
+### Example: multiple matches per observation
+
+Users can also specify the number of times each unit is matched to for the estimation (`M_matches`) and/or variance (`J_var_matches`) estimation procedures, as per [Abadie and Imbens (2006)](https://doi.org/10.1111/j.1468-0262.2006.00655.x). These are illustrated here:
+
+
+```{r}
+set.seed(123)
+fit3a <- multiMatch(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  match_on = "multinom",
+  J_var_matches = 2,
+  trimming = TRUE
+)
+
+set.seed(123)
+fit3b <- multiMatch(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  match_on = "multinom",
+  M_matches = 3,
+  J_var_matches = 2,
+  trimming = TRUE
+)
+```
+
+Note that the point estimates change between runs
+```{r}
+fit3a
+```
+
+as well as the variance estimates:
+```{r}
+fit3b
+```
+
+The column labeled `VarianceAI2016` provides the estimated variance per the method described in [Abadie & Imbens (2016)](https://doi.org/10.3982/ECTA11293) for when using multinomial logistic regression for GPS estimation.
+
+## Matching on User-supplied ("existing") GPS
+
+It's possible to pass in a set of generalized propensity scores to the `X` argument and match on these values. We demonstrate with some simulated GPS values:
+
+```{r}
+set.seed(123)
+pr_w1 <- sample(x=c(0.3,0.5), replace=TRUE, size=length(treatment))
+pr_w2 <- (1-pr_w1)/3
+pr_w3 <- 1-(pr_w1+pr_w2)
+existing_GPS_matrix <- cbind(pr_w1, pr_w2,pr_w3)
+```
+
+Note that each row of GPS values must add to one
+```{r}
+#the following checks are also carried out under the hood
+nrow(existing_GPS_matrix)==length(treatment)
+ncol(existing_GPS_matrix)==length(unique(treatment))
+all(rowSums(existing_GPS_matrix)==1)
+```
+
+Then, estimation can be carried out:
+```{r}
+# set.seed(123)
+# fit1 <- multilevelGPSMatch(
+#   Y = outcome,
+#   W = treatment,
+#   X = existing_GPS_matrix,
+#   Trimming = 0,
+#   GPSM = "existing"
+# )
+set.seed(123)
+fit2 <- multiMatch(
+  Y = outcome,
+  W = treatment,
+  X = existing_GPS_matrix,
+  trimming = 0,
+  match_on = "existing"
+)
+fit2
+```
+
+
+## Stratification on the GPS
+
+The `multilevelGPSStratification()` function is used to estimate via GPS stratification. There are some additional arguments for using the stratification method:
+
+```{r}
+NS <- 5 ## The number of strata to divide into
+linearp <- FALSE ## Use subclassification, not linear prediction
+nboot <- 10 ## Number of bootstrap samples for variance estimation
+```
+
+```{r}
+set.seed(123)
+multilevelGPSStratification(
+  Y = outcome,
+  W = treatment,
+  X = covar_matrix,
+  GPSM = "multinomiallogisticReg",
+  NS = NS,
+  linearp = linearp,
+  nboot = nboot
+)
+```
+
+Note that ordinal logistic regression can also be used, or "existing" GPS values can be specified, as in the examples above.
+
+# News
+
+See [the News site](https://shuyang1987.github.io/multilevelMatching/news/index.html) for the changelog
+
+## A note on `multiMatch()`
+
+The `multiMatch()` function may return slightly different estimates than the other matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns.
+
