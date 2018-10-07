@@ -12,9 +12,9 @@
 #'   match_on="existing", then X must be a vector (1 x n) of user-specified
 #'   propensity scores.
 #' @param M_matches Number of matches per unit for imputing potential outcomes,
-#'   as in Abadie and Imbens (2006). Currently can only support M=1.
+#'   as in Abadie and Imbens (2006).
 #' @param J_var_matches Number of matches when estimating sigmasq(X,W) as in
-#'   Abadie and Imbens (2006). Currently can only support J=1.
+#'   Abadie and Imbens (2006).
 #' @param trimming an indicator of whether trimming the sample to ensure overlap
 #' @param match_on "multinom", "polr", "existing", or "covariates",
 #' @param model_options A list of the options to pass to propensity model.

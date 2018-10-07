@@ -14,7 +14,7 @@ estVarAI2006(N, W, M_matches, trt_level_1, trt_level_2, Yiw1, Yiw2, tau,
 treatment groups}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens (2006). Currently can only support M=1.}
+as in Abadie and Imbens (2006).}
 
 \item{trt_level_1}{Unique treatment level 1; aka \eqn{W_1} in \eqn{\tau(W_1,
 W_2)}}

@@ -30,10 +30,10 @@ of units observed to have each treatment level}
 \item{unit_ids_sorted}{The unit identifiers in correct, sorted order.}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens (2006). Currently can only support M=1.}
+as in Abadie and Imbens (2006).}
 
 \item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006). Currently can only support J=1.}
+Abadie and Imbens (2006).}
 
 \item{match_on}{"multinom", "polr", "existing", or "covariates",}
 

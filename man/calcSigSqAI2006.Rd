@@ -11,7 +11,7 @@ calcSigSqAI2006(match_output, J_var_matches)
 same-treatment matching, from \code{\link{estSigSq}}.}
 
 \item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006). Currently can only support J=1.}
+Abadie and Imbens (2006).}
 }
 \value{
 A vector of the \code{sigsqiw} values for those individuals observed

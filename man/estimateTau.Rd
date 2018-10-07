@@ -19,7 +19,7 @@ estimateTau(trt_levels, mean_Yiw, num_trts, num_contrasts, N, M_matches,
 \item{N}{A scalar for the number of rows in the data}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
-as in Abadie and Imbens (2006). Currently can only support M=1.}
+as in Abadie and Imbens (2006).}
 
 \item{Yiw}{A matrix of all imputed potential outcomes}
 
