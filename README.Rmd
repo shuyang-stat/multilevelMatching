@@ -1,5 +1,7 @@
 ---
-  output: github_document
+output:
+  github_document:
+    html_preview: true
 ---
 
 <!-- rmarkdown v1 -->
@@ -125,10 +127,10 @@ knitr::kable(head(simulated_data), digits = 2)
 ```
 
 
-```{r boxplot, fig.path="man/figures/"}
-plot(
-  x = simulated_data$treatment, 
-  y = simulated_data$outcome, 
+```{r boxplot}
+boxplot(
+  outcome ~ treatment, 
+  data = simulated_data,
   xlab = "treatment level",
   ylab = "outcome",
   main = "Outcomes by treatment level"

@@ -1,5 +1,7 @@
 ---
-  output: github_document
+output:
+  github_document:
+    html_preview: true
 ---
 
 <!-- rmarkdown v1 -->
@@ -192,28 +194,28 @@ knitr::kable(head(simulated_data), digits = 2)
 
 
 
-| outcome|treatment | covar1| covar2| covar3| covar4| covar5| covar6|
-|-------:|:---------|------:|------:|------:|------:|------:|------:|
-|   -5.13|1         |  -0.87|   0.24|   0.23|  -2.89|   0.21|      0|
-|   -3.03|1         |   0.27|  -0.35|  -0.40|  -2.21|   0.07|      1|
-|    3.05|1         |   1.42|   1.32|  -1.20|   0.06|   1.26|      1|
-|   -6.09|1         |  -1.39|  -1.07|   1.12|  -2.36|   0.00|      0|
-|   -2.46|1         |  -1.15|   0.95|   0.51|  -2.68|   0.07|      0|
-|   -0.32|1         |   0.27|   0.42|  -0.45|   2.43|   0.60|      0|
+| outcome| treatment| covar1| covar2| covar3| covar4| covar5| covar6|
+|-------:|---------:|------:|------:|------:|------:|------:|------:|
+|   -5.13|         1|  -0.87|   0.24|   0.23|  -2.89|   0.21|      0|
+|   -3.03|         1|   0.27|  -0.35|  -0.40|  -2.21|   0.07|      1|
+|    3.05|         1|   1.42|   1.32|  -1.20|   0.06|   1.26|      1|
+|   -6.09|         1|  -1.39|  -1.07|   1.12|  -2.36|   0.00|      0|
+|   -2.46|         1|  -1.15|   0.95|   0.51|  -2.68|   0.07|      0|
+|   -0.32|         1|   0.27|   0.42|  -0.45|   2.43|   0.60|      0|
 
 
 
 ```r
-plot(
-  x = simulated_data$treatment, 
-  y = simulated_data$outcome, 
+boxplot(
+  outcome ~ treatment, 
+  data = simulated_data,
   xlab = "treatment level",
   ylab = "outcome",
   main = "Outcomes by treatment level"
 )
 ```
 
-![plot of chunk boxplot](man/figures/boxplot-1.png)
+![plot of chunk boxplot](man/figures/README-boxplot-1.png)
 
 
 ```r
