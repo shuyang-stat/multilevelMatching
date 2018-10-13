@@ -18,6 +18,14 @@ output: github_document
 
 ### Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments 
 
+Installation:
+
+
+```r
+devtools::install_github("shuyang1987/multilevelMatching")
+```
+
+
 ### Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
 
 

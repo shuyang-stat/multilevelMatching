@@ -25,6 +25,13 @@ knitr::opts_chunk$set(
 
 ### Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments 
 
+Installation:
+
+```{r, eval = FALSE}
+devtools::install_github("shuyang1987/multilevelMatching")
+```
+
+
 ### Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
 
 
