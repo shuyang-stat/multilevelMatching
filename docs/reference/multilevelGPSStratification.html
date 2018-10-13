@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">1.0.0</span>
       </span>
     </div>
 
@@ -192,70 +192,24 @@ required in the function <code>multilevelGPSStratification</code>)</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-  <span class='fu'>set.seed</span>(<span class='fl'>111</span>)
-  <span class='no'>n</span>    <span class='kw'>&lt;-</span> <span class='fl'>5000</span>*<span class='fl'>6</span>
-  <span class='co'># X1-X3 3 MVN var 2, 1, 1, covars 1, -1, -.5</span>
-  <span class='no'>vars</span>   <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>1</span>)
-  <span class='no'>covars</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>1</span>,-<span class='fl'>1</span>,-<span class='fl'>.5</span>)
-  <span class='no'>mu</span>     <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
-  <span class='no'>tau</span>    <span class='kw'>&lt;-</span> <span class='fl'>1</span>
-  <span class='no'>Sigma</span> <span class='kw'>&lt;-</span> <span class='fu'>diag</span>(<span class='no'>vars</span>)
-  <span class='no'>Sigma</span>[<span class='fl'>2</span>,<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='no'>Sigma</span>[<span class='fl'>1</span>,<span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='no'>covars</span>[<span class='fl'>1</span>]
-  <span class='no'>Sigma</span>[<span class='fl'>3</span>,<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='no'>Sigma</span>[<span class='fl'>1</span>,<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='no'>covars</span>[<span class='fl'>2</span>]
-  <span class='no'>Sigma</span>[<span class='fl'>3</span>,<span class='fl'>2</span>] <span class='kw'>&lt;-</span> <span class='no'>Sigma</span>[<span class='fl'>2</span>,<span class='fl'>3</span>] <span class='kw'>&lt;-</span> <span class='no'>covars</span>[<span class='fl'>3</span>]
-  <span class='no'>trt1</span> <span class='kw'>&lt;-</span> <span class='fl'>100</span>; <span class='no'>trt1</span></div><div class='output co'>#&gt; [1] 100</div><div class='input'>  <span class='no'>trt2</span> <span class='kw'>&lt;-</span> <span class='fl'>100</span>; <span class='no'>trt2</span></div><div class='output co'>#&gt; [1] 100</div><div class='input'>  <span class='no'>trt3</span> <span class='kw'>&lt;-</span> <span class='fl'>100</span>; <span class='no'>trt3</span></div><div class='output co'>#&gt; [1] 100</div><div class='input'>  <span class='co'># draw Xs</span>
-  <span class='no'>X13</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>MASS</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/MASS/topics/mvrnorm'>mvrnorm</a></span>(<span class='no'>n</span>,<span class='kw'>mu</span><span class='kw'>=</span><span class='no'>mu</span>,<span class='kw'>Sigma</span><span class='kw'>=</span><span class='no'>Sigma</span>, <span class='kw'>empirical</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-  <span class='no'>X1</span> <span class='kw'>&lt;-</span> <span class='no'>X13</span>[,<span class='fl'>1</span>]
-  <span class='no'>X2</span> <span class='kw'>&lt;-</span> <span class='no'>X13</span>[,<span class='fl'>2</span>]
-  <span class='no'>X3</span> <span class='kw'>&lt;-</span> <span class='no'>X13</span>[,<span class='fl'>3</span>]
-  <span class='no'>X4</span> <span class='kw'>&lt;-</span> <span class='fu'>runif</span>(<span class='no'>n</span>,-<span class='fl'>3</span>,<span class='fl'>3</span>)
-  <span class='no'>X5</span> <span class='kw'>&lt;-</span> <span class='fu'>rchisq</span>(<span class='no'>n</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='fl'>1</span>)
-  <span class='no'>X6</span> <span class='kw'>&lt;-</span> <span class='fu'>rbinom</span>(<span class='no'>n</span>,<span class='kw'>size</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>prob</span><span class='kw'>=</span><span class='fl'>.5</span>)
-
-  <span class='no'>xb2</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>*(<span class='no'>X1</span>^<span class='fl'>2</span>+<span class='no'>X2</span>+<span class='no'>X3</span>+<span class='no'>X4</span>+<span class='no'>X5</span>+<span class='no'>X6</span>)
-  <span class='no'>xb3</span> <span class='kw'>&lt;-</span> <span class='fl'>0.1</span>*(<span class='no'>X1</span>+<span class='no'>X2</span>^<span class='fl'>2</span>+<span class='no'>X3</span>^<span class='fl'>2</span>+<span class='no'>X4</span>+<span class='no'>X5</span>+<span class='no'>X6</span>)
-  <span class='no'>exb2</span><span class='kw'>&lt;-</span><span class='fu'>exp</span>(<span class='no'>xb2</span>)
-  <span class='no'>exb3</span><span class='kw'>&lt;-</span><span class='fu'>exp</span>(<span class='no'>xb3</span>)
-  <span class='no'>pi1</span><span class='kw'>&lt;-</span><span class='fl'>1</span>/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>xb2</span>)+<span class='fu'>exp</span>(<span class='no'>xb3</span>))
-  <span class='no'>pi2</span><span class='kw'>&lt;-</span><span class='fu'>exp</span>(<span class='no'>xb2</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>xb2</span>)+<span class='fu'>exp</span>(<span class='no'>xb3</span>))
-  <span class='no'>pi3</span><span class='kw'>&lt;-</span><span class='fu'>exp</span>(<span class='no'>xb3</span>)/(<span class='fl'>1</span>+<span class='fu'>exp</span>(<span class='no'>xb2</span>)+<span class='fu'>exp</span>(<span class='no'>xb3</span>))
-  <span class='no'>pi</span><span class='kw'>&lt;-</span><span class='fu'>cbind</span>(<span class='no'>pi1</span>,<span class='no'>pi2</span>,<span class='no'>pi3</span>)
-  <span class='fu'>apply</span>(<span class='no'>pi</span>,<span class='fl'>2</span>,<span class='no'>mean</span>)</div><div class='output co'>#&gt;       pi1       pi2       pi3 
-#&gt; 0.2637337 0.3681104 0.3681559 </div><div class='input'>
-  <span class='no'>W</span><span class='kw'>&lt;-</span><span class='fu'>matrix</span>(<span class='fl'>NA</span>,<span class='no'>n</span>,<span class='fl'>4</span>)
-  <span class='fu'>colnames</span>(<span class='no'>W</span>)   <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"W1"</span>,<span class='st'>"W2"</span>,<span class='st'>"W3"</span>,<span class='st'>"W"</span>)
-  <span class='kw'>for</span>(<span class='no'>kk</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='no'>n</span>){
-    <span class='no'>W</span>[<span class='no'>kk</span>,<span class='fl'>1</span>:<span class='fl'>3</span>]<span class='kw'>&lt;-</span><span class='kw pkg'>stats</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/stats/topics/Multinom'>rmultinom</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='kw'>prob</span> <span class='kw'>=</span> <span class='no'>pi</span>[<span class='no'>kk</span>,])
-  }
-
-  <span class='no'>sim.dat</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='no'>W</span>,<span class='no'>X1</span>,<span class='no'>X2</span>,<span class='no'>X3</span>,<span class='no'>X4</span>,<span class='no'>X5</span>,<span class='no'>X6</span>)
-  <span class='no'>trt1.keep</span> <span class='kw'>&lt;-</span> <span class='fu'>sample</span>(<span class='fu'>which</span>(<span class='no'>sim.dat</span>$<span class='no'>W1</span><span class='kw'>==</span><span class='fl'>1</span>),<span class='no'>trt1</span>,<span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-  <span class='no'>trt2.keep</span> <span class='kw'>&lt;-</span> <span class='fu'>sample</span>(<span class='fu'>which</span>(<span class='no'>sim.dat</span>$<span class='no'>W2</span><span class='kw'>==</span><span class='fl'>1</span>),<span class='no'>trt2</span>,<span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-  <span class='no'>trt3.keep</span> <span class='kw'>&lt;-</span> <span class='fu'>sample</span>(<span class='fu'>which</span>(<span class='no'>sim.dat</span>$<span class='no'>W3</span><span class='kw'>==</span><span class='fl'>1</span>),<span class='no'>trt3</span>,<span class='kw'>replace</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-  <span class='no'>sim.dat</span> <span class='kw'>&lt;-</span> <span class='no'>sim.dat</span>[<span class='fu'>c</span>(<span class='no'>trt1.keep</span>,<span class='no'>trt2.keep</span>,<span class='no'>trt3.keep</span>),]
-  <span class='no'>sim.dat</span>[,<span class='st'>"W"</span>]<span class='kw'>&lt;-</span><span class='no'>sim.dat</span>[,<span class='st'>"W1"</span>]+<span class='fl'>2</span>*<span class='no'>sim.dat</span>[,<span class='st'>"W2"</span>]+<span class='fl'>3</span>*<span class='no'>sim.dat</span>[,<span class='st'>"W3"</span>]
-  <span class='no'>sim.dat</span>[,<span class='st'>"W"</span>]<span class='kw'>&lt;-</span><span class='fu'>as.factor</span>(<span class='no'>sim.dat</span>[,<span class='st'>"W"</span>])
-  <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>sim.dat</span>[,<span class='st'>"W"</span>]
-  <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'>as.matrix</span>(<span class='no'>sim.dat</span>[,<span class='fu'>names</span>(<span class='no'>sim.dat</span>)[-<span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>4</span>)]])
-  <span class='no'>X1</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X1"</span>]; <span class='no'>X2</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X2"</span>]; <span class='no'>X3</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X3"</span>]; <span class='no'>X4</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X4"</span>]; <span class='no'>X5</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X5"</span>];<span class='no'>X6</span> <span class='kw'>&lt;-</span> <span class='no'>X</span>[,<span class='st'>"X6"</span>]
-
-  <span class='co'># outcome: treatment effect is zero</span>
-  <span class='no'>u</span>  <span class='kw'>&lt;-</span> <span class='fu'>rnorm</span>(<span class='fu'>nrow</span>(<span class='no'>X</span>))
-  <span class='co'># ouctome 1 (linear)</span>
-  <span class='no'>Y</span> <span class='kw'>&lt;-</span>  (<span class='no'>W</span><span class='kw'>==</span><span class='fl'>1</span>)*(  <span class='no'>X1</span> +   <span class='no'>X2</span> +   <span class='no'>X3</span> +   <span class='no'>X4</span> +    <span class='no'>X5</span>-<span class='fl'>1</span> +     <span class='no'>X6</span>-<span class='fl'>0.5</span>)+
-    (<span class='no'>W</span><span class='kw'>==</span><span class='fl'>2</span>)*(<span class='fl'>2</span>*<span class='no'>X1</span> + <span class='fl'>3</span>*<span class='no'>X2</span> +   <span class='no'>X3</span> + <span class='fl'>2</span>*<span class='no'>X4</span> + <span class='fl'>2</span>*(<span class='no'>X5</span>-<span class='fl'>1</span>) + <span class='fl'>2</span>*(<span class='no'>X6</span>-<span class='fl'>0.5</span>))+
-    (<span class='no'>W</span><span class='kw'>==</span><span class='fl'>3</span>)*(<span class='fl'>3</span>*<span class='no'>X1</span> +   <span class='no'>X2</span> + <span class='fl'>2</span>*<span class='no'>X3</span> -   <span class='no'>X4</span> -   (<span class='no'>X5</span>-<span class='fl'>1</span>) -   (<span class='no'>X6</span>-<span class='fl'>0.5</span>))+<span class='no'>u</span>
-
-  <span class='no'>match1</span><span class='kw'>&lt;-</span><span class='fu'><a href='multilevelMatchX.html'>multilevelMatchX</a></span>(<span class='no'>Y</span>,<span class='no'>W</span>,<span class='no'>X</span>)
-  <span class='no'>match2</span><span class='kw'>&lt;-</span><span class='fu'><a href='multilevelGPSMatch.html'>multilevelGPSMatch</a></span>(<span class='no'>Y</span>,<span class='no'>W</span>,<span class='no'>X</span>,<span class='kw'>Trimming</span><span class='kw'>=</span><span class='fl'>FALSE</span>,<span class='kw'>GPSM</span><span class='kw'>=</span><span class='st'>"multinomiallogisticReg"</span>)
-  <span class='no'>match3</span><span class='kw'>&lt;-</span><span class='fu'><a href='multilevelGPSMatch.html'>multilevelGPSMatch</a></span>(<span class='no'>Y</span>,<span class='no'>W</span>,<span class='no'>X</span>,<span class='kw'>Trimming</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>GPSM</span><span class='kw'>=</span><span class='st'>"multinomiallogisticReg"</span>)
-  <span class='no'>match4</span><span class='kw'>&lt;-</span><span class='fu'>multilevelGPSStratification</span>(<span class='no'>Y</span>,<span class='no'>W</span>,<span class='no'>X</span>,<span class='kw'>NS</span><span class='kw'>=</span><span class='fl'>10</span>,<span class='kw'>GPSM</span><span class='kw'>=</span><span class='st'>"multinomiallogisticReg"</span>,<span class='kw'>linearp</span><span class='kw'>=</span><span class='fl'>0</span>,<span class='kw'>nboot</span><span class='kw'>=</span><span class='fl'>50</span>)
-
-  <span class='fu'>c</span>(<span class='no'>match1</span>$<span class='no'>tauestimate</span>,<span class='no'>match1</span>$<span class='no'>varestimate</span>)</div><div class='output co'>#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#&gt;  0.07927361  0.86264929  0.78337567  0.17921859  0.16347538  0.32216157 </div><div class='input'>  <span class='fu'>c</span>(<span class='no'>match2</span>$<span class='no'>tauestimate</span>,<span class='no'>match2</span>$<span class='no'>varestimate</span>)</div><div class='output co'>#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#&gt;  -0.7458499   0.5605192   1.3063691   0.6974908   0.4856579   0.7089620 </div><div class='input'>  <span class='fu'>c</span>(<span class='no'>match3</span>$<span class='no'>tauestimate</span>,<span class='no'>match3</span>$<span class='no'>varestimate</span>)</div><div class='output co'>#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#&gt;  -1.0564447   1.0011894   2.0576341   0.7924310   0.4457239   0.8310264 </div><div class='input'>  <span class='fu'>c</span>(<span class='no'>match4</span>$<span class='no'>tauestimate</span>,<span class='no'>match4</span>$<span class='no'>varestimate</span>)</div><div class='output co'>#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
-#&gt;  -0.3077249   0.4170466   0.7247715   0.3515320   0.2412386   0.4906146 </div><div class='input'>
+<span class='no'>simulated_data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>multilevelMatching</span><span class='kw ns'>::</span><span class='no'><a href='http://www.rdocumentation.org/packages/multilevelMatching/topics/simulated_data'>simulated_data</a></span>
+<span class='fu'>set.seed</span>(<span class='fl'>123</span>)
+<span class='fu'>multilevelGPSStratification</span>(
+  <span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>simulated_data</span>$<span class='no'>outcome</span> ,
+  <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>simulated_data</span>$<span class='no'>treatment</span>,
+  <span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>simulated_data</span>[ ,<span class='fu'>names</span>(<span class='no'>simulated_data</span>) <span class='kw'>%in%</span> <span class='fu'>paste0</span>(<span class='st'>"covar"</span>, <span class='fl'>1</span>:<span class='fl'>6</span>)],
+  <span class='kw'>GPSM</span> <span class='kw'>=</span> <span class='st'>"multinomiallogisticReg"</span>,
+  <span class='kw'>NS</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>linearp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nboot</span> <span class='kw'>=</span> <span class='fl'>10</span>
+)</div><div class='output co'>#&gt; $tauestimate
+#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+#&gt;  -0.3038424   0.4201045   0.7239469 
+#&gt; 
+#&gt; $varestimate
+#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) 
+#&gt;   0.1658798   0.2881434   0.6232490 
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

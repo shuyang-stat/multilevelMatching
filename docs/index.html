@@ -12,7 +12,12 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Propensity Score Matching and Subclassification in Observational Studies
     with Multi-level Treatments">
-<meta property="og:description" content="Matching and subclassfication with multilevel treatment.">
+<meta property="og:description" content='This package implements methods to estimate causal effects from 
+    observational studies when there are 2+ distinct levels of treatment 
+    (i.e., "multilevel treatment") using matching estimators, as introduced in
+    Yang et al. (2016) Biometrics. Matching on covariates, and matching or 
+    stratification on modeled propensity scores, are available. These methods
+    require matching on only a scalar function of generalized propensity scores.'>
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">1.0.0</span>
       </span>
     </div>
 
@@ -99,167 +104,46 @@
 <a href="#visit-the-package-website" class="anchor"></a>Visit the <a href="https://shuyang1987.github.io/multilevelMatching/">package website</a>
 </h3>
 </div>
-<div id="description" class="section level2">
-<h2 class="hasAnchor">
-<a href="#description" class="anchor"></a>Description</h2>
-<p>In setting with Multi-level treatments, our goal is to estimate pairwise average treatment effects from a common population using matching methods.</p>
-<p>This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A.</p>
-<p>We focus on estimating the average values of potential outcomes for each treatment level by matching methods, which facilitate estimation of pairwise average treatment effects for a common population.</p>
-<p>The estimation methods include generalized propensity score (GPS) matching, GPS stratification, matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels.</p>
-<p>In order to ensure sufficient overlap, <a href="https://doi.org/10.1093/biomet/asn055">Crump et al. (2009)</a>’s trimming method can be extended to this setting as well.</p>
-<div id="main-paper-yang-et-al--2016" class="section level3">
-<h3 class="hasAnchor">
-<a href="#main-paper-yang-et-al--2016" class="anchor"></a>Main Paper: Yang et al. (2016)</h3>
-<p>Yang, S., Imbens G. W., Cui, Z., Faries, D. E., &amp; Kadziola, Z. (2016) Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments. <em>Biometrics</em>, 72, 1055-1065. <a href="https://doi.org/10.1111/biom.12505" class="uri">https://doi.org/10.1111/biom.12505</a></p>
 </div>
-</div>
-<div id="installation-with-devtools" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation-with-devtools" class="anchor"></a>Installation with <code>devtools</code>:</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"shuyang1987/multilevelMatching"</span>)</code></pre></div>
-</div>
-<div id="use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use" class="anchor"></a>Use</h2>
-<p>The functions implementing matching methods are shown here:</p>
-<table class="table">
-<thead><tr class="header">
-<th>Version</th>
-<th></th>
-<th>Covariate Matching Function</th>
-<th>Propensity Score Matching Function</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td>
-<code>v0.1</code>+</td>
-<td></td>
-<td><code><a href="reference/multilevelMatchX.html">multilevelMatchX()</a></code></td>
-<td><code><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code></td>
-</tr>
-<tr class="even">
-<td>
-<code>v0.1.0.9000</code>+</td>
-<td></td>
-<td><code><a href="reference/multiMatch.html">multiMatch()</a></code></td>
-<td><code><a href="reference/multiMatch.html">multiMatch()</a></code></td>
-</tr>
-</tbody>
-</table>
-<p>Note that these functions have slightly different syntax. The <code><a href="reference/multiMatch.html">multiMatch()</a></code> function was added to standardize some of the inputs, has more verbose output with S3 class <code>"multiMatch"</code>.</p>
+<div id="description" class="section level1">
+<h1 class="hasAnchor">
+<a href="#description" class="anchor"></a>Description</h1>
+<p>This package implements methods to estimate causal effects from observational studies when there are 2+ distinct levels of treatment (i.e., “multilevel treatment”) using matching estimators, as introduced in <a href="https://doi.org/10.1111/biom.12505">Yang et al. (2016) Biometrics</a>. Matching on covariates, and matching or stratification on modeled propensity scores, are made available. These methods require matching on only a scalar function of generalized propensity scores. For more information, see the Extended Description below or the main paper:</p>
 <ul>
-<li>To estimate by stratifying on the estimating propensity score, use <code><a href="reference/multilevelGPSStratification.html">multilevelGPSStratification()</a></code>.</li>
+<li>Yang, S., Imbens G. W., Cui, Z., Faries, D. E., &amp; Kadziola, Z. (2016) Propensity Score Matching and Subclassification in Observational Studies with Multi-Level Treatments. <em>Biometrics</em>, 72, 1055-1065. <a href="https://doi.org/10.1111/biom.12505" class="uri">https://doi.org/10.1111/biom.12505</a>
+</li>
 </ul>
-<div id="toy-example" class="section level3">
-<h3 class="hasAnchor">
-<a href="#toy-example" class="anchor"></a>Toy example</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Outcome
-Y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">102</span>,<span class="dv">105</span>,<span class="dv">120</span>,<span class="dv">130</span>,<span class="dv">100</span>,<span class="dv">80</span>,<span class="dv">94</span>,<span class="dv">108</span>,<span class="dv">96</span>)
-## Treatment level
-W &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">2</span>)
-## Baseline Covariates
-X &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">5.5</span>,<span class="fl">10.6</span>,<span class="fl">3.1</span>,<span class="fl">8.7</span>,<span class="fl">5.1</span>,<span class="fl">10.2</span>,<span class="fl">9.8</span>,<span class="fl">4.4</span>,<span class="fl">4.9</span>)</code></pre></div>
-<div id="matching-on-covariates" class="section level4">
-<h4 class="hasAnchor">
-<a href="#matching-on-covariates" class="anchor"></a>Matching on covariates</h4>
+<p>Visit the <a href="https://shuyang1987.github.io/multilevelMatching/">package website</a></p>
+</div>
+<div id="estimators-available" class="section level1">
+<h1 class="hasAnchor">
+<a href="#estimators-available" class="anchor"></a>Estimators available</h1>
+<ul>
+<li>Matching on raw covariates: via <code><a href="reference/multiMatch.html">multiMatch()</a></code> and <code><a href="reference/multilevelMatchX.html">multilevelMatchX()</a></code>
+</li>
+<li>Matching on estimated propensity scores: via <code><a href="reference/multiMatch.html">multiMatch()</a></code> and <code><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code>
+</li>
+<li>using ordinal logistic regression</li>
+<li>using multinomial logistic regression
+<ul>
+<li>This method also provides two types of variance estimates</li>
+</ul>
+</li>
+<li>using user-provided propensity score values
+<ul>
+<li>This method does not provide variance estimates</li>
+</ul>
+</li>
+<li>Stratification on propensity scores: via <code><a href="reference/multilevelGPSStratification.html">multilevelGPSStratification()</a></code>
+</li>
+</ul>
+</div>
+<div id="tutorial" class="section level1">
+<h1 class="hasAnchor">
+<a href="#tutorial" class="anchor"></a>Tutorial</h1>
+<p>This is a brief tutorial; an extended tutorial is provided in the vignette for <a href="https://github.com/shuyang1987/multilevelMatching/releases/tag/v1.0.0">version 1.0.0</a>. We will use the dataset provided with this package</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(multilevelMatching)
-<span class="kw">set.seed</span>(<span class="dv">123</span>)
-
-<span class="kw"><a href="reference/multilevelMatchX.html">multilevelMatchX</a></span>(Y,W,X)
-<span class="co">#&gt; $tauestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;  -10.666667    6.666667   17.333333 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;    9.111111  615.580247  613.925926</span>
-
-<span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(Y,W,X, <span class="dt">match_on =</span> <span class="st">"covariates"</span>)
-<span class="co">#&gt; no unit IDs supplied; unit_ids will be assigned generically</span>
-<span class="co">#&gt; Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming</span>
-<span class="co">#&gt; = trimming, : It is recommended that X is a matrix. X will be coerced to a</span>
-<span class="co">#&gt; matrix.</span>
-<span class="co">#&gt; -------------- Causal estimates ---------------</span>
-<span class="co">#&gt;         Param Trt1 Trt2   Estimate   Variance</span>
-<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 -10.666667   9.111111</span>
-<span class="co">#&gt; 2 EY(3)-EY(1)    1    3   6.666667 615.580247</span>
-<span class="co">#&gt; 3 EY(3)-EY(2)    2    3  17.333333 613.925926</span>
-<span class="co">#&gt; --- Matching on 'covariates' with M=1, J=1 ---</span></code></pre></div>
-</div>
-<div id="matching-on-estimated-propensity-score" class="section level4">
-<h4 class="hasAnchor">
-<a href="#matching-on-estimated-propensity-score" class="anchor"></a>Matching on Estimated Propensity Score</h4>
-<p>Using multinomial logistic regression:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## v0.1
-<span class="kw"><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">0</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)
-<span class="co">#&gt; $tauestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;  -10.444444    6.666667   17.111111 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;    8.545953  616.913580  611.122085 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimateAI2012</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;    8.302024  411.456234  434.247037 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $analysisidx</span>
-<span class="co">#&gt; [1] 1 2 3 4 5 6 7 8 9</span>
-
-## v0.1.0.9000+
-<span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming =</span> <span class="dv">0</span>, <span class="dt">match_on =</span> <span class="st">"multinom"</span>)
-<span class="co">#&gt; no unit IDs supplied; unit_ids will be assigned generically</span>
-<span class="co">#&gt; Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming</span>
-<span class="co">#&gt; = trimming, : It is recommended that X is a matrix. X will be coerced to a</span>
-<span class="co">#&gt; matrix.</span>
-<span class="co">#&gt; -------------- Causal estimates ---------------</span>
-<span class="co">#&gt;         Param Trt1 Trt2   Estimate   Variance VarianceAI2016</span>
-<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024</span>
-<span class="co">#&gt; 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234</span>
-<span class="co">#&gt; 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037</span>
-<span class="co">#&gt; --- Matching on 'multinom' with M=1, J=1 ---</span></code></pre></div>
-<p>Using ordinal logistic regression:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## v0.1
-<span class="kw"><a href="reference/multilevelGPSMatch.html">multilevelGPSMatch</a></span>(Y,W,X,<span class="dt">Trimming=</span><span class="dv">1</span>,<span class="dt">GPSM=</span><span class="st">"multinomiallogisticReg"</span>)
-<span class="co">#&gt; $tauestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;      -9.375       5.875      15.250 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;    7.794922  582.654297  576.304688 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimateAI2012</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;    5.072057  383.848575  430.978089 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $analysisidx</span>
-<span class="co">#&gt; 1 2 4 5 6 7 8 9 </span>
-<span class="co">#&gt; 1 2 4 5 6 7 8 9</span>
-
-## v0.1.0.9000+
-<span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming =</span> <span class="dv">0</span>, <span class="dt">match_on =</span> <span class="st">"multinom"</span>)
-<span class="co">#&gt; no unit IDs supplied; unit_ids will be assigned generically</span>
-<span class="co">#&gt; Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming</span>
-<span class="co">#&gt; = trimming, : It is recommended that X is a matrix. X will be coerced to a</span>
-<span class="co">#&gt; matrix.</span>
-<span class="co">#&gt; -------------- Causal estimates ---------------</span>
-<span class="co">#&gt;         Param Trt1 Trt2   Estimate   Variance VarianceAI2016</span>
-<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024</span>
-<span class="co">#&gt; 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234</span>
-<span class="co">#&gt; 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037</span>
-<span class="co">#&gt; --- Matching on 'multinom' with M=1, J=1 ---</span></code></pre></div>
-</div>
-<div id="stratifying-on-estimated-propensity-score" class="section level4">
-<h4 class="hasAnchor">
-<a href="#stratifying-on-estimated-propensity-score" class="anchor"></a>Stratifying on Estimated Propensity Score</h4>
-<p>There are some additional arguments for using the stratification method</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">NS &lt;-<span class="st"> </span><span class="dv">5</span> ## The number of strata to divide into
-linearp &lt;-<span class="st"> </span><span class="ot">FALSE</span> ## Use subclassification, not linear prediction
-nboot &lt;-<span class="st"> </span><span class="dv">10</span> ## Number of bootstrap samples for variance estimation</code></pre></div>
-<p>We will use the dataset provided with this package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">"simulated_data"</span>, <span class="dt">package =</span> <span class="st">"multilevelMatching"</span>)
+simulated_data &lt;-<span class="st"> </span>multilevelMatching<span class="op">::</span>simulated_data
 knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw">head</span>(simulated_data), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
 <table class="table">
 <thead><tr class="header">
@@ -335,85 +219,83 @@ knitr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentati
 </tr>
 </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(
-  outcome <span class="op">~</span><span class="st"> </span>treatment, 
-  <span class="dt">data =</span> simulated_data,
-  <span class="dt">xlab =</span> <span class="st">"treatment level"</span>,
-  <span class="dt">ylab =</span> <span class="st">"outcome"</span>,
-  <span class="dt">main =</span> <span class="st">"Outcomes by treatment level"</span>
-)</code></pre></div>
-<p><img src="reference/figures/README-boxplot-1.png" width="700"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/multilevelGPSStratification.html">multilevelGPSStratification</a></span>(
-  <span class="dt">Y =</span> simulated_data<span class="op">$</span>outcome,
-  <span class="dt">W =</span> simulated_data<span class="op">$</span>treatment,
-  <span class="dt">X =</span> <span class="kw">as.matrix</span>(simulated_data[,<span class="op">-</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)]),
-  <span class="dt">GPSM =</span> <span class="st">"multinomiallogisticReg"</span>,
-  <span class="dt">NS =</span> NS,
-  <span class="dt">linearp =</span> linearp,
-  <span class="dt">nboot =</span> nboot
+<p>We restructure the dataframe slightly, and use identifying names for the observations:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">outcome &lt;-<span class="st"> </span>simulated_data<span class="op">$</span>outcome
+treatment &lt;-<span class="st"> </span>simulated_data<span class="op">$</span>treatment
+covar_matrix &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(
+  simulated_data[ ,<span class="kw">names</span>(simulated_data) <span class="op">%in%</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"covar"</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>)]
 )
-<span class="co">#&gt; $tauestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;  -0.2593016   0.2684324   0.5277340 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $varestimate</span>
-<span class="co">#&gt; EY(2)-EY(1) EY(3)-EY(1) EY(3)-EY(2) </span>
-<span class="co">#&gt;   0.0752562   0.1793161   0.2744478</span></code></pre></div>
+identifying_names &lt;-<span class="st"> </span><span class="kw">paste0</span>(
+  <span class="kw">rep</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>],<span class="dt">each =</span> <span class="dv">12</span>), <span class="kw">rep</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">25</span>], <span class="dv">12</span>)
+)
+<span class="kw">names</span>(treatment) &lt;-<span class="st"> </span>identifying_names</code></pre></div>
+<div id="matching-on-covariates" class="section level2">
+<h2 class="hasAnchor">
+<a href="#matching-on-covariates" class="anchor"></a>Matching on covariates</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
+fit &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(
+  <span class="dt">Y =</span> outcome,
+  <span class="dt">W =</span> treatment,
+  <span class="dt">X =</span> covar_matrix,
+  <span class="dt">match_on =</span> <span class="st">"covariates"</span>
+)
+
+fit
+<span class="co">#&gt; -------------- Causal estimates ---------------</span>
+<span class="co">#&gt;         Param Trt1 Trt2   Estimate  Variance</span>
+<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186</span>
+<span class="co">#&gt; 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754</span>
+<span class="co">#&gt; 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616</span>
+<span class="co">#&gt; --- Matching on 'covariates' with M=1, J=1 ---</span></code></pre></div>
+</div>
+<div id="matching-on-the-estimated-generalized-propensity-score-gps" class="section level2">
+<h2 class="hasAnchor">
+<a href="#matching-on-the-estimated-generalized-propensity-score-gps" class="anchor"></a>Matching on the Estimated Generalized Propensity Score (GPS)</h2>
+<p>Propensity scores can be estimated with either of the following options - <code>match_on="multinom"</code> for multinomial logistic regression from <code><a href="http://www.rdocumentation.org/packages/nnet/topics/multinom">nnet::multinom()</a></code> - <code>match_on="polr"</code> for ordinal logistic regression from <code><a href="http://www.rdocumentation.org/packages/MASS/topics/polr">MASS::polr()</a></code> - Or, estimated propensity scores can be supplied via the <code>X</code> argument when <code>match_on="existing"</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match_on &lt;-<span class="st"> "multinom"</span>
+<span class="co"># match_on &lt;- "polr" </span>
+
+<span class="kw">set.seed</span>(<span class="dv">123</span>)
+fit2 &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(
+  <span class="dt">Y =</span> outcome,
+  <span class="dt">W =</span> treatment,
+  <span class="dt">X =</span> covar_matrix,
+  <span class="dt">match_on =</span> match_on,
+  <span class="dt">trimming =</span> <span class="ot">FALSE</span>
+)
+
+fit
+<span class="co">#&gt; -------------- Causal estimates ---------------</span>
+<span class="co">#&gt;         Param Trt1 Trt2   Estimate  Variance</span>
+<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186</span>
+<span class="co">#&gt; 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754</span>
+<span class="co">#&gt; 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616</span>
+<span class="co">#&gt; --- Matching on 'covariates' with M=1, J=1 ---</span></code></pre></div>
+<p>Please see the vignette for an extended tutorial.</p>
 </div>
 </div>
+<div id="extended-description" class="section level1">
+<h1 class="hasAnchor">
+<a href="#extended-description" class="anchor"></a>Extended Description</h1>
+<div id="matching-with-3-or-more-levels-of-treatment" class="section level2">
+<h2 class="hasAnchor">
+<a href="#matching-with-3-or-more-levels-of-treatment" class="anchor"></a>Matching with 3 or more levels of treatment</h2>
+<p>In setting with where 3 or more levels of treatment (i.e., multilevel treatment), our goal is to estimate pairwise average treatment effects from a common population using matching methods.</p>
+<p>This goal can not be acheived by matching one treatment with another one at a time, since the pairwise matched samples may differ from the target population systematically, and thus they are not compatitable. One implication is that from this approach, it is possible that treatment A is better than treatment B, treatment B is better than treatment C, and treatment C is better than treatment A.</p>
+<p>We focus on estimating the average values of potential outcomes for each treatment level by matching methods, which facilitate estimation of pairwise average treatment effects for a common population.</p>
+<p>The estimation methods include generalized propensity score (GPS) matching, GPS stratification, matching with the full set of covariates, matching with the full set of GPS vector. Note that GPS matching and GPS straticication only require matching on a scalar function when estimating the average value of the potential outcome at a particular treatment level, which reduces the matching dimension to one, regardless of the number of covariates and the number of treatment levels.</p>
+<p>In order to ensure sufficient overlap, <a href="https://doi.org/10.1093/biomet/asn055">Crump et al. (2009)</a>’s trimming method can be extended to this setting as well.</p>
 </div>
 </div>
 <div id="news" class="section level1">
 <h1 class="hasAnchor">
 <a href="#news" class="anchor"></a>News</h1>
-<p>See <a href="https://shuyang1987.github.io/multilevelMatching/news/index.html">the News site</a> for the changelog (and updates since version 0.1).</p>
+<p>See <a href="https://shuyang1987.github.io/multilevelMatching/news/index.html">the News site</a> for the changelog.</p>
 <div id="a-note-on-multimatch" class="section level4">
 <h4 class="hasAnchor">
 <a href="#a-note-on-multimatch" class="anchor"></a>A note on <code><a href="reference/multiMatch.html">multiMatch()</a></code>
 </h4>
 <p>The <code><a href="reference/multiMatch.html">multiMatch()</a></code> function may return slightly different estimates than the original 2 matching functions in certain circumstances. We attempt to ensure that the functions implement are identical methods up to perhaps random number generation. Please file an issue if you have any questions or concerns.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fit &lt;-<span class="st"> </span><span class="kw"><a href="reference/multiMatch.html">multiMatch</a></span>(Y,W,X,<span class="dt">trimming =</span> <span class="dv">0</span>, <span class="dt">match_on =</span> <span class="st">"multinom"</span>)
-<span class="co">#&gt; no unit IDs supplied; unit_ids will be assigned generically</span>
-<span class="co">#&gt; Warning in prepareData(Y = Y, W = W, X = X, match_on = match_on, trimming</span>
-<span class="co">#&gt; = trimming, : It is recommended that X is a matrix. X will be coerced to a</span>
-<span class="co">#&gt; matrix.</span>
-
-<span class="kw">names</span>(fit)
-<span class="co">#&gt;  [1] "results"           "analysis_idx"      "mu"               </span>
-<span class="co">#&gt;  [4] "impute_mat"        "estimate_args"     "model"            </span>
-<span class="co">#&gt;  [7] "propensity_scores" "impute_match_data" "impute_mat_sorted"</span>
-<span class="co">#&gt; [10] "AI2016_args"</span>
-
-<span class="kw">summary</span>(fit)
-<span class="co">#&gt; ------------- Method arguments --------------</span>
-<span class="co">#&gt; $match_on</span>
-<span class="co">#&gt; [1] "multinom"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $model_options</span>
-<span class="co">#&gt; $model_options$reference_level</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $M_matches</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $J_var_matches</span>
-<span class="co">#&gt; [1] 1</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $trt_levels</span>
-<span class="co">#&gt; [1] 1 2 3</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $N_per_trt</span>
-<span class="co">#&gt; W</span>
-<span class="co">#&gt; 1 2 3 </span>
-<span class="co">#&gt; 4 3 2 </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ------------- Causal estimates --------------</span>
-<span class="co">#&gt;         Param Trt1 Trt2   Estimate   Variance VarianceAI2016</span>
-<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 -10.444444   8.545953       8.302024</span>
-<span class="co">#&gt; 2 EY(3)-EY(1)    1    3   6.666667 616.913580     411.456234</span>
-<span class="co">#&gt; 3 EY(3)-EY(2)    2    3  17.111111 611.122085     434.247037</span>
-<span class="co">#&gt; ---------------------------------------------</span></code></pre></div>
 </div>
 </div>
   </div>

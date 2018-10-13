@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">1.0.0</span>
       </span>
     </div>
 
@@ -113,27 +113,32 @@
       <small>Source: <a href='https://github.com/shuyang1987/multilevelMatching/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="multilevelmatching-0-1-0-9002" class="section level1">
+    <div id="multilevelmatching-1-0-0" class="section level1">
 <h1 class="page-header">
-<a href="#multilevelmatching-0-1-0-9002" class="anchor"></a>multilevelMatching 0.1.0.9002</h1>
+<a href="#multilevelmatching-1-0-0" class="anchor"></a>multilevelMatching 1.0.0</h1>
 <ul>
+<li>Original CRAN release version by Shu Yang (<a href='http://github.com/shuyang1987'>@shuyang1987</a>) and Brian G Barkley (<a href='http://github.com/BarkleyBG'>@BarkleyBG</a>).</li>
 <li>Added <code><a href="../reference/multiMatch.html">multiMatch()</a></code> function to carry out all types of matching. This effectively combines <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> and <code><a href="../reference/multilevelMatchX.html">multilevelMatchX()</a></code> into one function. Features include:</li>
-<li>Better output: tidier estimates - see <code><a href="../reference/estimateTau.html">estimateTau()</a></code> - plus more information from under-the-hood - see the <code>impute_mat</code> object for matrix off all imputed potential outcomes.</li>
-<li>Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify <code>M_matches &gt;=1</code>.</li>
-<li>Now allows for one-to-many matches for the variance component when <code>J_var_matches &gt;1</code>
+<li>Better output:
+<ul>
+<li>tidier estimates: see <code><a href="../reference/estimateTau.html">estimateTau()</a></code>
 </li>
+<li>plus more information from under-the-hood: see the <code>impute_mat</code> object for matrix off all imputed potential outcomes.</li>
+</ul>
+</li>
+<li>Now allows for one-to-many matches for the main matching procedure (and imputing potential outomces). The user may specify <code>M_matches &gt;=1</code>.</li>
+<li>Now allows for one-to-many matches to estimate the variance component. The user may specify <code>J_var_matches &gt;=1</code>.</li>
 <li>Allowed for more user-specified arguments (for fitting PS models) i.e. <code>model_options</code>
 </li>
 <li>Divergence: Using <code><a href="../reference/multiMatch.html">multiMatch()</a></code> with <code>match_on='existing'</code> does not always return the same results as using <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> for matching on the existing (user-specified) generalized propensity scores.</li>
 <li>Added S3 methods for <code>print</code> and <code>summary</code> for the <code>multiMatch</code> class</li>
-<li>Added Brian Barkley (<a href='http://github.com/BarkleyBG'>@BarkleyBG</a>) as co-author and maintainer</li>
 </ul>
 </div>
     <div id="multilevelmatching-0-1-0" class="section level1">
 <h1 class="page-header">
 <a href="#multilevelmatching-0-1-0" class="anchor"></a>multilevelMatching 0.1.0</h1>
 <ul>
-<li>Original package version, released to GitHub by Shu Yang (<a href='http://github.com/shuyang1987'>@shuyang1987</a>)</li>
+<li>Original package version, released to GitHub by Shu Yang (<a href='http://github.com/shuyang1987'>@shuyang1987</a>). See <a href="https://github.com/shuyang1987/multilevelMatching/releases/tag/v0.1.0">Release v0.1.0</a>.</li>
 </ul>
 </div>
   </div>
@@ -142,7 +147,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#multilevelmatching-0-1-0-9002">0.1.0.9002</a></li>
+        <li><a href="#multilevelmatching-1-0-0">1.0.0</a></li>
         <li><a href="#multilevelmatching-0-1-0">0.1.0</a></li>
       </ul>
     </div>

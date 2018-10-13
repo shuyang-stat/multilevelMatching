@@ -3,4 +3,7 @@ pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   multilevelMatching-v1.0.0: multilevelMatching-v1.0.0.html
+urls:
+  reference: https://shuyang1987.github.io/multilevelMatching//reference
+  article: https://shuyang1987.github.io/multilevelMatching//articles
 

@@ -154,7 +154,7 @@ class(fit2)
 
 The `print.multiMatch()` method looks similar to before:
 ```{r}
-class(fit2)
+print(fit2)
 ```
 but there is a lot more information available now:
 ```{r}

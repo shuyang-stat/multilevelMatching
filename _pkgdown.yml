@@ -1,2 +1,19 @@
 development:
   mode: unreleased
+
+url: https://shuyang1987.github.io/multilevelMatching/
+
+reference:
+- title: Matching on raw covariates
+  contents:
+  - multiMatch
+  - multilevelMatchX
+
+- title: Matching on generalized propensity scores
+  contents:
+  - multiMatch
+  - multilevelGPSMatch
+
+- title: Stratification on generalized propensity scores
+  contents:
+  - multilevelGPSStratification

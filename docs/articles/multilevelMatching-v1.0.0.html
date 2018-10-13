@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">multilevelMatching</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">0.1.0.9002</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased package">1.0.0</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@
       <h1>multilevelMatching-v1.0.0</h1>
                         <h4 class="author">Shu Yang and Brian G. Barkley</h4>
             
-            <h4 class="date">2018-10-07</h4>
+            <h4 class="date">2018-10-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/shuyang1987/multilevelMatching/blob/master/vignettes/multilevelMatching-v1.0.0.Rmd"><code>vignettes/multilevelMatching-v1.0.0.Rmd</code></a></small>
       <div class="hidden name"><code>multilevelMatching-v1.0.0.Rmd</code></div>
@@ -302,8 +302,13 @@ fit2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/multiM
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fit2)
 <span class="co">#&gt; [1] "multiMatch"</span></code></pre></div>
 <p>The <code><a href="../reference/print.multiMatch.html">print.multiMatch()</a></code> method looks similar to before:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(fit2)
-<span class="co">#&gt; [1] "multiMatch"</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(fit2)
+<span class="co">#&gt; -------------- Causal estimates ---------------</span>
+<span class="co">#&gt;         Param Trt1 Trt2   Estimate  Variance</span>
+<span class="co">#&gt; 1 EY(2)-EY(1)    1    2 0.07927361 0.1792186</span>
+<span class="co">#&gt; 2 EY(3)-EY(1)    1    3 0.86264929 0.1634754</span>
+<span class="co">#&gt; 3 EY(3)-EY(2)    2    3 0.78337567 0.3221616</span>
+<span class="co">#&gt; --- Matching on 'covariates' with M=1, J=1 ---</span></code></pre></div>
 <p>but there is a lot more information available now:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(fit2)
 <span class="co">#&gt; ------------- Method arguments --------------</span>
