@@ -36,7 +36,7 @@ output from \code{\link{estimateTau}}}
 \item{...}{the dots argument}
 }
 \value{
-A list with the updated \code{tau_dfm} includeing a column for
+A list with the updated \code{tau_dfm} including a column for
   \code{VarianceAI2016}, and a list object \code{AI2016_args} with
   potentially helpful extra information.
 }

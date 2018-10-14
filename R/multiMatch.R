@@ -13,28 +13,31 @@
 #'   propensity scores.
 #' @param M_matches Number of matches per unit for imputing potential outcomes,
 #'   as in Abadie and Imbens (2006).
-#' @param J_var_matches Number of matches when estimating sigmasq(X,W) as in
-#'   Abadie and Imbens (2006).
+#' @param J_var_matches Number of matches when estimating \eqn{\sigmasq(X,W)} as
+#'   in Abadie and Imbens (2006).
 #' @param trimming an indicator of whether trimming the sample to ensure overlap
-#' @param match_on "multinom", "polr", "existing", or "covariates",
+#' @param match_on User specifies "covariates" to match on raw covariates, or
+#'   "existing" to match on user-supplied propensity score values, or "polr" or
+#'   "multinom" to fit a propensity score model.
 #' @param model_options A list of the options to pass to propensity model.
 #'   Currently under development. Can only pass reference level to multinomial
-#'   logisitc regression.
+#'   logistic regression.
 #'
 #' @return according to \code{\link{estimateTau}}, including at most: \itemize{
 #'
-#'   \item tauestimate:  a vector of estimates for pairwise treatment effects
+#'   \item \code{tauestimate}:  a vector of estimates for pairwise treatment
+#'   effects
 #'
-#'   \item varestimate:  a vector of variance estimates for tauestimate, using
-#'   Abadie and Imbens (2006)'s method
+#'   \item \code{varestimate}:  a vector of variance estimates for tauestimate,
+#'   using Abadie and Imbens (2006)'s method
 #'
-#'   \item varestimateAI2016:  a vector of variance estimates for tauestimate,
-#'   when matching on the generalized propensity score, using
-#'   Abadie & Imbens (2016)'s method. This variance estimate takes into account of
-#'   the uncertainty in estimating the GPS.
+#'   \item \code{varestimateAI2016}:  a vector of variance estimates for
+#'   tauestimate, when matching on the generalized propensity score, using
+#'   Abadie & Imbens (2016)'s method. This variance estimate takes into account
+#'   of the uncertainty in estimating the GPS.
 #'
-#'   \item analysis_idx: a list containing the indices_kept (analyzed) and
-#'   indices_dropped (trimmed) based on Crump et al. (2009)'s method.
+#'   \item \code{analysis_idx}: a list containing the indices_kept (analyzed)
+#'   and indices_dropped (trimmed) based on Crump et al. (2009)'s method.
 #'
 #'   }
 #'
@@ -45,9 +48,9 @@
 #'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
 #'   \url{https://doi.org/10.1111/biom.12505}
 #'
-#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
+#'   estimators for average treatment effects. econometrica, 74(1), 235-267.
+#'   \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 #'
 #'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
 #'   score. Econometrica, 84(2), 781-807.
@@ -203,7 +206,7 @@ multiMatch <- function(
 #'   \url{https://doi.org/10.3982/ECTA11293}
 #'
 #'
-#' @return A list with the updated \code{tau_dfm} includeing a column for
+#' @return A list with the updated \code{tau_dfm} including a column for
 #'   \code{VarianceAI2016}, and a list object \code{AI2016_args} with
 #'   potentially helpful extra information.
 calcSigSqAI2016 <- function(

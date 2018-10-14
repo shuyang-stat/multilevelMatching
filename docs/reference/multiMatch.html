@@ -155,13 +155,15 @@ propensity scores.</p></td>
     </tr>
     <tr>
       <th>match_on</th>
-      <td><p>"multinom", "polr", "existing", or "covariates",</p></td>
+      <td><p>User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.</p></td>
     </tr>
     <tr>
       <th>model_options</th>
       <td><p>A list of the options to pass to propensity model.
 Currently under development. Can only pass reference level to multinomial
-logisitc regression.</p></td>
+logistic regression.</p></td>
     </tr>
     <tr>
       <th>M_matches</th>
@@ -170,23 +172,24 @@ as in Abadie and Imbens (2006).</p></td>
     </tr>
     <tr>
       <th>J_var_matches</th>
-      <td><p>Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006).</p></td>
+      <td><p>Number of matches when estimating \(\sigmasq(X,W)\) as
+in Abadie and Imbens (2006).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>according to <code><a href='estimateTau.html'>estimateTau</a></code>, including at most:</p><ul>
-<li><p>tauestimate:  a vector of estimates for pairwise treatment effects</p></li>
-<li><p>varestimate:  a vector of variance estimates for tauestimate, using
-  Abadie and Imbens (2006)'s method</p></li>
-<li><p>varestimateAI2016:  a vector of variance estimates for tauestimate,
-  when matching on the generalized propensity score, using
-  Abadie &amp; Imbens (2016)'s method. This variance estimate takes into account of
-  the uncertainty in estimating the GPS.</p></li>
-<li><p>analysis_idx: a list containing the indices_kept (analyzed) and
-  indices_dropped (trimmed) based on Crump et al. (2009)'s method.</p></li>
+<li><p><code>tauestimate</code>:  a vector of estimates for pairwise treatment
+  effects</p></li>
+<li><p><code>varestimate</code>:  a vector of variance estimates for tauestimate,
+  using Abadie and Imbens (2006)'s method</p></li>
+<li><p><code>varestimateAI2016</code>:  a vector of variance estimates for
+  tauestimate, when matching on the generalized propensity score, using
+  Abadie &amp; Imbens (2016)'s method. This variance estimate takes into account
+  of the uncertainty in estimating the GPS.</p></li>
+<li><p><code>analysis_idx</code>: a list containing the indices_kept (analyzed)
+  and indices_dropped (trimmed) based on Crump et al. (2009)'s method.</p></li>
 </ul>
 
     
@@ -196,9 +199,9 @@ Abadie and Imbens (2006).</p></td>
   (2016) Propensity Score Matching and Subclassification in Observational
   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
   <a href='https://doi.org/10.1111/biom.12505'>https://doi.org/10.1111/biom.12505</a></p>
-<p>Abadie, A., &amp; Imbens, G. W. (2006). Large sample properties of
-  matching estimators for average treatment effects. econometrica, 74(1),
-  235-267. <a href='https://doi.org/10.1111/j.1468-0262.2006.00655.x'>https://doi.org/10.1111/j.1468-0262.2006.00655.x</a></p>
+<p>Abadie, A., &amp; Imbens, G. W. (2006). Large sample properties of matching
+  estimators for average treatment effects. econometrica, 74(1), 235-267.
+  <a href='https://doi.org/10.1111/j.1468-0262.2006.00655.x'>https://doi.org/10.1111/j.1468-0262.2006.00655.x</a></p>
 <p>Abadie, A., &amp; Imbens, G. W. (2016). Matching on the estimated propensity
   score. Econometrica, 84(2), 781-807.
   <a href='https://doi.org/10.3982/ECTA11293'>https://doi.org/10.3982/ECTA11293</a></p>

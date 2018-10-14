@@ -21,10 +21,12 @@ observed to have treatment level kk}
 
 \item{var_options}{Options for carrying out matching for variance estimation.}
 
-\item{match_on}{"multinom", "polr", "existing", or "covariates",}
+\item{match_on}{User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.}
 
 \item{var_args_AI2016}{A list of arguments for carrying out matching
-  procedures to estimate components in the VarianceAI2016 variance estimates
+  procedures to estimate components in the \code{VarianceAI2016} variance estimates
   (see \code{\link{calcSigSqAI2016}}).
 
   Note that these variance components are combined in

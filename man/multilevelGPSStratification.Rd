@@ -59,7 +59,7 @@ Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
   \url{https://doi.org/10.1111/biom.12505}
 
   Abadie, A., & Imbens, G. W. (2006). Large sample properties of matching
-  estimators for average treatment effects. econometrica, 74(1), 235-267.
+  estimators for average treatment effects. Econometrica, 74(1), 235-267.
   \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 
   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity

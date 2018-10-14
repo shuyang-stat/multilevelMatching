@@ -32,10 +32,12 @@ of units observed to have each treatment level}
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens (2006).}
 
-\item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006).}
+\item{J_var_matches}{Number of matches when estimating \eqn{\sigmasq(X,W)} as
+in Abadie and Imbens (2006).}
 
-\item{match_on}{"multinom", "polr", "existing", or "covariates",}
+\item{match_on}{User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.}
 
 \item{...}{the dots argument}
 }

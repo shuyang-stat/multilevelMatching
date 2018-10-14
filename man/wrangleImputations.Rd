@@ -9,7 +9,7 @@ wrangleImputations(match_output, M_matches, Y, which_same_trt,
 }
 \arguments{
 \item{match_output}{The output from \code{\link[Matching]{Match}} when
-matching different treament levels to impute potential outcomes (for point
+matching different treatment levels to impute potential outcomes (for point
 estimation of causal estimands).}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,

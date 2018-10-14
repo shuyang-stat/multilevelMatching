@@ -96,7 +96,7 @@ matchImputePO <- function(
 #' @inheritParams multiMatch
 #' @inheritParams matchImputePO
 #' @param match_output The output from \code{\link[Matching]{Match}} when
-#'   matching different treament levels to impute potential outcomes (for point
+#'   matching different treatment levels to impute potential outcomes (for point
 #'   estimation of causal estimands).
 #'
 #' @return A list, many of which are necessary arguments for

@@ -10,8 +10,8 @@ calcSigSqAI2006(match_output, J_var_matches)
 \item{match_output}{Output of the \code{Matching::Match()} function for the
 same-treatment matching, from \code{\link{estSigSq}}.}
 
-\item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006).}
+\item{J_var_matches}{Number of matches when estimating \eqn{\sigmasq(X,W)} as
+in Abadie and Imbens (2006).}
 }
 \value{
 A vector of the \code{sigsqiw} values for those individuals observed
@@ -23,6 +23,6 @@ Section 4.1 of Abadie and Imbens 2006 Econometrica. The matching procedure in
 \code{\link{estSigSq}} matches units within the same treatment level (level
 kk), and compares their outcomes to estimate a variance component. This
 function was introduced to extend this variance matching procedure to
-\code{J_var_matches >=1}, as it takes care of some of the bookeeping aspects
+\code{J_var_matches >=1}, as it takes care of some of the bookkeeping aspects
 of one-to-many matching.
 }

@@ -164,12 +164,14 @@ observed to have treatment level kk</p></td>
     </tr>
     <tr>
       <th>match_on</th>
-      <td><p>"multinom", "polr", "existing", or "covariates",</p></td>
+      <td><p>User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.</p></td>
     </tr>
     <tr>
       <th>var_args_AI2016</th>
       <td><p>A list of arguments for carrying out matching
-  procedures to estimate components in the VarianceAI2016 variance estimates
+  procedures to estimate components in the <code>VarianceAI2016</code> variance estimates
   (see <code><a href='calcSigSqAI2016.html'>calcSigSqAI2016</a></code>).</p>
 <p>Note that these variance components are combined in
   <code><a href='estimateTau.html'>estimateTau</a></code> (and perhaps <code><a href='calcSigSqAI2016.html'>calcSigSqAI2016</a></code>).</p></td>

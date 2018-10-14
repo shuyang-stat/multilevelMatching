@@ -17,19 +17,21 @@ treatment groups}
 match_on="existing", then X must be a vector (1 x n) of user-specified
 propensity scores.}
 
-\item{match_on}{"multinom", "polr", "existing", or "covariates",}
+\item{match_on}{User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.}
 
 \item{trimming}{an indicator of whether trimming the sample to ensure overlap}
 
 \item{model_options}{A list of the options to pass to propensity model.
 Currently under development. Can only pass reference level to multinomial
-logisitc regression.}
+logistic regression.}
 
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens (2006).}
 
-\item{J_var_matches}{Number of matches when estimating sigmasq(X,W) as in
-Abadie and Imbens (2006).}
+\item{J_var_matches}{Number of matches when estimating \eqn{\sigmasq(X,W)} as
+in Abadie and Imbens (2006).}
 }
 \value{
 A list of information, including the \code{X, W, Y} arguments after

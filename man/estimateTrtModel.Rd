@@ -14,11 +14,13 @@ treatment groups}
 match_on="existing", then X must be a vector (1 x n) of user-specified
 propensity scores.}
 
-\item{match_on}{"multinom", "polr", "existing", or "covariates",}
+\item{match_on}{User specifies "covariates" to match on raw covariates, or
+"existing" to match on user-supplied propensity score values, or "polr" or
+"multinom" to fit a propensity score model.}
 
 \item{model_options}{A list of the options to pass to propensity model.
 Currently under development. Can only pass reference level to multinomial
-logisitc regression.}
+logistic regression.}
 
 \item{...}{the dots argument}
 }

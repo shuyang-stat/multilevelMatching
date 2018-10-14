@@ -15,7 +15,7 @@
 #' @param var_options Options for carrying out matching for variance estimation.
 #' @param N_this_trt The number of units observed to have this treatment level.
 #' @param var_args_AI2016 A list of arguments for carrying out matching
-#'   procedures to estimate components in the VarianceAI2016 variance estimates
+#'   procedures to estimate components in the \code{VarianceAI2016} variance estimates
 #'   (see \code{\link{calcSigSqAI2016}}).
 #'
 #'   Note that these variance components are combined in
@@ -157,7 +157,7 @@ estSigSq <- function(
 #' \code{\link{estSigSq}} matches units within the same treatment level (level
 #' kk), and compares their outcomes to estimate a variance component. This
 #' function was introduced to extend this variance matching procedure to
-#' \code{J_var_matches >=1}, as it takes care of some of the bookeeping aspects
+#' \code{J_var_matches >=1}, as it takes care of some of the bookkeeping aspects
 #' of one-to-many matching.
 #'
 #' @inheritParams multiMatch
