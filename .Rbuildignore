@@ -10,3 +10,4 @@ NEWS.md
 ^README\.html$
 ^docs$
 ^data_raw$
+^cran-comments\.md$
