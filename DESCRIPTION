@@ -10,12 +10,12 @@ Authors@R: c(
     )
 Date: 2018-10-14
 Version: 1.0.0
-Description: This package implements methods to estimate causal effects from 
-    observational studies when there are 2+ distinct levels of treatment 
-    (i.e., "multilevel treatment") using matching estimators, as introduced in
-    Yang et al. (2016) Biometrics. Matching on covariates, and matching or 
-    stratification on modeled propensity scores, are available. These methods
-    require matching on only a scalar function of generalized propensity scores.
+Description: Implements methods to estimate causal effects from observational
+    studies when there are 2+ distinct levels of treatment (i.e., "multilevel
+    treatment") using matching estimators, as introduced in Yang et al. (2016)
+    Biometrics. Matching on covariates, and matching or stratification on 
+    modeled propensity scores, are available. These methods require matching on 
+    only a scalar function of generalized propensity scores.
 Depends:
     R (>= 3.1.2)
 Imports:
