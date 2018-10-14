@@ -32,6 +32,6 @@ Suggests:
     rprojroot
 RoxygenNote: 6.1.0
 LazyData: TRUE
-URL: https://github.com/shuyang1987/multilevelMatching
+URL: https://shuyang1987.github.io/multilevelMatching/
 BugReports: https://github.com/shuyang1987/multilevelMatching/issues
 Encoding: UTF-8
