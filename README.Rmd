@@ -59,7 +59,7 @@ Visit the [package website](https://shuyang1987.github.io/multilevelMatching/)
 
 # Tutorial
 
-This is a brief tutorial; an extended tutorial is provided in the vignette for [version 1.0.0](https://github.com/shuyang1987/multilevelMatching/releases/tag/v1.0.0).
+This is a brief tutorial; an extended tutorial is provided in the vignette for [version 1.0.0](https://github.com/shuyang1987/multilevelMatching/releases/).
 We will use the dataset provided with this package
 
 ```{r}
