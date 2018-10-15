@@ -10,7 +10,7 @@ calcSigSqAI2006(match_output, J_var_matches)
 \item{match_output}{Output of the \code{Matching::Match()} function for the
 same-treatment matching, from \code{\link{estSigSq}}.}
 
-\item{J_var_matches}{Number of matches when estimating \eqn{\sigmasq(X,W)} as
+\item{J_var_matches}{Number of matches when estimating \eqn{\sigma^2(X,W)} as
 in Abadie and Imbens (2006).}
 }
 \value{

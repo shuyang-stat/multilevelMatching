@@ -30,7 +30,7 @@ logistic regression.}
 \item{M_matches}{Number of matches per unit for imputing potential outcomes,
 as in Abadie and Imbens (2006).}
 
-\item{J_var_matches}{Number of matches when estimating \eqn{\sigmasq(X,W)} as
+\item{J_var_matches}{Number of matches when estimating \eqn{\sigma^2(X,W)} as
 in Abadie and Imbens (2006).}
 }
 \value{

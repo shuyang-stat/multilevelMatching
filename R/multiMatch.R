@@ -13,7 +13,7 @@
 #'   propensity scores.
 #' @param M_matches Number of matches per unit for imputing potential outcomes,
 #'   as in Abadie and Imbens (2006).
-#' @param J_var_matches Number of matches when estimating \eqn{\sigmasq(X,W)} as
+#' @param J_var_matches Number of matches when estimating \eqn{\sigma^2(X,W)} as
 #'   in Abadie and Imbens (2006).
 #' @param trimming an indicator of whether trimming the sample to ensure overlap
 #' @param match_on User specifies "covariates" to match on raw covariates, or
