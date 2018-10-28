@@ -8,14 +8,14 @@ Authors@R: c(
     person("Brian G.", "Barkley", email = "BarkleyBG@outlook.com", 
       role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1787-4735"))
     )
-Date: 2018-10-14
+Date: 2018-10-28
 Version: 1.0.0
 Description: Implements methods to estimate causal effects from observational
     studies when there are 2+ distinct levels of treatment (i.e., "multilevel
     treatment") using matching estimators, as introduced in Yang et al. (2016)
-    Biometrics. Matching on covariates, and matching or stratification on 
-    modeled propensity scores, are available. These methods require matching on 
-    only a scalar function of generalized propensity scores.
+    <doi:10.1111/biom.12505>. Matching on covariates, and matching or 
+    stratification on modeled propensity scores, are available. These methods 
+    require matching on only a scalar function of generalized propensity scores.
 Depends:
     R (>= 3.1.2)
 Imports:

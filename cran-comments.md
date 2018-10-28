@@ -2,6 +2,7 @@
 This is a resubmission. In this version I have:
 
 * edited the roxygen2 documentation with correct LaTeX variable definition
+* added DOI information to the reference in the Description.
 
 ## Test environments
 * local OS X install, R 3.4.3
