@@ -14,3 +14,7 @@ nameContrast(trt1, trt2)
 \description{
 Naming the matching contrasts
 }
+\examples{
+  nameContrast(trt1=1, trt2=0)
+
+}

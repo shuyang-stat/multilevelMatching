@@ -156,6 +156,8 @@ estVarAI2006 <- function(
 #'   matching estimators for average treatment effects. econometrica, 74(1),
 #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
 #'
+#' @examples
+#'    calcKMVarFactor(Kiw = 2, M_matches = 4)
 #'
 #' @export
 calcKMVarFactor <- function(Kiw, M_matches){

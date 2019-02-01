@@ -10,6 +10,20 @@
 #'
 #' @method print multiMatch
 #'
+#' @examples
+#'
+#'   sim_data <- multilevelMatching::simulated_data
+#'   Y <- sim_data$outcome
+#'   W <- sim_data$treatment
+#'   X <- as.matrix(sim_data[ ,-(1:2)])
+#'   names(Y) <- paste0("ID", 1:length(Y))
+#'
+#'   trimming <- FALSE
+#'   method <- c("covariates", "polr", "multinom")[2]
+#'
+#'   fit <- multiMatch(Y,W,X,trimming=trimming,match_on=method)
+#'   print(fit)
+#'
 #' @export
 print.multiMatch <- function(x,...){
 
@@ -44,6 +58,21 @@ print.multiMatch <- function(x,...){
 #' @method summary multiMatch
 #'
 #' @author Brian G. Barkley
+#'
+#'
+#' @examples
+#'
+#'   sim_data <- multilevelMatching::simulated_data
+#'   Y <- sim_data$outcome
+#'   W <- sim_data$treatment
+#'   X <- as.matrix(sim_data[ ,-(1:2)])
+#'   names(Y) <- paste0("ID", 1:length(Y))
+#'
+#'   trimming <- FALSE
+#'   method <- c("covariates", "polr", "multinom")[2]
+#'
+#'   fit <- multiMatch(Y,W,X,trimming=trimming,match_on=method)
+#'   summary(fit)
 #'
 #' @export
 summary.multiMatch <- function(object, ...){

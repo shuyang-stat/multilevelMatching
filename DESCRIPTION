@@ -8,7 +8,7 @@ Authors@R: c(
     person("Brian G.", "Barkley", email = "BarkleyBG@outlook.com", 
       role = c("aut", "cre"), comment = c(ORCID = "0000-0003-1787-4735"))
     )
-Date: 2018-12-16
+Date: 2019-01-31
 Version: 1.0.0
 Description: Implements methods to estimate causal effects from observational
     studies when there are 2+ distinct levels of treatment (i.e., "multilevel

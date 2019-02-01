@@ -13,6 +13,19 @@
 #'   sorting, and information on \code{unit_ids}, etc. See
 #'   \code{\link{determineIDs}} for more.
 #'
+#' @examples
+#' \dontrun{
+#'  prepared_data <- prepareData(
+#'  Y = Y,
+#'  W = W,
+#'  X = X,
+#'  match_on = match_on,
+#'  trimming = trimming,
+#'  model_options = model_options,
+#'  M_matches = 3,
+#'  J_var_matches = 2
+#' )
+#' }
 #' @export
 prepareData <- function(
   Y, W, X, match_on, trimming=NULL, model_options,

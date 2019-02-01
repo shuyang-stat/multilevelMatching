@@ -26,6 +26,10 @@ Econometrica. The \code{K_M_var_factor} is an important component in the varianc
 estimation, and is called from \code{\link{estVarAI2006}} in
 \code{\link{estimateTau}}.
 }
+\examples{
+   calcKMVarFactor(Kiw = 2, M_matches = 4)
+
+}
 \references{
 Abadie, A., & Imbens, G. W. (2006). Large sample properties of
   matching estimators for average treatment effects. econometrica, 74(1),

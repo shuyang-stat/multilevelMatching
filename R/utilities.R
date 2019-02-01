@@ -18,12 +18,18 @@ nameCols <- function(trt_levels){
 #' @param trt1 Former treatment level
 #' @param trt2 Latter treatment level
 #'
+#' @examples
+#'   nameContrast(trt1=1, trt2=0)
+#'
 #' @export
 nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
 
 #' Naming the matching population mean mu's
 #'
 #' @param trt Treatment level
+#'
+#' @examples
+#'  nameMu(1)
 #'
 #' @export
 nameMu <- function(trt){ paste0("EY(", trt,")") }

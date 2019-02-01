@@ -43,3 +43,17 @@ A series of checks, tests, re-ordering, and other operations to prepare the
 data for matching. This function can be run standalone, before running
 \code{\link{multiMatch}}.
 }
+\examples{
+\dontrun{
+ prepared_data <- prepareData(
+ Y = Y,
+ W = W,
+ X = X,
+ match_on = match_on,
+ trimming = trimming,
+ model_options = model_options,
+ M_matches = 3,
+ J_var_matches = 2
+)
+}
+}
