@@ -5,6 +5,8 @@ This is a resubmission. In this version I have:
 * added DOI information to the reference in the Description.
 * reinstalled Tex to see if examples are included in submission build
 * added more examples to exported functions
+* fixed broken examples
+
 
 ## Test environments
 * local OS X install, R 3.5.1

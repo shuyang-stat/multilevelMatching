@@ -181,18 +181,26 @@ in Abadie and Imbens (2006).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
+ <span class='no'>sim_data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>multilevelMatching</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/multilevelMatching/topics/simulated_data'>simulated_data</a></span>
+ <span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='no'>sim_data</span>$<span class='no'>outcome</span>
+ <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>sim_data</span>$<span class='no'>treatment</span>
+ <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>sim_data</span>[ ,-(<span class='fl'>1</span>:<span class='fl'>2</span>)])
+ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>Y</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"ID"</span>, <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>Y</span>))
+
+ <span class='no'>trimming</span> <span class='kw'>&lt;-</span> <span class='fl'>FALSE</span>
+ <span class='no'>method</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"covariates"</span>, <span class='st'>"polr"</span>, <span class='st'>"multinom"</span>)[<span class='fl'>2</span>]
+
  <span class='no'>prepared_data</span> <span class='kw'>&lt;-</span> <span class='fu'>prepareData</span>(
- <span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>Y</span>,
- <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>,
- <span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>X</span>,
- <span class='kw'>match_on</span> <span class='kw'>=</span> <span class='no'>match_on</span>,
- <span class='kw'>trimming</span> <span class='kw'>=</span> <span class='no'>trimming</span>,
- <span class='kw'>model_options</span> <span class='kw'>=</span> <span class='no'>model_options</span>,
- <span class='kw'>M_matches</span> <span class='kw'>=</span> <span class='fl'>3</span>,
- <span class='kw'>J_var_matches</span> <span class='kw'>=</span> <span class='fl'>2</span>
-)
-<span class='co'># }</span></pre>
+   <span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>Y</span>,
+   <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>,
+   <span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>X</span>,
+   <span class='kw'>match_on</span> <span class='kw'>=</span> <span class='st'>"polr"</span>,
+   <span class='kw'>trimming</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+   <span class='kw'>model_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>reference_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='no'>W</span>)[<span class='fl'>1</span>]),
+   <span class='kw'>M_matches</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+   <span class='kw'>J_var_matches</span> <span class='kw'>=</span> <span class='fl'>2</span>
+ )</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

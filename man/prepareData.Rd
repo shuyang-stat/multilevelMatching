@@ -44,16 +44,24 @@ data for matching. This function can be run standalone, before running
 \code{\link{multiMatch}}.
 }
 \examples{
-\dontrun{
+
+ sim_data <- multilevelMatching::simulated_data
+ Y <- sim_data$outcome
+ W <- sim_data$treatment
+ X <- as.matrix(sim_data[ ,-(1:2)])
+ names(Y) <- paste0("ID", 1:length(Y))
+
+ trimming <- FALSE
+ method <- c("covariates", "polr", "multinom")[2]
+
  prepared_data <- prepareData(
- Y = Y,
- W = W,
- X = X,
- match_on = match_on,
- trimming = trimming,
- model_options = model_options,
- M_matches = 3,
- J_var_matches = 2
-)
-}
+   Y = Y,
+   W = W,
+   X = X,
+   match_on = "polr",
+   trimming = FALSE,
+   model_options = list(reference_level = sort(W)[1]),
+   M_matches = 3,
+   J_var_matches = 2
+ )
 }
