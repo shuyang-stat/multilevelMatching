@@ -10,8 +10,7 @@
 #'
 #'
 #' @return A list of information, including the \code{X, W, Y} arguments after
-#'   sorting, and information on \code{unit_ids}, etc. See
-#'   \code{\link{determineIDs}} for more.
+#'   sorting observeations, and information on \code{unit_ids}, etc.
 #'
 #' @examples
 #'
@@ -189,18 +188,18 @@ prepareData <- function(
   ordered_data_list
 }
 
-#' Determines Unique Unit Identifiers
-#'
-#' This function attempts to determine unique identifying information,
-#' \code{unit_ids}, for each unit in the dataset. Users can apply this function
-#' on their raw data ahead of using \code{\link{multiMatch}} to ensure that the
-#' matching procedure will work. \code{unit_ids} will be used to identify study
-#' units in some of the information output from \code{\link{multiMatch}}.
-#'
-#' @inheritParams multiMatch
-#'
-#' @return \code{unit_ids}
-#'
+# #' Determines Unique Unit Identifiers
+# #'
+# #' This function attempts to determine unique identifying information,
+# #' \code{unit_ids}, for each unit in the dataset. Users can apply this function
+# #' on their raw data ahead of using \code{\link{multiMatch}} to ensure that the
+# #' matching procedure will work. \code{unit_ids} will be used to identify study
+# #' units in some of the information output from \code{\link{multiMatch}}.
+# #'
+# #' @inheritParams multiMatch
+# #'
+# #' @return \code{unit_ids}
+# #'
 determineIDs <- function(Y,W,X){
 
 
@@ -272,13 +271,13 @@ determineIDs <- function(Y,W,X){
   )
 }
 
-#' Get/grab identifiers from vector/matrix/dataframe
-#'
-#' This is a helper function for \code{\link{determineIDs}}
-#'
-#' @param x An object
-#'
-#' @return \code{names(x)}, \code{row.names(x)}, or \code{NULL}.
+# #' Get/grab identifiers from vector/matrix/dataframe
+# #'
+# #' This is a helper function for \code{\link{determineIDs}}
+# #'
+# #' @param x An object
+# #'
+# #' @return \code{names(x)}, \code{row.names(x)}, or \code{NULL}.
 getIDs <- function(x){
   if (is.vector(x)) {names <- names(x)} else
     if (is.matrix(x)) {names <- rownames(x)} else
@@ -293,15 +292,15 @@ getIDs <- function(x){
   names
 }
 
-#' Set identifiers from vector/matrix/dataframe
-#'
-#' This is a helper function for \code{\link{determineIDs}}
-#'
-#' @param x An object
-#' @param unit_ids Character vector to identify study units.
-#'
-#' @return The object \code{x} after setting its \code{names(x)},
-#'   \code{row.names(x)}, or \code{rownames(x)} to \code{unit_ids}.
+# #' Set identifiers from vector/matrix/dataframe
+# #'
+# #' This is a helper function for \code{\link{determineIDs}}
+# #'
+# #' @param x An object
+# #' @param unit_ids Character vector to identify study units.
+# #'
+# #' @return The object \code{x} after setting its \code{names(x)},
+# #'   \code{row.names(x)}, or \code{rownames(x)} to \code{unit_ids}.
 setIDs <- function(x,unit_ids){
   if (is.vector(x)) {names(x) <- unit_ids} else
     if (is.matrix(x)) {rownames(x) <- unit_ids} else

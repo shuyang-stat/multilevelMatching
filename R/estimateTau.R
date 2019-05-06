@@ -1,37 +1,37 @@
-#' Calculate the estimates of population-level estimands (e.g., \code{tau}).
-#'
-#' This is a major plumbing function for the package. All matching procedures
-#' are carried out in \code{\link{matchImputePO}} (for point estimates) and
-#' \code{\link{estSigSq}} (for variance), which are subfunctions of
-#' \code{\link{matchAllTreatments}}. Most of the necessary arguments to this
-#' function are output from these two subfunctions.
-#'
-#' @inheritParams estimateTrtModel
-#' @inheritParams multiMatch
-#' @param trt_levels A vector of the unique levels of treatment W
-#' @param num_trts A scalar for the number of treatment levels
-#' @param num_contrasts A scalar for the number of tau contrasts to estimate
-#' @param N A scalar for the number of rows in the data
-#' @param Yiw A matrix of all imputed potential outcomes
-#' @param mean_Yiw A vector of the estimated mean w.r.t. each treatment w
-#' @param Kiw A vector of times each unit is matched to
-#' @param sigsqiw Estimated sigma squared (variance), from Abadie and Imbens
-#'   (2006)
-#'
-#' @seealso \code{\link{multiMatch}}
-#'
-#' @return A list, including the tidy dataframes estimates of target estimands
-#'
-#'
-#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
-#'   (2016) Propensity Score Matching and Subclassification in Observational
-#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
-#'   \url{https://doi.org/10.1111/biom.12505}
-#'
-#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
-#'
+# #' Calculate the estimates of population-level estimands (e.g., \code{tau}).
+# #'
+# #' This is a major plumbing function for the package. All matching procedures
+# #' are carried out in \code{\link{matchImputePO}} (for point estimates) and
+# #' \code{\link{estSigSq}} (for variance), which are subfunctions of
+# #' \code{\link{matchAllTreatments}}. Most of the necessary arguments to this
+# #' function are output from these two subfunctions.
+# #'
+# #' @inheritParams estimateTrtModel
+# #' @inheritParams multiMatch
+# #' @param trt_levels A vector of the unique levels of treatment W
+# #' @param num_trts A scalar for the number of treatment levels
+# #' @param num_contrasts A scalar for the number of tau contrasts to estimate
+# #' @param N A scalar for the number of rows in the data
+# #' @param Yiw A matrix of all imputed potential outcomes
+# #' @param mean_Yiw A vector of the estimated mean w.r.t. each treatment w
+# #' @param Kiw A vector of times each unit is matched to
+# #' @param sigsqiw Estimated sigma squared (variance), from Abadie and Imbens
+# #'   (2006)
+# #'
+# #' @seealso \code{\link{multiMatch}}
+# #'
+# #' @return A list, including the tidy dataframes estimates of target estimands
+# #'
+# #'
+# #' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+# #'   (2016) Propensity Score Matching and Subclassification in Observational
+# #'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+# #'   \url{https://doi.org/10.1111/biom.12505}
+# #'
+# #'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+# #'   matching estimators for average treatment effects. econometrica, 74(1),
+# #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+# #'
 estimateTau <- function(
   trt_levels, mean_Yiw,
   num_trts, num_contrasts, N, M_matches,
@@ -90,28 +90,28 @@ estimateTau <- function(
   results
 }
 
-#' Computes Estimated Asymptotic Variance of matching estimators.
-#'
-#' See Theorem 7 of Abadie and Imbens (2006) Econometrica for the formula.
-#'
-#' @inheritParams estimateTau
-#' @inheritParams multiMatch
-#' @param tau Estimated value of \eqn{\tau(W_1, W_2)}.
-#' @param trt_level_1 Unique treatment level 1; aka \eqn{W_1} in \eqn{\tau(W_1,
-#'   W_2)}
-#' @param trt_level_2 Unique treatment level 2; aka \eqn{W_2} in \eqn{\tau(W_1,
-#'   W_2)}
-#' @param Yiw1 Vector of imputed outcomes for all units for \code{trt_level_2}.
-#' @param Yiw2 Vector of imputed outcomes for all units for \code{trt_level_2}.
-#'
-#' @return A single numeric value for the estimated asymptotic variance of the
-#'   estimator.
-#'
-#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
-#'
-#'
+# #' Computes Estimated Asymptotic Variance of matching estimators.
+# #'
+# #' See Theorem 7 of Abadie and Imbens (2006) Econometrica for the formula.
+# #'
+# #' @inheritParams estimateTau
+# #' @inheritParams multiMatch
+# #' @param tau Estimated value of \eqn{\tau(W_1, W_2)}.
+# #' @param trt_level_1 Unique treatment level 1; aka \eqn{W_1} in \eqn{\tau(W_1,
+# #'   W_2)}
+# #' @param trt_level_2 Unique treatment level 2; aka \eqn{W_2} in \eqn{\tau(W_1,
+# #'   W_2)}
+# #' @param Yiw1 Vector of imputed outcomes for all units for \code{trt_level_2}.
+# #' @param Yiw2 Vector of imputed outcomes for all units for \code{trt_level_2}.
+# #'
+# #' @return A single numeric value for the estimated asymptotic variance of the
+# #'   estimator.
+# #'
+# #' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+# #'   matching estimators for average treatment effects. econometrica, 74(1),
+# #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+# #'
+# #'
 estVarAI2006 <- function(
   N, W, M_matches,
   trt_level_1, trt_level_2,
@@ -143,10 +143,11 @@ estVarAI2006 <- function(
 #' \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
 #' in this function comes from Theorem 7, page 251 of Abadie and Imbens (2006)
 #' Econometrica. The \code{K_M_var_factor} is an important component in the variance
-#' estimation, and is called from \code{\link{estVarAI2006}} in
-#' \code{\link{estimateTau}}.
+#' estimation, created in the function \code{estVarAI2006} in
+#' \code{estimateTau}.
 #'
-#' @inheritParams estVarAI2006
+#' @inheritParams multiMatch
+#' @param Kiw A vector of times each unit is matched to
 #'
 #' @return A numeric vector.
 #'

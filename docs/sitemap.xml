@@ -4,43 +4,10 @@
     <loc>https://shuyang1987.github.io/multilevelMatching//index.html</loc>
   </url>
   <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/argChecks.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/averageMultipleMatches.html</loc>
-  </url>
-  <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/calcKMVarFactor.html</loc>
   </url>
   <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/calcSigSqAI2006.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/calcSigSqAI2016.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/determineIDs.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/estSigSq.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/estVarAI2006.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/estimateTau.html</loc>
-  </url>
-  <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/estimateTrtModel.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/getIDs.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/matchAllTreatments.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/matchImputePO.html</loc>
   </url>
   <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/multiMatch.html</loc>
@@ -58,16 +25,10 @@
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/multilevelMatching.html</loc>
   </url>
   <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/nameCols.html</loc>
-  </url>
-  <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/nameContrast.html</loc>
   </url>
   <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/nameMu.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/overlap.html</loc>
   </url>
   <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/prepareData.html</loc>
@@ -76,19 +37,10 @@
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/print.multiMatch.html</loc>
   </url>
   <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/reorderByTreatment.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/setIDs.html</loc>
-  </url>
-  <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/simulated_data.html</loc>
   </url>
   <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//reference/summary.multiMatch.html</loc>
-  </url>
-  <url>
-    <loc>https://shuyang1987.github.io/multilevelMatching//reference/wrangleImputations.html</loc>
   </url>
   <url>
     <loc>https://shuyang1987.github.io/multilevelMatching//articles/multilevelMatching-v1.0.0.html</loc>

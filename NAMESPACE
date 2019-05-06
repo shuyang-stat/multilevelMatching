@@ -3,6 +3,7 @@
 S3method(print,multiMatch)
 S3method(summary,multiMatch)
 export(calcKMVarFactor)
+export(estimateTrtModel)
 export(multiMatch)
 export(multilevelGPSMatch)
 export(multilevelGPSStratification)

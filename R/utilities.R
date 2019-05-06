@@ -1,9 +1,9 @@
 
-#' Name Two or All Columns in the Matching Matrix
-#'
-#' Useful when using Abadie and Imbens (2016) variance estimator
-#'
-#' @inheritParams matchAllTreatments
+# #' Name Two or All Columns in the Matching Matrix
+# #'
+# #' Useful when using Abadie and Imbens (2016) variance estimator
+# #'
+# #' @inheritParams matchAllTreatments
 nameCols <- function(trt_levels){
   col_names <- lapply(trt_levels, function(x){
     c(paste0("m",x, ".1"), paste0("m", x, ".2"))
@@ -35,10 +35,10 @@ nameContrast <- function(trt1,trt2){ paste0("EY(", trt2,")-EY(", trt1,")") }
 nameMu <- function(trt){ paste0("EY(", trt,")") }
 
 
-#' Defensive programming for data re-ordering
-#'
-#' @inheritParams multiMatch
-#' @param N The number of unique units
+# #' Defensive programming for data re-ordering
+# #'
+# #' @inheritParams multiMatch
+# #' @param N The number of unique units
 argChecks <- function(Y,W,X,N=NULL) {
 
   if ((length(W) != length(Y))) {
@@ -57,33 +57,33 @@ argChecks <- function(Y,W,X,N=NULL) {
 
 
 
-#' Orders the treatment increasingly
-#'
-#' @inheritParams setIDs
-#' @param W A treatment vector (1 x n) with numerical values indicating treatment groups
-#' @param X A covariate matrix (p x n) with no intercept
-#' @param Y A continuous response vector (1 x n)
-#' @param unit_ids_unsorted The \code{unit_ids} before the data is reordered
-#'
-#' @return The following elements, ordered according to levels of \code{W}
-#' \itemize{
-#'
-#'  \item \code{W}: a treatment vector (1 x n) with numerical values indicating treatment groups
-#'
-#'  \item \code{X}: a covariate matrix (p x n) with no intercept
-#'
-#'  \item \code{Y}: a continuous response vector (1 x n)
-#
-#' }
-#' along with these downstream elements of treatment:
-#' \itemize{
-#' \item \code{num_trts}: number of treatment levels
-#' \item \code{trt_levels}: all treatment levels
-#' \item \code{N_per_trt}: number of observations by treatment level
-#' \item \code{num_contrasts}: number of pairwise treatment effects
-#' \item \code{orig_to_sorted}: vector to rearrange from original to sorted by treatment
-#' \item \code{sorted_to_orig}: vector to rearrange from sorted to original order
-#' }
+# #' Orders the treatment increasingly
+# #'
+# #' @inheritParams setIDs
+# #' @param W A treatment vector (1 x n) with numerical values indicating treatment groups
+# #' @param X A covariate matrix (p x n) with no intercept
+# #' @param Y A continuous response vector (1 x n)
+# #' @param unit_ids_unsorted The \code{unit_ids} before the data is reordered
+# #'
+# #' @return The following elements, ordered according to levels of \code{W}
+# #' \itemize{
+# #'
+# #'  \item \code{W}: a treatment vector (1 x n) with numerical values indicating treatment groups
+# #'
+# #'  \item \code{X}: a covariate matrix (p x n) with no intercept
+# #'
+# #'  \item \code{Y}: a continuous response vector (1 x n)
+# #
+# #' }
+# #' along with these downstream elements of treatment:
+# #' \itemize{
+# #' \item \code{num_trts}: number of treatment levels
+# #' \item \code{trt_levels}: all treatment levels
+# #' \item \code{N_per_trt}: number of observations by treatment level
+# #' \item \code{num_contrasts}: number of pairwise treatment effects
+# #' \item \code{orig_to_sorted}: vector to rearrange from original to sorted by treatment
+# #' \item \code{sorted_to_orig}: vector to rearrange from sorted to original order
+# #' }
 reorderByTreatment <- function(Y,W,X, unit_ids_unsorted){
 
   N <- length(Y)

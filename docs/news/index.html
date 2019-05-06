@@ -114,11 +114,11 @@
 <h1 class="page-header">
 <a href="#multilevelmatching-1-0-0" class="anchor"></a>multilevelMatching 1.0.0</h1>
 <ul>
-<li>Original CRAN release version by Shu Yang (<a href='https://github.com/shuyang1987'>@shuyang1987</a>) and Brian G Barkley (<a href='https://github.com/BarkleyBG'>@BarkleyBG</a>).</li>
+<li>Original CRAN release version by Shu Yang (<a href="https://github.com/shuyang1987/">@shuyang1987</a>) and Brian G Barkley (<a href="https://github.com/BarkleyBG/">@BarkleyBG</a>).</li>
 <li>Added <code><a href="../reference/multiMatch.html">multiMatch()</a></code> function to carry out all types of matching. This effectively combines <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> and <code><a href="../reference/multilevelMatchX.html">multilevelMatchX()</a></code> into one function. Features include:</li>
 <li>Better output:
 <ul>
-<li>tidier estimates: see <code><a href="../reference/estimateTau.html">estimateTau()</a></code>
+<li>tidier estimates: see <code>estimateTau()</code>
 </li>
 <li>plus more information from under-the-hood: see the <code>impute_mat</code> object for matrix off all imputed potential outcomes.</li>
 </ul>
@@ -129,6 +129,8 @@
 </li>
 <li>Divergence: Using <code><a href="../reference/multiMatch.html">multiMatch()</a></code> with <code>match_on='existing'</code> does not always return the same results as using <code><a href="../reference/multilevelGPSMatch.html">multilevelGPSMatch()</a></code> for matching on the existing (user-specified) generalized propensity scores.</li>
 <li>Added S3 methods for <code>print</code> and <code>summary</code> for the <code>multiMatch</code> class</li>
+<li>Added S3 methods for <code>print</code> and <code>summary</code> for the <code>multiMatch</code> class</li>
+<li>Users can apply the <code><a href="../reference/estimateTrtModel.html">estimateTrtModel()</a></code> function before using <code><a href="../reference/multiMatch.html">multiMatch()</a></code> to verify that the model fitted in <code><a href="../reference/multiMatch.html">multiMatch()</a></code> is the same as the user desires</li>
 </ul>
 </div>
     <div id="multilevelmatching-0-1-0" class="section level1">

@@ -32,8 +32,9 @@
 
 <meta property="og:title" content="Estimate Treatment Model for Generalized Propensity Scores — estimateTrtModel" />
 
-<meta property="og:description" content="Note that the model_options argument must be a list with reference_level
-element" />
+<meta property="og:description" content="This function is used to fit the model for the generalized propensity score.
+Users can apply this function before multiMatch and verify that
+the output's fitted model object is the same as the user desires." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,8 +118,9 @@ element" />
 
     <div class="ref-description">
     
-    <p>Note that the model_options argument must be a list with reference_level
-element</p>
+    <p>This function is used to fit the model for the generalized propensity score.
+Users can apply this function before <code><a href='multiMatch.html'>multiMatch</a></code> and verify that
+the output's fitted model object is the same as the user desires.</p>
     
     </div>
 
@@ -156,13 +158,60 @@ logistic regression.</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>A list element with two items:</p><ul>
+<li><p><code>prop_score_model</code> the fitted model object</p></li>
+<li><p><code>prop_score_ests</code> the estimated generalized propensity scores
+  for each individual in the dataset</p></li>
+</ul>
+
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that the <code>model_options</code> argument must be a list with
+<code>reference_level</code> element. Future versions of this package may allow
+for the user to supply a fitted model object directly to
+<code><a href='multiMatch.html'>multiMatch</a></code>; to request this feature, users should go to the
+GitHub repository and fill out an Issue requesting it.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+ <span class='no'>sim_data</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>multilevelMatching</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/multilevelMatching/topics/simulated_data'>simulated_data</a></span>
+ <span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='no'>sim_data</span>$<span class='no'>outcome</span>
+ <span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>sim_data</span>$<span class='no'>treatment</span>
+ <span class='no'>X</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='no'>sim_data</span>[ ,-(<span class='fl'>1</span>:<span class='fl'>2</span>)])
+ <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>Y</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"ID"</span>, <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>Y</span>))
+
+ <span class='no'>trimming</span> <span class='kw'>&lt;-</span> <span class='fl'>FALSE</span>
+ <span class='no'>method</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"covariates"</span>, <span class='st'>"polr"</span>, <span class='st'>"multinom"</span>)[<span class='fl'>2</span>]
+
+ <span class='no'>prepared_data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='prepareData.html'>prepareData</a></span>(
+   <span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>Y</span>,
+   <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>,
+   <span class='kw'>X</span> <span class='kw'>=</span> <span class='no'>X</span>,
+   <span class='kw'>match_on</span> <span class='kw'>=</span> <span class='st'>"polr"</span>,
+   <span class='kw'>trimming</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+   <span class='kw'>model_options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>reference_level</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sort'>sort</a></span>(<span class='no'>W</span>)[<span class='fl'>1</span>]),
+   <span class='kw'>M_matches</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+   <span class='kw'>J_var_matches</span> <span class='kw'>=</span> <span class='fl'>2</span>
+ )
+
+<span class='no'>trt_model</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/do.call'>do.call</a></span>(<span class='no'>estimateTrtModel</span>, <span class='no'>prepared_data</span>)
+<span class='no'>estimated_generalized_propensity_scores</span> <span class='kw'>&lt;-</span> <span class='no'>trt_model</span>$<span class='no'>prop_score_ests</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

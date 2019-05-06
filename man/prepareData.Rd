@@ -35,8 +35,7 @@ in Abadie and Imbens (2006).}
 }
 \value{
 A list of information, including the \code{X, W, Y} arguments after
-  sorting, and information on \code{unit_ids}, etc. See
-  \code{\link{determineIDs}} for more.
+  sorting observeations, and information on \code{unit_ids}, etc.
 }
 \description{
 A series of checks, tests, re-ordering, and other operations to prepare the

@@ -1,4 +1,4 @@
-#' Matching Estimators for Multiple Treatments from Yang et al (2016).
+#' Matching Estimators for Multiple Treatments from Yang et al. (2016).
 #'
 #'
 #' This function carries out matching on covariates or on propensity scores, and
@@ -23,7 +23,7 @@
 #'   Currently under development. Can only pass reference level to multinomial
 #'   logistic regression.
 #'
-#' @return according to \code{\link{estimateTau}}, including at most: \itemize{
+#' @return A list of output from \code{estimateTau}, including at most: \itemize{
 #'
 #'   \item \code{tauestimate}:  a vector of estimates for pairwise treatment
 #'   effects
@@ -180,35 +180,35 @@ multiMatch <- function(
 }
 
 
-#' Calculate Variance as in Abadie & Imbens (2016) JASA
-#'
-#' This function calculates the estimated variance of matching estimator when
-#' matching on propensity scores that were estimated with multinomial logistic
-#' regression. This method takes into account the uncertainty from the treatment
-#' model. This function does no "heavy lifting" in that it only assembles pieces
-#' that have been estimated elsewhere (i.e., see \code{\link{estSigSq}} to see
-#' how the matching procedures are carried out).
-#'
-#' @inheritParams multiMatch
-#' @inheritParams matchAllTreatments
-#' @param X_covars The matrix of covariates (not the matrix of estimated GPS)
-#' @param prop_score_ests The matrix of propensity scores
-#' @param vcov_coeff The variance-covariance (inverse fisher information) matrix
-#'   from the multinomial logistic regression model
-#' @param tau_dfm The dataframe of estimates and estimated standard errors
-#'   output from \code{\link{estimateTau}}
-#' @param match_mat_AI2016 Information on matches from
-#'   \code{\link{matchAllTreatments}}
-#'
-#'
-#' @references Abadie, A., & Imbens, G. W. (2016). Matching on the estimated
-#'   propensity score. Econometrica, 84(2), 781-807.
-#'   \url{https://doi.org/10.3982/ECTA11293}
-#'
-#'
-#' @return A list with the updated \code{tau_dfm} including a column for
-#'   \code{VarianceAI2016}, and a list object \code{AI2016_args} with
-#'   potentially helpful extra information.
+# #' Calculate Variance as in Abadie & Imbens (2016) JASA
+# #'
+# #' This function calculates the estimated variance of matching estimator when
+# #' matching on propensity scores that were estimated with multinomial logistic
+# #' regression. This method takes into account the uncertainty from the treatment
+# #' model. This function does no "heavy lifting" in that it only assembles pieces
+# #' that have been estimated elsewhere (i.e., see \code{\link{estSigSq}} to see
+# #' how the matching procedures are carried out).
+# #'
+# #' @inheritParams multiMatch
+# #' @inheritParams matchAllTreatments
+# #' @param X_covars The matrix of covariates (not the matrix of estimated GPS)
+# #' @param prop_score_ests The matrix of propensity scores
+# #' @param vcov_coeff The variance-covariance (inverse fisher information) matrix
+# #'   from the multinomial logistic regression model
+# #' @param tau_dfm The dataframe of estimates and estimated standard errors
+# #'   output from \code{estimateTau}
+# #' @param match_mat_AI2016 Information on matches from
+# #'   \code{\link{matchAllTreatments}}
+# #'
+# #'
+# #' @references Abadie, A., & Imbens, G. W. (2016). Matching on the estimated
+# #'   propensity score. Econometrica, 84(2), 781-807.
+# #'   \url{https://doi.org/10.3982/ECTA11293}
+# #'
+# #'
+# #' @return A list with the updated \code{tau_dfm} including a column for
+# #'   \code{VarianceAI2016}, and a list object \code{AI2016_args} with
+# #'   potentially helpful extra information.
 calcSigSqAI2016 <- function(
   W, X_covars, Y, N,
   num_trts, trt_levels,

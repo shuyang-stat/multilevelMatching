@@ -1,48 +1,48 @@
 
-#' Estimate Imputed Outcomes and AI06 Variance Components
-#'
-#' Mostly calls a subfunction for each treatment level, which calls subfunctions
-#' that either carry out the matched imputation or the variance estimation.
-#'
-#' @inheritParams multiMatch
-#' @inheritParams estimateTrtModel
-#' @param num_trts The number of unique treatments (3+), a scalar
-#' @param trt_levels A vector (of length \code{num_trts} providing the unique
-#'   treatment levels
-#' @param N_per_trt A vector (of length \code{num_trts}) indicating the number
-#'   of units observed to have each treatment level
-#' @param N The total number of units
-#' @param unit_ids_sorted The unit identifiers in correct, sorted order.
-#'
-#' @return A list including at most: \itemize{
-#'
-#'   \item \code{Yiw}: A matrix of all imputed (or observed) potential outcomes
-#'   for each unit \item \code{mean_Yiw}: A vector of the average (across all
-#'   units) of estimated/imputed potential outcomes \item \code{sigsqiw}:
-#'   Estimated variance components (from Abadie and Imbens (2006)'s method) for
-#'   each unit \item \code{Kiw}: The vector of number of times unit i used as a
-#'   match \item \code{impute_match_data}: extra information from the main
-#'   matching procedure \item \code{match_mat_AI2016}: When
-#'   \code{match_on=`multinom`} this additional information will be output for
-#'   \code{\link{calcSigSqAI2016}} (from Abadie and Imbens (2016)'s method) }
-#'
-#'   A few of the necessary arguments are output from the
-#'   \code{\link{reorderByTreatment}} function.
-#'
-#'
-#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
-#'   (2016) Propensity Score Matching and Subclassification in Observational
-#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
-#'   \url{https://doi.org/10.1111/biom.12505}
-#'
-#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
-#'
-#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
-#'   score. Econometrica, 84(2), 781-807.
-#'   \url{https://doi.org/10.3982/ECTA11293}
-#'
+# #' Estimate Imputed Outcomes and AI06 Variance Components
+# #'
+# #' Mostly calls a subfunction for each treatment level, which calls subfunctions
+# #' that either carry out the matched imputation or the variance estimation.
+# #'
+# #' @inheritParams multiMatch
+# #' @inheritParams estimateTrtModel
+# #' @param num_trts The number of unique treatments (3+), a scalar
+# #' @param trt_levels A vector (of length \code{num_trts} providing the unique
+# #'   treatment levels
+# #' @param N_per_trt A vector (of length \code{num_trts}) indicating the number
+# #'   of units observed to have each treatment level
+# #' @param N The total number of units
+# #' @param unit_ids_sorted The unit identifiers in correct, sorted order.
+# #'
+# #' @return A list including at most: \itemize{
+# #'
+# #'   \item \code{Yiw}: A matrix of all imputed (or observed) potential outcomes
+# #'   for each unit \item \code{mean_Yiw}: A vector of the average (across all
+# #'   units) of estimated/imputed potential outcomes \item \code{sigsqiw}:
+# #'   Estimated variance components (from Abadie and Imbens (2006)'s method) for
+# #'   each unit \item \code{Kiw}: The vector of number of times unit i used as a
+# #'   match \item \code{impute_match_data}: extra information from the main
+# #'   matching procedure \item \code{match_mat_AI2016}: When
+# #'   \code{match_on=`multinom`} this additional information will be output for
+# #'   \code{\link{calcSigSqAI2016}} (from Abadie and Imbens (2016)'s method) }
+# #'
+# #'   A few of the necessary arguments are output from the
+# #'   \code{\link{reorderByTreatment}} function.
+# #'
+# #'
+# #' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+# #'   (2016) Propensity Score Matching and Subclassification in Observational
+# #'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+# #'   \url{https://doi.org/10.1111/biom.12505}
+# #'
+# #'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+# #'   matching estimators for average treatment effects. econometrica, 74(1),
+# #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+# #'
+# #'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+# #'   score. Econometrica, 84(2), 781-807.
+# #'   \url{https://doi.org/10.3982/ECTA11293}
+# #'
 matchAllTreatments <- function(
   N, X, W, Y,
   num_trts, trt_levels, N_per_trt, unit_ids_sorted,

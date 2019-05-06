@@ -1,40 +1,40 @@
 
 
-#' Perform matching methods to estimate variance for one treatment level
-#'
-#' This function executes the matching methods to estimate the components for
-#' estimating the variance (sigma squared) of the matching estimator. All
-#' matching methods (specified with \code{match_on}) will estimate the variance
-#' as in Abadie and Imbens (2006). When \code{match_on = "multinom"} this function
-#' will carry out additional matching procedures to estimate the variance as
-#' described in Abadie and Imbens (2016).
-#'
-#' @inheritParams multiMatch
-#' @inheritParams matchAllTreatments
-#' @inheritParams matchImputePO
-#' @param var_options Options for carrying out matching for variance estimation.
-#' @param N_this_trt The number of units observed to have this treatment level.
-#' @param var_args_AI2016 A list of arguments for carrying out matching
-#'   procedures to estimate components in the \code{VarianceAI2016} variance estimates
-#'   (see \code{\link{calcSigSqAI2016}}).
-#'
-#'   Note that these variance components are combined in
-#'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).
-#'
-#' @return A list of one or two elements. \code{sigsqiw_kk} is a vector with the
-#'   estimated variance component for units observed to have the \code{kk}^th treatment
-#'   level. When \code{match_on = "multinom"}, the list will also have an
-#'   element for \code{match_mat_AI2016_kk_two_cols}, which is a \code{Ntot}-by-2
-#'   matrix with matching information that will eventually be passed to
-#'   \code{\link{calcSigSqAI2016}}.
-#'
-#' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
-#'
-#'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
-#'   score. Econometrica, 84(2), 781-807.
-#'   \url{https://doi.org/10.3982/ECTA11293}
+# #' Perform matching methods to estimate variance for one treatment level
+# #'
+# #' This function executes the matching methods to estimate the components for
+# #' estimating the variance (sigma squared) of the matching estimator. All
+# #' matching methods (specified with \code{match_on}) will estimate the variance
+# #' as in Abadie and Imbens (2006). When \code{match_on = "multinom"} this function
+# #' will carry out additional matching procedures to estimate the variance as
+# #' described in Abadie and Imbens (2016).
+# #'
+# #' @inheritParams multiMatch
+# #' @inheritParams matchAllTreatments
+# #' @inheritParams matchImputePO
+# #' @param var_options Options for carrying out matching for variance estimation.
+# #' @param N_this_trt The number of units observed to have this treatment level.
+# #' @param var_args_AI2016 A list of arguments for carrying out matching
+# #'   procedures to estimate components in the \code{VarianceAI2016} variance estimates
+# #'   (see \code{\link{calcSigSqAI2016}}).
+# #'
+# #'   Note that these variance components are combined in
+# #'   \code{\link{estimateTau}} (and perhaps \code{\link{calcSigSqAI2016}}).
+# #'
+# #' @return A list of one or two elements. \code{sigsqiw_kk} is a vector with the
+# #'   estimated variance component for units observed to have the \code{kk}^th treatment
+# #'   level. When \code{match_on = "multinom"}, the list will also have an
+# #'   element for \code{match_mat_AI2016_kk_two_cols}, which is a \code{Ntot}-by-2
+# #'   matrix with matching information that will eventually be passed to
+# #'   \code{\link{calcSigSqAI2016}}.
+# #'
+# #' @references Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+# #'   matching estimators for average treatment effects. econometrica, 74(1),
+# #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+# #'
+# #'   Abadie, A., & Imbens, G. W. (2016). Matching on the estimated propensity
+# #'   score. Econometrica, 84(2), 781-807.
+# #'   \url{https://doi.org/10.3982/ECTA11293}
 estSigSq <- function(
   X, Y,
   which_same_trt, N_this_trt,
@@ -150,22 +150,22 @@ estSigSq <- function(
 }
 
 
-#' Calculates \code{sigsqiw}
-#'
-#' This function estimates the conditional variance as seen in equation 14 in
-#' Section 4.1 of Abadie and Imbens 2006 Econometrica. The matching procedure in
-#' \code{\link{estSigSq}} matches units within the same treatment level (level
-#' kk), and compares their outcomes to estimate a variance component. This
-#' function was introduced to extend this variance matching procedure to
-#' \code{J_var_matches >=1}, as it takes care of some of the bookkeeping aspects
-#' of one-to-many matching.
-#'
-#' @inheritParams multiMatch
-#' @param match_output Output of the \code{Matching::Match()} function for the
-#'   same-treatment matching, from \code{\link{estSigSq}}.
-#'
-#' @return A vector of the \code{sigsqiw} values for those individuals observed
-#'   to have the \code{kk}th treatment level
+# #' Calculates \code{sigsqiw}
+# #'
+# #' This function estimates the conditional variance as seen in equation 14 in
+# #' Section 4.1 of Abadie and Imbens 2006 Econometrica. The matching procedure in
+# #' \code{\link{estSigSq}} matches units within the same treatment level (level
+# #' kk), and compares their outcomes to estimate a variance component. This
+# #' function was introduced to extend this variance matching procedure to
+# #' \code{J_var_matches >=1}, as it takes care of some of the bookkeeping aspects
+# #' of one-to-many matching.
+# #'
+# #' @inheritParams multiMatch
+# #' @param match_output Output of the \code{Matching::Match()} function for the
+# #'   same-treatment matching, from \code{\link{estSigSq}}.
+# #'
+# #' @return A vector of the \code{sigsqiw} values for those individuals observed
+# #'   to have the \code{kk}th treatment level
 calcSigSqAI2006 <- function(match_output,J_var_matches){
   md <- match_output$mdata
   J_factor <- ( (J_var_matches)/(1+J_var_matches) )

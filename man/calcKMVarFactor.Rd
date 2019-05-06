@@ -23,8 +23,8 @@ this vector is a function of the number of times each unit is matched to, aka
 \eqn{K_M(i)} (corresponding to \code{Kiw}, where \eqn{M} corresponds to \code{M_matches}. The calculation
 in this function comes from Theorem 7, page 251 of Abadie and Imbens (2006)
 Econometrica. The \code{K_M_var_factor} is an important component in the variance
-estimation, and is called from \code{\link{estVarAI2006}} in
-\code{\link{estimateTau}}.
+estimation, created in the function \code{estVarAI2006} in
+\code{estimateTau}.
 }
 \examples{
    calcKMVarFactor(Kiw = 2, M_matches = 4)

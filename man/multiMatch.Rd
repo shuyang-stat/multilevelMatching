@@ -2,7 +2,7 @@
 % Please edit documentation in R/multiMatch.R
 \name{multiMatch}
 \alias{multiMatch}
-\title{Matching Estimators for Multiple Treatments from Yang et al (2016).}
+\title{Matching Estimators for Multiple Treatments from Yang et al. (2016).}
 \usage{
 multiMatch(Y, W, X, trimming = NULL, match_on,
   model_options = list(reference_level = sort(W)[1]), M_matches = 1,
@@ -35,7 +35,7 @@ as in Abadie and Imbens (2006).}
 in Abadie and Imbens (2006).}
 }
 \value{
-according to \code{\link{estimateTau}}, including at most: \itemize{
+A list of output from \code{estimateTau}, including at most: \itemize{
 
   \item \code{tauestimate}:  a vector of estimates for pairwise treatment
   effects

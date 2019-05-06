@@ -1,11 +1,51 @@
 
 #' Estimate Treatment Model for Generalized Propensity Scores
 #'
-#' Note that the model_options argument must be a list with reference_level
-#' element
+#' This function is used to fit the model for the generalized propensity score.
+#' Users can apply this function before \code{\link{multiMatch}} and verify that
+#' the output's fitted model object is the same as the user desires.
+#'
+#' Note that the \code{model_options} argument must be a list with
+#' \code{reference_level} element. Future versions of this package may allow
+#' for the user to supply a fitted model object directly to
+#' \code{\link{multiMatch}}; to request this feature, users should go to the
+#' GitHub repository and fill out an Issue requesting it.
 #'
 #' @inheritParams multiMatch
 #' @param ... the dots argument
+#'
+#' @return A list element with two items: \itemize{
+#'   \item \code{prop_score_model} the fitted model object
+#'   \item \code{prop_score_ests} the estimated generalized propensity scores
+#'   for each individual in the dataset
+#' }
+#'
+#' @export
+#'
+#' @examples
+#'
+#'  sim_data <- multilevelMatching::simulated_data
+#'  Y <- sim_data$outcome
+#'  W <- sim_data$treatment
+#'  X <- as.matrix(sim_data[ ,-(1:2)])
+#'  names(Y) <- paste0("ID", 1:length(Y))
+#'
+#'  trimming <- FALSE
+#'  method <- c("covariates", "polr", "multinom")[2]
+#'
+#'  prepared_data <- prepareData(
+#'    Y = Y,
+#'    W = W,
+#'    X = X,
+#'    match_on = "polr",
+#'    trimming = FALSE,
+#'    model_options = list(reference_level = sort(W)[1]),
+#'    M_matches = 3,
+#'    J_var_matches = 2
+#'  )
+#'
+#' trt_model <- do.call(estimateTrtModel, prepared_data)
+#' estimated_generalized_propensity_scores <- trt_model$prop_score_ests
 #'
 estimateTrtModel <- function(
   W, X, match_on, model_options, ...

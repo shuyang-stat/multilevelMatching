@@ -6,6 +6,7 @@ This is a resubmission. In this version I have:
 * reinstalled Tex to see if examples are included in submission build
 * added more examples to exported functions
 * fixed broken examples
+* Ensured every documented function has an example
 
 
 ## Test environments

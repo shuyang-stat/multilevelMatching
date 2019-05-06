@@ -1,40 +1,40 @@
 
-#' Perform matching methods to estimate (or impute) potential outcomes for one
-#' treatment level (level \code{kk})
-#'
-#' This function executes the matching methods to estimate the components for
-#' the point estimates of the population-level estimands. The components will be
-#' assembled into the estimator in the function \code{\link{estimateTau}}.
-#'
-#' @inheritParams matchAllTreatments
-#' @param est_options Options for carrying out matching for point estimation.
-#' @param vec_same_trt Boolean vector indicating which individuals observed to
-#'   have treatment level kk
-#' @param which_same_trt Numeric vector providing indices of individuals
-#'   observed to have treatment level kk
-#' @param vec_diff_trt Boolean vector indicating which individuals observed to
-#'   have treatment level NOT equal to kk
-#' @param which_diff_trt Numeric vector providing indices of individuals
-#'   observed to have treatment level  NOT equal to kk
-#'
-#' @return A list, many of which are necessary arguments for
-#'   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
-#'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of Yiw
-#'   across all units i. These are the estimates of the population-level mean
-#'   estimands. See \code{\link{estimateTau}}. \item \code{Kiw} The vector of
-#'   number of times unit i used as a match in imputation. \item
-#'   \code{impute_match_data} Extra information from the main matching
-#'   procedure. }
-#'
-#' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
-#'   (2016) Propensity Score Matching and Subclassification in Observational
-#'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
-#'   \url{https://doi.org/10.1111/biom.12505}
-#'
-#'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
-#'   matching estimators for average treatment effects. econometrica, 74(1),
-#'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
-#'
+# #' Perform matching methods to estimate (or impute) potential outcomes for one
+# #' treatment level (level \code{kk})
+# #'
+# #' This function executes the matching methods to estimate the components for
+# #' the point estimates of the population-level estimands. The components will be
+# #' assembled into the estimator in the function \code{\link{estimateTau}}.
+# #'
+# #' @inheritParams matchAllTreatments
+# #' @param est_options Options for carrying out matching for point estimation.
+# #' @param vec_same_trt Boolean vector indicating which individuals observed to
+# #'   have treatment level kk
+# #' @param which_same_trt Numeric vector providing indices of individuals
+# #'   observed to have treatment level kk
+# #' @param vec_diff_trt Boolean vector indicating which individuals observed to
+# #'   have treatment level NOT equal to kk
+# #' @param which_diff_trt Numeric vector providing indices of individuals
+# #'   observed to have treatment level  NOT equal to kk
+# #'
+# #' @return A list, many of which are necessary arguments for
+# #'   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
+# #'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of Yiw
+# #'   across all units i. These are the estimates of the population-level mean
+# #'   estimands. See \code{\link{estimateTau}}. \item \code{Kiw} The vector of
+# #'   number of times unit i used as a match in imputation. \item
+# #'   \code{impute_match_data} Extra information from the main matching
+# #'   procedure. }
+# #'
+# #' @references Yang, S., Imbens G. W., Cui, Z., Faries, D. E., & Kadziola, Z.
+# #'   (2016) Propensity Score Matching and Subclassification in Observational
+# #'   Studies with Multi-Level Treatments. Biometrics, 72, 1055-1065.
+# #'   \url{https://doi.org/10.1111/biom.12505}
+# #'
+# #'   Abadie, A., & Imbens, G. W. (2006). Large sample properties of
+# #'   matching estimators for average treatment effects. econometrica, 74(1),
+# #'   235-267. \url{https://doi.org/10.1111/j.1468-0262.2006.00655.x}
+# #'
 matchImputePO <- function(
   X,
   # W,
@@ -88,26 +88,26 @@ matchImputePO <- function(
 }
 
 
-#' Calculate imputed potential outcomes and other estimation components
-#'
-#' This is a plumbing function, called from \code{\link{matchImputePO}}; they
-#' output the same list of information.
-#'
-#' @inheritParams multiMatch
-#' @inheritParams matchImputePO
-#' @param match_output The output from \code{\link[Matching]{Match}} when
-#'   matching different treatment levels to impute potential outcomes (for point
-#'   estimation of causal estimands).
-#'
-#' @return A list, many of which are necessary arguments for
-#'   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
-#'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of
-#'   \code{Yiw} across all units i. These are the estimates of the
-#'   population-level mean estimands. See \code{\link{estimateTau}}. \item
-#'   \code{Kiw} The vector of number of times unit i used as a match in
-#'   imputation. \item \code{impute_match_data} Extra information from the main
-#'   matching procedure. }
-#'
+# #' Calculate imputed potential outcomes and other estimation components
+# #'
+# #' This is a plumbing function, called from \code{\link{matchImputePO}}; they
+# #' output the same list of information.
+# #'
+# #' @inheritParams multiMatch
+# #' @inheritParams matchImputePO
+# #' @param match_output The output from \code{\link[Matching]{Match}} when
+# #'   matching different treatment levels to impute potential outcomes (for point
+# #'   estimation of causal estimands).
+# #'
+# #' @return A list, many of which are necessary arguments for
+# #'   \code{\link{estimateTau}}: \itemize{ \item \code{Yiw} The fully-imputed
+# #'   data set of all potential outcomes. \item \code{mean_Yiw} Mean of
+# #'   \code{Yiw} across all units i. These are the estimates of the
+# #'   population-level mean estimands. See \code{\link{estimateTau}}. \item
+# #'   \code{Kiw} The vector of number of times unit i used as a match in
+# #'   imputation. \item \code{impute_match_data} Extra information from the main
+# #'   matching procedure. }
+# #'
 wrangleImputations <- function(
   match_output,
   M_matches,
@@ -162,22 +162,22 @@ wrangleImputations <- function(
   )
 }
 
-#' Plumbing function for one-to-many matches
-#'
-#' This is called from \code{\link{wrangleImputations}} and from
-#' \code{\link{calcSigSqAI2006}}.
-#'
-#' @param num_matches Either \code{M_matches} or \code{J_var_matches}
-#' @param matched_outcomes These are the \code{num_matches}-many imputed
-#'   potential outcomes. These need to be averaged if \code{num_matches}>1.
-#' @param orig_outcomes When called from \code{\link{calcSigSqAI2006}}, these
-#'   are repeated outcomes that simply need to be subsetted; in the case of
-#'   \code{\link{wrangleImputations}} this is left to \code{NULL} and is
-#'   ignored.
-#'
-#' @return A list including the averaged \code{matched_outcomes}, and also
-#'   \code{orig_outcomes} which is sometimes \code{NULL}.
-#'
+# #' Plumbing function for one-to-many matches
+# #'
+# #' This is called from \code{\link{wrangleImputations}} and from
+# #' \code{\link{calcSigSqAI2006}}.
+# #'
+# #' @param num_matches Either \code{M_matches} or \code{J_var_matches}
+# #' @param matched_outcomes These are the \code{num_matches}-many imputed
+# #'   potential outcomes. These need to be averaged if \code{num_matches}>1.
+# #' @param orig_outcomes When called from \code{\link{calcSigSqAI2006}}, these
+# #'   are repeated outcomes that simply need to be subsetted; in the case of
+# #'   \code{\link{wrangleImputations}} this is left to \code{NULL} and is
+# #'   ignored.
+# #'
+# #' @return A list including the averaged \code{matched_outcomes}, and also
+# #'   \code{orig_outcomes} which is sometimes \code{NULL}.
+# #'
 averageMultipleMatches <- function(
   num_matches, matched_outcomes, orig_outcomes = NULL
 ){
