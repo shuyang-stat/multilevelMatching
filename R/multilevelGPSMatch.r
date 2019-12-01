@@ -226,7 +226,7 @@ multilevelGPSMatch <- function(
         thattrt <- trtlevels[kk]
         cname1 <- c(paste(paste(paste(paste(paste("EY(",thattrt,sep=""),")",sep=""),"-EY(",sep=""),thistrt,sep=""),")",sep=""))
         varestimateAI2012[cname1] <- varestimate[cname1]-
-          t(Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(Cvec[jj,]+Cvec[kk,])
+          t(-Cvec[jj,]+Cvec[kk,])%*%vcov_coeff%*%(-Cvec[jj,]+Cvec[kk,])
       }
     }
   }
